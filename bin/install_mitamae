@@ -1,0 +1,45 @@
+#! /bin/bash
+
+DESTDIR=${DESTDIR:-${HOME}}
+
+uname_m=`uname -m | tr A-Z a-z`
+uname_s=`uname -s | tr A-Z a-z`
+
+mitamae_version=1.2.2
+mitamae_platform=${uname_m}-${uname_s}
+mitamae_url=https://github.com/k0kubun/mitamae/releases/download/v${mitamae_version}/mitamae-${mitamae_platform}
+
+case "${uname_s}" in
+darwin)
+  mitamae_sha256=178591210737cd2ce819ccc1d1e68f13a18668f1c365809d8f646aa5bb51218a
+  ;;
+
+linux)
+  mitamae_sha256=1d7fff50a34e2ce2632fa4d373e045ef07c08528f812135e339328fa59378933
+  ;;
+esac
+
+mitamae=${DESTDIR}/bin/mitamae
+
+## Check sha255
+
+if [ -f "${mitamae}" ]; then
+  case "${uname_s}" in
+  darwin)
+    actual_sha256=`shasum -a 256 ${mitamae} | cut -d' ' -f1`
+    ;;
+  linux)
+    actual_sha256=`sha256sum ${mitamae} | cut -d' ' -f1`
+    ;;
+  esac
+  if [ "${mitamae_sha256}" != "${actual_sha256}" ]; then
+    rm -f ${mitamae}
+  fi
+fi
+
+## Download
+
+if [ ! -x "${mitamae}" ]; then
+  curl -fsSL -o ${mitamae} ${mitamae_url}
+  chmod 755 ${mitamae}
+fi
