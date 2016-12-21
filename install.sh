@@ -1,5 +1,7 @@
 #! /bin/bash
 
+set -xe
+
 export DESTDIR=${DESTDIR:-${HOME}}
 export DOTFILES_REPO=https://github.com/mrkn/dotfiles
 
