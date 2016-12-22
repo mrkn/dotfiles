@@ -6,3 +6,5 @@ include_module 'slack'
 
 include_module 'rbenv'
 include_module 'ruby'
+
+include_module 'terraform'
