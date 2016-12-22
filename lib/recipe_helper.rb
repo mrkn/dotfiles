@@ -52,8 +52,8 @@ MItamae::RecipeContext.class_eval do
 
   def install_ruby_trunk(opts={})
     rbenv_root = File.expand_path("~/.rbenv")
-    source_dir = File.join(rbenv_root, 'sources', 'ruby-trunk')
-    prefix_dir = File.join(rbenv_root, 'versions', 'ruby-trunk')
+    source_dir = File.join(rbenv_root, 'sources', 'trunk')
+    prefix_dir = File.join(rbenv_root, 'versions', 'trunk')
 
     configure_args = opts[:configure_args] || []
     make_jobs = opts[:make_jobs]
