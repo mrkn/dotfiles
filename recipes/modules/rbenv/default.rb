@@ -1,15 +1,10 @@
-execute "git clone https://github.com/rbenv/rbenv.git ~/.rbenv" do
-  not_if "test -d ~/.rbenv/.git"
+rbenv_dir = File.expand_path("~/.rbenv")
+ruby_build_dir = File.join(rbenv_dir, 'plugins', 'ruby-build')
+
+git rbenv_dir do
+  repository 'https://github.com/rbenv/rbenv.git'
 end
 
-execute "cd ~/.rbenv && git pull --rebase" do
-  not_if "test ! -d ~/.rbenv/.git"
-end
-
-execute "git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build" do
-  not_if "test -d ~/.rbenv/plugins/ruby-build/.git"
-end
-
-execute "cd ~/.rbenv/plugins/ruby-build && git pull --rebase" do
-  not_if "test ! -d ~/.rbenv/plugins/ruby-build/.git"
+git ruby_build_dir do
+  repository 'https://github.com/rbenv/ruby-build.git'
 end
