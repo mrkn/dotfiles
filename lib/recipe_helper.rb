@@ -30,6 +30,42 @@ MItamae::RecipeContext.class_eval do
     end
   end
 
+  def install_ruby_trunk(opts={})
+    rbenv_root = File.expand_path("~/.rbenv")
+    source_dir = File.join(rbenv_root, 'sources', 'ruby-trunk')
+    prefix_dir = File.join(rbenv_root, 'versions', 'ruby-trunk')
+
+    configure_args = opts[:configure_args] || []
+    make_jobs = opts[:make_jobs]
+
+    git source_dir do
+      repository 'https://github.com/ruby/ruby.git'
+    end
+
+    local_ruby_block 'Build and install ruby-trunk' do
+      block do
+        Dir.chdir source_dir do
+          run_command('autoconf')
+
+          configure_cmdline = [
+            './configure',
+            "--prefix=#{prefix_dir}",
+            *configure_args
+          ]
+          run_command(configure_cmdline)
+
+          make_cmdline = ['make']
+          make_cmdline << '-j' << make_jobs.to_s if make_jobs
+          run_command(make_cmdline)
+
+          run_command(['make', 'install'])
+        end
+      end
+
+      only_if "test ! -x #{prefix_dir}/bin/ruby || test x$REBUILD_RUBY_TRUNK != x"
+    end
+  end
+
   def top_dir
     @top_dir ||= File.expand_path('../..', __FILE__)
   end
