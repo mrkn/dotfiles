@@ -30,6 +30,26 @@ MItamae::RecipeContext.class_eval do
     end
   end
 
+  def install_ruby(version, opts={})
+    rbenv_root = File.expand_path("~/.rbenv")
+    source_dir = File.join(rbenv_root, 'sources', version)
+    prefix_dir = File.join(rbenv_root, 'versions', version)
+
+    configure_args = opts[:configure_args]
+    make_jobs = opts[:make_jobs]
+
+    directory source_dir
+
+    version_dir = version.split('.')[0, 2].join('.')
+    tarball_url = "https://cache.ruby-lang.org/pub/ruby/#{version_dir}/ruby-#{version}.tar.gz"
+
+    execute "curl -fsSL #{tarball_url} | /usr/bin/tar xz --strip 1 -C #{source_dir}" do
+      not_if "test -f #{source_dir}/configure.in"
+    end
+
+    build_and_install_ruby(version, source_dir, prefix_dir, configure_args, make_jobs)
+  end
+
   def install_ruby_trunk(opts={})
     rbenv_root = File.expand_path("~/.rbenv")
     source_dir = File.join(rbenv_root, 'sources', 'ruby-trunk')
@@ -42,9 +62,19 @@ MItamae::RecipeContext.class_eval do
       repository 'https://github.com/ruby/ruby.git'
     end
 
-    local_ruby_block 'Build and install ruby-trunk' do
+    build_and_install_ruby('trunk', source_dir, prefix_dir, configure_args, make_jobs)
+  end
+
+  def build_and_install_ruby(version, source_dir, prefix_dir, configure_args, make_jobs)
+    rebuild_flag_name = "REBUILD_RUBY_#{version.gsub('.', '_').upcase}"
+
+    local_ruby_block "Build and install ruby-#{version}" do
       block do
         Dir.chdir source_dir do
+          if File.file?('Makefile') && ENV[rebuild_flag_name]
+            run_command(['make', 'distclean'])
+          end
+
           run_command('autoconf')
 
           configure_cmdline = [
@@ -62,9 +92,10 @@ MItamae::RecipeContext.class_eval do
         end
       end
 
-      only_if "test ! -x #{prefix_dir}/bin/ruby || test x$REBUILD_RUBY_TRUNK != x"
+      only_if "test ! -x #{prefix_dir}/bin/ruby || test x$#{rebuild_flag_name} != x"
     end
   end
+  private :build_and_install_ruby
 
   def top_dir
     @top_dir ||= File.expand_path('../..', __FILE__)

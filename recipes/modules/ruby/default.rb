@@ -7,3 +7,4 @@ include_module 'qdbm'
 include_module 'readline'
 
 include_recipe 'trunk'
+include_recipe '2.3'
