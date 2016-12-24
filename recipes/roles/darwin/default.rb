@@ -19,3 +19,4 @@ include_module 'terraform'
 
 dotfile '.bash_profile'
 dotfile '.bash_profile.d'
+dotfile '.vimrc'
