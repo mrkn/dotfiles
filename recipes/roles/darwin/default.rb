@@ -6,6 +6,7 @@ execute 'brew update'
 
 include_module 'mas'
 include_module 'slack'
+include_module 'tweetbot'
 include_module 'lv'
 include_module 'highway'
 include_module 'xz'
