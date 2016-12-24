@@ -1,3 +1,4 @@
+include_module 'dotfile'
 include_module 'homebrew'
 include_module 'git'
 execute 'brew update'
@@ -9,3 +10,6 @@ include_module 'rbenv'
 include_module 'ruby'
 
 include_module 'terraform'
+
+dotfile '.bash_profile'
+dotfile '.bash_profile.d'
