@@ -20,4 +20,4 @@ bin/install_mitamae
 ## Run mitamae
 
 PATH=$HOME/bin:$PATH
-mitamae local -l DEBUG bootstrap.rb
+mitamae local bootstrap.rb
