@@ -97,6 +97,10 @@ MItamae::RecipeContext.class_eval do
   end
   private :build_and_install_ruby
 
+  def pip_package(name)
+    execute "pyenv exec pip install '#{name}'"
+  end
+
   def top_dir
     @top_dir ||= File.expand_path('../..', __FILE__)
   end

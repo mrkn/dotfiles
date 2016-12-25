@@ -18,6 +18,8 @@ include_module 'ruby'
 include_module 'pyenv'
 include_module 'python'
 
+include_module 'jupyter'
+
 include_module 'terraform'
 
 dotfile '.bash_profile'
