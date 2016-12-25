@@ -1,0 +1,16 @@
+#!/bin/bash
+
+if [[ ! -d .git ]]; then
+  set -e
+  trap '{ rm -rf .git; exit 1; }' EXIT
+  git init
+  git config --bool core.autocrlf false
+  git config remote.origin.url git@github.com:mrkn/dotfiles.git
+  git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+  git fetch origin refs/heads/master:refs/remotes/origin/master
+  git reset --hard origin/master
+  set +e
+  trap - EXIT
+fi
+
+git pull --rebase origin master
