@@ -16,6 +16,7 @@ include_module 'rbenv'
 include_module 'ruby'
 
 include_module 'pyenv'
+include_module 'python'
 
 include_module 'terraform'
 
