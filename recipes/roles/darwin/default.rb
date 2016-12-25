@@ -15,6 +15,8 @@ include_module 'tmux'
 include_module 'rbenv'
 include_module 'ruby'
 
+include_module 'pyenv'
+
 include_module 'terraform'
 
 dotfile '.bash_profile'
