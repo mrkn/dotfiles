@@ -20,6 +20,7 @@ include_module 'python'
 
 include_module 'jupyter'
 
+include_module 'neovim'
 include_module 'terraform'
 
 dotfile '.bash_profile'
