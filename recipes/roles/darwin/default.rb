@@ -11,6 +11,7 @@ include_module 'lv'
 include_module 'highway'
 include_module 'xz'
 include_module 'tmux'
+include_module 'iterm2'
 
 include_module 'rbenv'
 include_module 'ruby'

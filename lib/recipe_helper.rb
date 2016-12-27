@@ -1,3 +1,7 @@
+Dir.glob(File.expand_path('../recipe_helpers/*.rb', __FILE__)).each do |helper_file|
+  include_recipe helper_file
+end
+
 MItamae::RecipeContext.class_eval do
   def include_module(name)
     include_recipe File.join(top_dir, 'recipes', 'modules', name, 'default')
