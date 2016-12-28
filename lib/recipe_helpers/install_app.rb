@@ -4,7 +4,8 @@ install_app_args = {
   sha256: nil,
   archive_name: nil,
   app_name: nil,
-  open_after_install: false
+  open_after_install: false,
+  installer_name: nil
 }
 define :install_app, install_app_args do
   name = params[:name]
@@ -20,11 +21,13 @@ define :install_app, install_app_args do
   downloads_dir = File.expand_path('~/Downloads')
   download_path = File.join(downloads_dir, archive_name)
 
-  app_name = params[:app_name] || name
-  app_path = File.join('/Applications', "#{app_name}.app")
+  app_name = params[:app_name] || "#{name}.app"
+  app_path = File.join('/Applications', app_name)
   info_plist_path = File.join(app_path, 'Contents', 'Info.plist')
 
   version_key = 'CFBundleShortVersionString'
+
+  installer_name = params[:installer_name] || app_name
 
   local_ruby_block "Install #{name}" do
     block do
@@ -51,14 +54,35 @@ define :install_app, install_app_args do
 
       # Install new version
 
-      if run_command("file -bI '#{download_path}' | grep -q application/zip >&/dev/null")
+      if run_command("file -bI '#{download_path}' | grep -q application/zip >&/dev/null", error: false).success?
+        # ZIP File
+
         run_command("zip --delete '#{download_path}' '*.DS_Store' || :")
         run_command("zip --delete '#{download_path}' '*__MACOSX*' || :")
-      end
 
-      unless run_command(['unzip', '-x', '-d', '/Applications', download_path])
-        MItamae.logger.error "install_app[#{name}] Failed due to unable to extract the archive."
-	exit 2
+        unless run_command(['unzip', '-x', '-d', '/Applications', download_path], error: false).success?
+          MItamae.logger.error "install_app[#{name}] Failed due to unable to extract the archive."
+          exit 2
+        end
+      elsif run_command("file -bI '#{download_path}' | grep -q application/x-iso9660-image >&/dev/null", error: false).success?
+        # DMG file
+
+        mktmpdir do |tmpdir|
+          mountpoint = File.join(tmpdir, 'vol')
+          result = run_command("hdiutil attach '#{download_path}' -readonly -mountpoint '#{mountpoint}'", error: false)
+          unless result.success?
+            MItamae.logger.error "install_app[#{name}] Failed due to unable to mount dmg file."
+            MItamae.logger.error result.stderr
+            exit 2
+          end
+
+          begin
+            installer_path = File.join(mountpoint, installer_name)
+            run_command(['open', '-W', installer_path])
+          ensure
+            run_command(['hdiutil', 'detach', mountpoint])
+          end
+        end
       end
 
       if params[:open_after_install]

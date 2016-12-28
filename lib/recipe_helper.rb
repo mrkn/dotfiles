@@ -1,5 +1,15 @@
-Dir.glob(File.expand_path('../recipe_helpers/*.rb', __FILE__)).each do |helper_file|
-  include_recipe helper_file
+class << Dir
+  def tmpdir
+    [ENV['TMPDIR'], ENV['TMP'], ENV['TEMP'], '/tmp', '.'].each do |dir|
+      next if !dir
+      dir = File.expand_path(dir)
+      if (stat = File.stat(dir)) && stat.directory? && stat.writable? &&
+          (!stat.world_writable? or stat.sticky?)
+        return dir
+      end rescue nil
+    end
+    raise ArgumentError, "could not find a temporary directory"
+  end
 end
 
 MItamae::RecipeContext.class_eval do
@@ -111,6 +121,46 @@ MItamae::RecipeContext.class_eval do
 end
 
 MItamae::ResourceContext.class_eval do
+  def mktmpdir(prefix_suffix=nil, *rest)
+    path = tmpname_create(prefix_suffix || 'd', *rest) {|n| run_command("mkdir -p '#{n}' && chmod 700 '#{n}'") }
+    if block_given?
+      begin
+        yield path
+      ensure
+        stat = File.stat(File.dirname(path))
+        if stat.world_writable? && !stat.sticky?
+          raise ArgumentError, "parent directory is world writable but not sticky"
+        end
+        run_command(['rm', '-rf', path])
+      end
+    else
+      path
+    end
+  end
+
+  def make_tmpname(basename, n)
+    prefix, suffix = basename
+    t = run_command('date +%Y%m%d').stdout.chomp
+    path = "#{prefix}#{t}-#{$$}-#{rand(0x100000).to_s(36)}".dup
+    path << "-#{n}" if n
+    path << suffix if suffix
+    path
+  end
+
+  def tmpname_create(basename, tmpdir=nil)
+    tmpdir ||= Dir.tmpdir
+    n = nil
+    begin
+      path = File.join(tmpdir, make_tmpname(basename, n))
+      yield(path, n)
+      path
+    rescue Errno::EEXIST
+      n ||= 0
+      n += 1
+      retry
+    end
+  end
+
   def download_file(url, filename=nil, dest_dir=nil, sha256=nil)
     filename ||= File.basename(url)
     dest_dir = File.expand_path(dest_dir, '~/Downloads')
@@ -118,7 +168,7 @@ MItamae::ResourceContext.class_eval do
 
     # Check existing file
     if File.file?(download_path) && sha256
-      unless run_command("echo '#{sha256}  #{download_path}' | shasum -a 256 -cs -")
+      unless run_command("echo '#{sha256}  #{download_path}' | shasum -a 256 -cs -", error: false).success?
         run_command(['rm', '-f', download_path])
       end
     end
@@ -133,7 +183,7 @@ MItamae::ResourceContext.class_eval do
 
       # Check downloaded archive
       if sha256
-        unless run_command("echo '#{sha256}  #{download_path}' | shasum -a 256 -cs -")
+        unless run_command("echo '#{sha256}  #{download_path}' | shasum -a 256 -cs -", error: false).success?
           MItamae.logger.error "download[#{filename}] Failed due to invalid sha256."
           return false
         end
@@ -142,5 +192,8 @@ MItamae::ResourceContext.class_eval do
 
     true
   end
+end
 
+Dir.glob(File.expand_path('../recipe_helpers/*.rb', __FILE__)).each do |helper_file|
+  include_recipe helper_file
 end
