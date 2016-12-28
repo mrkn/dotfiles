@@ -1,4 +1,30 @@
 set nocompatible
+
+"" dein {{{
+let s:plugin_dir = expand('~/.cache/dein')
+let s:dein_dir = s:plugin_dir . '/repos/github.com/Shougo/dein.vim'
+
+if !isdirectory(s:dein_dir)
+  call mkdir(s:dein_dir, 'p')
+  silent execute '!git clone https://github.com/Shougo/dein.vim' s:dein_dir
+endif
+
+execute 'set runtimepath^=' . s:dein_dir
+
+if dein#load_state(s:plugin_dir)
+  call dein#begin(s:plugin_dir)
+  call dein#load_toml('~/.dein.toml', { 'lazy': 0 })
+  call dein#end()
+  call dein#save_state()
+endif
+if dein#check_install()
+  call dein#install('vimproc')
+endif
+if dein#check_install()
+  call dein#install()
+endif
+"" }}}
+
 set encoding=utf-8
 
 syntax on

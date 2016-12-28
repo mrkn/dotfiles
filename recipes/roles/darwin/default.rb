@@ -3,6 +3,7 @@ include_module 'dotfile'
 dotfile '.bash_profile'
 dotfile '.bash_profile.d'
 dotfile '.tmux.conf'
+dotfile '.dein.toml'
 dotfile '.vimrc'
 
 include_module 'homebrew'
