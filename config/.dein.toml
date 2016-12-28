@@ -4,3 +4,9 @@ repo = 'Shougo/dein.vim'
 [[plugins]]
 repo = 'Shougo/vimproc.vim'
 build = 'make'
+
+# toml
+
+[[plugins]]
+repo = 'cespare/vim-toml'
+on_ft = ['toml']
