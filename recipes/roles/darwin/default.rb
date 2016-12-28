@@ -1,4 +1,10 @@
 include_module 'dotfile'
+
+dotfile '.bash_profile'
+dotfile '.bash_profile.d'
+dotfile '.tmux.conf'
+dotfile '.vimrc'
+
 include_module 'homebrew'
 include_module 'git'
 
@@ -25,8 +31,3 @@ include_module 'neovim'
 include_module 'terraform'
 
 include_module 'duet'
-
-dotfile '.bash_profile'
-dotfile '.bash_profile.d'
-dotfile '.tmux.conf'
-dotfile '.vimrc'
