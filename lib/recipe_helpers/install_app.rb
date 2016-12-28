@@ -3,7 +3,8 @@ install_app_args = {
   url: nil,
   sha256: nil,
   archive_name: nil,
-  app_name: nil
+  app_name: nil,
+  open_after_install: false
 }
 define :install_app, install_app_args do
   name = params[:name]
@@ -16,10 +17,11 @@ define :install_app, install_app_args do
   end
 
   archive_name = params[:archive_name] || File.basename(url)
-  download_path = File.expand_path(File.join('~/Downloads', archive_name))
+  downloads_dir = File.expand_path('~/Downloads')
+  download_path = File.join(downloads_dir, archive_name)
 
   app_name = params[:app_name] || name
-  app_path = File.join('Applications', "#{app_name}.app")
+  app_path = File.join('/Applications', "#{app_name}.app")
   info_plist_path = File.join(app_path, 'Contents', 'Info.plist')
 
   version_key = 'CFBundleShortVersionString'
@@ -37,31 +39,10 @@ define :install_app, install_app_args do
 	next
       end
 
-      # Check existing archive and download if needed
+      # Download archive
 
-      if File.file?(download_path) && sha256
-        unless run_command("echo '#{sha256}  #{download_path}' | shasum -a 256 -cs -")
-          run_command(['rm', '-f', download_path])
-        end
-      end
-
-      # Download and check archive
-
-      unless File.file?(download_path)
-        run_command(['curl', '-sfSL', '-o', download_path, url])
-        unless File.file?(download_path)
-          MItamae.logger.error "install_app[#{name}] Failed due to downloading failure."
-          exit 2
-        end
-
-        # Check downloaded archive
-
-        if sha256
-          unless run_command("echo '#{sha256}  #{download_path}' | shasum -a 256 -cs -")
-            MItamae.logger.error "install_app[#{name}] Failed due to invalid sha256."
-            exit 2
-          end
-        end
+      unless download_file(url, archive_name, downloads_dir, sha256)
+        exit 2
       end
 
       # Uninstall existing version
@@ -70,9 +51,18 @@ define :install_app, install_app_args do
 
       # Install new version
 
+      if run_command("file -bI '#{download_path}' | grep -q application/zip >&/dev/null")
+        run_command("zip --delete '#{download_path}' '*.DS_Store' || :")
+        run_command("zip --delete '#{download_path}' '*__MACOSX*' || :")
+      end
+
       unless run_command(['unzip', '-x', '-d', '/Applications', download_path])
         MItamae.logger.error "install_app[#{name}] Failed due to unable to extract the archive."
 	exit 2
+      end
+
+      if params[:open_after_install]
+        run_command(['open', app_path])
       end
     end
   end

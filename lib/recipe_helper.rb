@@ -109,3 +109,38 @@ MItamae::RecipeContext.class_eval do
     @top_dir ||= File.expand_path('../..', __FILE__)
   end
 end
+
+MItamae::ResourceContext.class_eval do
+  def download_file(url, filename=nil, dest_dir=nil, sha256=nil)
+    filename ||= File.basename(url)
+    dest_dir = File.expand_path(dest_dir, '~/Downloads')
+    download_path = File.join(dest_dir, filename)
+
+    # Check existing file
+    if File.file?(download_path) && sha256
+      unless run_command("echo '#{sha256}  #{download_path}' | shasum -a 256 -cs -")
+        run_command(['rm', '-f', download_path])
+      end
+    end
+
+    # Download and check file
+    unless File.file?(download_path)
+      run_command(['curl', '-sfSL', '-o', download_path, url])
+      unless File.file?(download_path)
+        MItamae.logger.error "download[#{filename}] Failed due to downloading failure."
+        return false
+      end
+
+      # Check downloaded archive
+      if sha256
+        unless run_command("echo '#{sha256}  #{download_path}' | shasum -a 256 -cs -")
+          MItamae.logger.error "download[#{filename}] Failed due to invalid sha256."
+          return false
+        end
+      end
+    end
+
+    true
+  end
+
+end

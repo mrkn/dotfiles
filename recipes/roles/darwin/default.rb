@@ -24,6 +24,8 @@ include_module 'jupyter'
 include_module 'neovim'
 include_module 'terraform'
 
+include_module 'duet'
+
 dotfile '.bash_profile'
 dotfile '.bash_profile.d'
 dotfile '.tmux.conf'
