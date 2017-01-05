@@ -28,6 +28,8 @@ include_module '1password'
 include_module 'rbenv'
 include_module 'ruby'
 
+execute 'rbenv global 2.4'
+
 include_module 'pyenv'
 include_module 'python'
 
