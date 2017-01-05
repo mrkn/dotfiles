@@ -47,6 +47,7 @@ include_module 'jupyter'
 
 include_module 'r'
 include_module 'irkernel'
+include_module 'rstudio-desktop'
 
 include_module 'neovim'
 include_module 'terraform'
