@@ -5,12 +5,22 @@ install_app_args = {
   archive_name: nil,
   app_name: nil,
   open_after_install: false,
-  installer_name: nil
+  installer_name: nil,
+  install_by: :copy
 }
+
+valid_values_of_install_by = [ :copy, :open ]
+
 define :install_app, install_app_args do
   name = params[:name]
   version = params[:version]
   sha256 = params[:sha256]
+
+  install_by = params[:install_by].to_sym
+  unless valid_values_of_install_by.include? install_by
+    MItamae.logger.error "install_app[#{name}] Invalid value of install_by: #{install_by}"
+    exit 2
+  end
 
   unless (url = params[:url])
     MItamae.logger.error "install_app[#{name}] Failed because url is not given."
@@ -64,7 +74,7 @@ define :install_app, install_app_args do
           MItamae.logger.error "install_app[#{name}] Failed due to unable to extract the archive."
           exit 2
         end
-      elsif run_command("file -bI '#{download_path}' | grep -q application/x-iso9660-image >&/dev/null", error: false).success?
+      elsif download_path.end_with?('.dmg')
         # DMG file
 
         mktmpdir do |tmpdir|
@@ -78,7 +88,12 @@ define :install_app, install_app_args do
 
           begin
             installer_path = File.join(mountpoint, installer_name)
-            run_command(['open', '-W', installer_path])
+            case params[:install_by].to_sym
+            when :copy
+              run_command(['cp', '-R', installer_path, app_path])
+            when :open
+              run_command(['open', '-W', installer_path])
+            end
           ensure
             run_command(['hdiutil', 'detach', mountpoint])
           end
