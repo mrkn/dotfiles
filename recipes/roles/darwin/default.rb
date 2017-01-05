@@ -23,6 +23,7 @@ include_module 'tmux'
 include_module 'iterm2'
 include_module 'peco'
 include_module 'ghq'
+include_module 'hub'
 
 include_module 'dropbox'
 include_module '1password'
