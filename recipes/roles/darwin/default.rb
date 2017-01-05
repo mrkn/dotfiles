@@ -6,6 +6,9 @@ dotfile '.bash_profile.d/101_cache.sh'
 dotfile '.bash_profile.d/500_rbenv.sh'
 dotfile '.bash_profile.d/510_pyenv.sh'
 dotfile '.bash_profile.d/900_home_bin.sh'
+
+dotfile '.config/nvim/init.vim'
+
 dotfile '.tmux.conf'
 dotfile '.dein.toml'
 dotfile '.vimrc'
