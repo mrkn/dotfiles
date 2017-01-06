@@ -16,3 +16,9 @@ on_ft = ['toml']
 [[plugins]]
 repo = 'JuliaEditorSupport/julia-vim'
 on_ft = ['julia']
+
+# ruby
+
+[[plugins]]
+repo = 'vim-ruby/vim-ruby'
+on_ft = ['ruby']
