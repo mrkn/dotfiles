@@ -10,3 +10,9 @@ build = 'make'
 [[plugins]]
 repo = 'cespare/vim-toml'
 on_ft = ['toml']
+
+# julia
+
+[[plugins]]
+repo = 'JuliaEditorSupport/julia-vim'
+on_ft = ['julia']
