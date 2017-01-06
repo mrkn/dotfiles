@@ -34,6 +34,7 @@ include_module 'hub'
 
 include_module 'dropbox'
 include_module '1password'
+include_module 'papers'
 
 include_module 'rbenv'
 include_module 'ruby'
