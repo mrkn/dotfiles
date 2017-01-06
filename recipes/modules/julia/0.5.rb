@@ -19,3 +19,5 @@ when 'darwin'
     force true
   end
 end
+
+execute %Q[julia -e 'Pkg.add("PyCall")']
