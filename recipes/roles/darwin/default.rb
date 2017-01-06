@@ -47,6 +47,8 @@ include_module 'python'
 
 include_module 'jupyter'
 
+include_module 'julia'
+
 include_module 'r'
 include_module 'irkernel'
 include_module 'rstudio-desktop'
