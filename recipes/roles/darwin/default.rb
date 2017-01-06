@@ -9,6 +9,8 @@ dotfile '.bash_profile.d/900_home_bin.sh'
 
 dotfile '.config/nvim/init.vim'
 
+dotfile '.gitconfig'
+
 dotfile '.tmux.conf'
 dotfile '.dein.toml'
 dotfile '.vimrc'

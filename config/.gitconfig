@@ -1,0 +1,38 @@
+[user]
+	name = Kenta Murata
+	email = mrkn@mrkn.jp
+
+[core]
+	editor = nvim
+        precomposeunicode = true
+        quotepath = false
+
+[alias]
+	a = add
+	ci = commit
+	co = checkout
+	cb = checkout -b
+	d = diff
+	dc = diff --cached --name-only
+	dcn = diff --cached --name-only
+	f = fetch
+	lg = log --oneline --decorate --graph
+	lga = log --oneline --decorate --graph --all
+	rb = rebase
+	rbc = rebase --continue
+	rbi = rebase -i
+	sb = status -sb
+	st = stash
+	sh = !bash -l
+
+[color]
+	ui = true
+
+[merge]
+	ff = false
+
+[push]
+	default = simple
+
+[github]
+	user = mrkn
