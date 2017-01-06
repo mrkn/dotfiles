@@ -22,3 +22,6 @@ on_ft = ['julia']
 [[plugins]]
 repo = 'vim-ruby/vim-ruby'
 on_ft = ['ruby']
+
+[[plugins]]
+repo = 'mrkn/vim-cruby'
