@@ -41,7 +41,6 @@ set expandtab
 
 set background=dark
 colorscheme desert
-set secure
 
 "" GetBufferDirectory {{{
 if !has('kaoriya')
@@ -59,3 +58,5 @@ if !has('kaoriya')
   endfunction
 endif
 "" }}}
+
+set secure
