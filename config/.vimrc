@@ -34,6 +34,7 @@ set incsearch
 set hlsearch
 set number
 set ruler
+set autoindent
 set shiftwidth=2
 set softtabstop=2
 set expandtab
