@@ -50,6 +50,7 @@ include_module 'pyenv'
 include_module 'python'
 
 include_module 'jupyter'
+include_module 'wakatime'
 
 include_module 'julia'
 include_module 'ijulia'
