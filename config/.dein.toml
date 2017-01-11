@@ -5,6 +5,11 @@ repo = 'Shougo/dein.vim'
 repo = 'Shougo/vimproc.vim'
 build = 'make'
 
+# git
+
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+
 # toml
 
 [[plugins]]
