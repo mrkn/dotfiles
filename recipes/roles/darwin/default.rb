@@ -1,11 +1,13 @@
 include_module 'dotfile'
 
+dotfile '.bash_aliases'
 dotfile '.bash_profile'
 dotfile '.bash_profile.d/100_homebrew.sh'
 dotfile '.bash_profile.d/101_cache.sh'
 dotfile '.bash_profile.d/500_rbenv.sh'
 dotfile '.bash_profile.d/510_pyenv.sh'
 dotfile '.bash_profile.d/900_home_bin.sh'
+dotfile '.bash_profile.d/910_aliases.sh'
 
 dotfile '.config/nvim/init.vim'
 
