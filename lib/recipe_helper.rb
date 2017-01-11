@@ -104,6 +104,8 @@ MItamae::RecipeContext.class_eval do
 
           run_command(['make', 'install'])
         end
+
+        run_command("RBENV_VERSION=#{version} rbenv exec gem update --system")
       end
 
       only_if "test ! -x #{prefix_dir}/bin/ruby || test x$#{rebuild_flag_name} != x"
