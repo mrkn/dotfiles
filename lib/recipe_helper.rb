@@ -107,6 +107,7 @@ MItamae::RecipeContext.class_eval do
 
         run_command("RBENV_VERSION=#{version} rbenv exec gem update --system")
         run_command("RBENV_VERSION=#{version} rbenv exec gem update")
+        run_command("RBENV_VERSION=#{version} rbenv exec gem install bundler pry pry-byebug")
       end
 
       only_if "test ! -x #{prefix_dir}/bin/ruby || test x$#{rebuild_flag_name} != x"
