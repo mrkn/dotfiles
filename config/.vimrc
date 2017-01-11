@@ -38,6 +38,7 @@ set autoindent
 set shiftwidth=2
 set softtabstop=2
 set expandtab
+set statusline=%<%f\ %{fugitive#statusline()}\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 
 set background=dark
 colorscheme desert
