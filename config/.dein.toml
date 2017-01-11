@@ -35,3 +35,8 @@ repo = 'mrkn/vim-cruby'
 
 [[plugins]]
 repo = 'wakatime/vim-wakatime'
+
+# etc.
+
+[[plugins]]
+repo = 'tpope/vim-surround'
