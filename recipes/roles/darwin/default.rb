@@ -35,6 +35,7 @@ include_module 'ghq'
 include_module 'hub'
 
 include_module 'alfred'
+include_module 'bartender'
 include_module 'dropbox'
 include_module '1password'
 include_module 'papers'
