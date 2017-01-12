@@ -1,0 +1,16 @@
+#!/bin/bash
+
+function git_current_branch() {
+  local HEAD_path=$(git rev-parse --git-path HEAD)
+  [[ -z $HEAD_path ]] && return 1
+
+  local head=$(cat $HEAD_path)
+  if [[ "$head" =~ ^(ref: (refs/(heads/|remotes/|tags/)?)?(.+)) ]]; then
+    local branch=${BASH_REMATCH[4]}
+  else
+    local branch=${head:0:7}
+  fi
+  echo $branch
+}
+
+git_current_branch
