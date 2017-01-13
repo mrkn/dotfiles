@@ -34,5 +34,8 @@
 [push]
 	default = simple
 
+[ghq]
+	root = ~/src
+
 [github]
 	user = mrkn
