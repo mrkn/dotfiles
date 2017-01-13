@@ -1,0 +1,1 @@
+execute 'xcode-select --install || :'

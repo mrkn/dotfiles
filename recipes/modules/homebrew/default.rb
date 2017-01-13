@@ -1,3 +1,5 @@
+include_module 'xcode/command_line_tools'
+
 brew_prefix = File.expand_path('/opt/brew')
 brew_url = 'https://github.com/Homebrew/homebrew/tarball/master'
 
