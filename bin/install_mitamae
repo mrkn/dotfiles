@@ -40,6 +40,7 @@ fi
 ## Download
 
 if [ ! -x "${mitamae}" ]; then
+  mkdir -p $(dirname ${mitamae})
   curl -fsSL -o ${mitamae} ${mitamae_url}
   chmod 755 ${mitamae}
 fi
