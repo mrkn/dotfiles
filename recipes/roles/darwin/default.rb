@@ -35,6 +35,7 @@ include_module 'iterm2'
 include_module 'peco'
 include_module 'ghq'
 include_module 'hub'
+include_module 'postgresql'
 
 include_module 'alfred'
 include_module 'bartender'
