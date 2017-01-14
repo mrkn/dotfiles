@@ -6,5 +6,5 @@ install_app 'Skype' do
   version skype_version
   url 'https://get.skype.com/go/getskype-macosx'
   archive_name "Skype_#{skype_full_version}.dmg"
-  sha256 '08c57f3f870f40f1390f3d8da0953cd4623d6ec8589a4a6852c5d56d903114b7'
+  sha256 '24fe8651e2194b1a75bbb3a91ec9bfb653ad8a762dc8f6c2a2d60d0c7e4394a0'
 end
