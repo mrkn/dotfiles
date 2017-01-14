@@ -11,8 +11,8 @@ dotfile '.bash_profile.d/910_aliases.sh'
 
 dotfile '.config/nvim/init.vim'
 
+dotfile '.gemrc'
 dotfile '.gitconfig'
-
 dotfile '.tmux.conf'
 dotfile '.dein.toml'
 dotfile '.vimrc'
