@@ -52,6 +52,7 @@ include_module 'rescue_time'
 
 include_module 'rbenv'
 include_module 'ruby'
+include_module 'gem-src'
 
 execute 'rbenv global 2.4'
 
