@@ -2,6 +2,7 @@ include_module 'dotfile'
 
 dotfile '.bash_aliases'
 dotfile '.bash_profile'
+dotfile '.bash_profile.d/000_locale.sh'
 dotfile '.bash_profile.d/100_homebrew.sh'
 dotfile '.bash_profile.d/101_cache.sh'
 dotfile '.bash_profile.d/500_rbenv.sh'
