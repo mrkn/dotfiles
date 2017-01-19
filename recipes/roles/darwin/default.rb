@@ -64,7 +64,6 @@ include_module 'pyenv'
 include_module 'python'
 
 include_module 'jupyter'
-include_module 'wakatime'
 
 include_module 'julia'
 include_module 'ijulia'
@@ -74,6 +73,7 @@ include_module 'irkernel'
 include_module 'rstudio-desktop'
 
 include_module 'neovim'
+include_module 'wakatime'
 include_module 'terraform'
 
 include_module 'duet'
