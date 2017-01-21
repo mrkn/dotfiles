@@ -14,11 +14,11 @@ end
 
 MItamae::RecipeContext.class_eval do
   def include_module(name)
-    include_recipe File.join(top_dir, 'recipes', 'modules', name, 'default')
+    include_recipe File.join(top_dir, 'recipes', 'modules', name)
   end
 
   def include_role(name)
-    include_recipe File.join(top_dir, 'recipes', 'roles', name, 'default')
+    include_recipe File.join(top_dir, 'recipes', 'roles', name)
   end
 
   def brew(*args)
