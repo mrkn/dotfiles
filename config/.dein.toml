@@ -31,6 +31,12 @@ on_ft = ['ruby']
 [[plugins]]
 repo = 'mrkn/vim-cruby'
 
+# terraform
+
+[[plugins]]
+repo = 'hashivim/vim-terraform'
+on_ft = ['terraform', 'javascript']
+
 # wakatime
 
 [[plugins]]
