@@ -40,8 +40,17 @@ set softtabstop=2
 set expandtab
 set statusline=%<%f\ %{fugitive#statusline()}\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 
-set background=dark
-colorscheme desert
+"" colorscheme {{{
+if has('gui_running')
+  set background=light
+else
+  set background=dark
+end
+
+let g:solarized_contrast = "high"
+
+colorscheme solarized
+"" }}}
 
 "" GetBufferDirectory {{{
 if !has('kaoriya')

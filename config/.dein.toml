@@ -42,6 +42,11 @@ on_ft = ['terraform', 'javascript']
 [[plugins]]
 repo = 'wakatime/vim-wakatime'
 
+# Solarized
+
+[[plugins]]
+repo = 'altercation/vim-colors-solarized'
+
 # etc.
 
 [[plugins]]
