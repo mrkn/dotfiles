@@ -5,6 +5,15 @@ repo = 'Shougo/dein.vim'
 repo = 'Shougo/vimproc.vim'
 build = 'make'
 
+# deoplete
+
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+if = 'has("nvim")'
+hook_add = '''
+  let g:deoplete#enable_at_startup = 1
+'''
+
 # git
 
 [[plugins]]
