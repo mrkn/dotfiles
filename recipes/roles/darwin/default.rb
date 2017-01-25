@@ -59,9 +59,9 @@ include_module 'docker'
 
 include_module 'rbenv'
 include_module 'ruby'
-include_module 'gem-src'
-
 execute 'rbenv global 2.4'
+
+include_module 'gem-src'
 
 include_module 'pyenv'
 include_module 'python'
