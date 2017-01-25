@@ -1,0 +1,19 @@
+#! /usr/bin/env ruby
+
+SIGNAL_SYMBOL = "\u{1F4F6} "
+
+@status = {}
+
+IO.foreach('|airport -I') do |line|
+  @status[$1] = $2 if line =~ /\A\s*([^:]+):\s*(.+)$/
+end
+
+output = [SIGNAL_SYMBOL]
+if @status['AirPort'] == 'Off'
+  output << 'OFF'
+elsif @status['SSID']
+  output << @status['SSID']
+  output << "(#{@status['agrCtlRSSI']} dBm)"
+end
+
+puts output.join(' ')
