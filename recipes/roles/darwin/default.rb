@@ -24,6 +24,7 @@ include_module 'git'
 
 execute 'brew update'
 
+include_module 'airport'
 include_module 'mas'
 include_module 'slack'
 include_module 'tweetbot'
