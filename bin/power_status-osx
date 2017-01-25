@@ -1,0 +1,58 @@
+#! /usr/bin/env ruby
+
+# When running on battery power:
+#
+#     $ pmset -g batt
+#     Now drawing from 'Battery Power'
+#      -InternalBattery-0 (id=3276899)        84%; discharging; 3:37 remaining present: true
+#
+#     $ pmset -g batt
+#     Now drawing from 'Battery Power'
+#      -InternalBattery-0 (id=3276899)        95%; discharging; (no estimate) present: true
+#
+# When running on AC power, but not charging:
+#
+#     $ pmset -g batt
+#     Now drawing from 'AC Power'
+#      -InternalBattery-0 (id=3276899)        83%; AC attached; not charging present: true
+#
+# When running on AC power, and charging:
+#
+#     $ pmset -g batt
+#     Now drawing from 'AC Power'
+#      -InternalBattery-0 (id=3276899)        85%; charging; 1:07 remaining present: true
+
+AC_POWER = "\u{1F50C} "
+BATTERY_POWER = "\u{1F50B} "
+
+IO.foreach('|pmset -g batt') do |line|
+  case line
+  when /\ANow drawing from '([^']+)'/
+    @source = $1
+  when /\s*-InternalBattery/
+    @percentage = line[/\(id=\d+\)\s+(\d+%)/, 1]
+    @mode = line[/; (discharging|AC attached|charging|charged);/, 1]
+    @remaining = line[/; (not charging|\(no estimate\)|\d+:\d+)(?: remaining)? present/, 1]
+  end
+end
+
+output = []
+case @source
+when 'AC Power'
+  output << AC_POWER
+when 'Battery Power'
+  output << BATTERY_POWER
+end
+
+case
+when @remaining === 'not charging'
+  # do nothing
+when @remaining == '(no estimate)'
+  output << 'Calculating...'
+else
+  output << @remaining
+end
+
+output << "(#{@percentage})" if @percentage
+
+puts output.join(' ')
