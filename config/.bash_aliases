@@ -13,3 +13,7 @@ case "${OSTYPE}" in
     alias ls='ls --color -F'
     ;;
 esac
+
+alias sha1='openssl dgst -sha1 -hex'
+alias sha256='openssl dgst -sha256 -hex'
+alias sha512='openssl dgst -sha512 -hex'
