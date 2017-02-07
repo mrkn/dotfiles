@@ -57,6 +57,7 @@ include_module 'skype'
 include_module 'rescue_time'
 include_module 'spark'
 include_module 'docker'
+include_module 'marp'
 
 include_module 'rbenv'
 include_module 'ruby'
