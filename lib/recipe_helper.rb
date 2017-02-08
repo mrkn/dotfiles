@@ -13,6 +13,14 @@ class << Dir
 end
 
 MItamae::RecipeContext.class_eval do
+  alias include_recipe_orig include_recipe
+
+  def include_recipe(recipe_path)
+    include_recipe_orig(recipe_path)
+  rescue
+    include_recipe_orig(File.join(recipe_path, node[:platform]))
+  end
+
   def include_module(name)
     include_recipe File.join(top_dir, 'recipes', 'modules', name)
   end
