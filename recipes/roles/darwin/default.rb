@@ -45,6 +45,7 @@ include_module 'sdl2'
 include_module 'envchain'
 include_module 'amazon-ecs-cli'
 include_module 'imagemagick'
+include_module 'terminal-notifier'
 
 include_module 'alfred'
 include_module 'bartender'
