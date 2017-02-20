@@ -53,6 +53,9 @@ let g:solarized_termtrans = 1
 let g:solarized_contrast = "high"
 
 colorscheme solarized
+
+" background toggle keymap
+map <Leader>bg :let &background = ( &background == "dark"? "light" : "dark" )<CR>
 "" }}}
 
 "" GetBufferDirectory {{{
