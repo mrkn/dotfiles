@@ -5,6 +5,6 @@ when 'darwin'
   include_module 'norm'
 
   package 'zeromq' do
-    options '--with-libpgm --with-libsodium --with-norm'
+    options '--HEAD --with-libpgm --with-libsodium --with-norm'
   end
 end
