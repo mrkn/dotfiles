@@ -1,0 +1,10 @@
+#! /bin/bash
+
+if [ ! -z "$1" ]; then
+  cd "$1"
+else
+  cd $(tmux display-message -p -F "#{pane_current_path}")
+fi
+
+branch_name=$(~/.dotfiles/bin/git-current-branch 2>/dev/null)
+[ ! -z "$branch_name" ] && echo "[$branch_name]"
