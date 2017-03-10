@@ -62,6 +62,7 @@ include_module 'spark'
 include_module 'docker'
 include_module 'marp'
 include_module 'kindle'
+include_module 'sequel_pro'
 
 include_module 'rbenv'
 include_module 'ruby'
