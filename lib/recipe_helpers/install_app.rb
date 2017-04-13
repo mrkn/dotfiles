@@ -70,7 +70,7 @@ define :install_app, install_app_args do
         run_command("zip --delete '#{download_path}' '*.DS_Store' || :")
         run_command("zip --delete '#{download_path}' '*__MACOSX*' || :")
 
-        unless run_command(['unzip', '-x', '-d', '/Applications', download_path], error: false).success?
+        unless run_command(['unzip', '-x', '-o', '-d', '/Applications', download_path], error: false).success?
           MItamae.logger.error "install_app[#{name}] Failed due to unable to extract the archive."
           exit 2
         end
