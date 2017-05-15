@@ -87,6 +87,8 @@ include_module 'r'
 include_module 'irkernel'
 include_module 'rstudio-desktop'
 
+include_module 'nodejs'
+
 include_module 'neovim'
 include_module 'wakatime'
 include_module 'terraform'
