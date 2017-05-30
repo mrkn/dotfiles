@@ -15,4 +15,4 @@ configure_args = [
   "debugflags=#{debugflags}"
 ]
 
-install_ruby('2.3.3', configure_args: configure_args, make_jobs: 4)
+install_ruby('2.3.4', configure_args: configure_args, make_jobs: 4)
