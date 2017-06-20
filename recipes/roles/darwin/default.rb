@@ -91,6 +91,8 @@ include_module 'rstudio-desktop'
 include_module 'nodejs'
 include_module 'yarn'
 
+include_module 'golang'
+
 include_module 'neovim'
 include_module 'wakatime'
 include_module 'terraform'
