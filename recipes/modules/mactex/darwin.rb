@@ -1,6 +1,6 @@
 url = "http://tug.org/cgi-bin/mactex-download/MacTeX.pkg"
 archive_name = "mactex.pkg"
-sha256 = "34e5c48846a674e0025e92bf1ab7bb43a1108f729b4c26c61edcda24fa5383e3"
+sha256 = "0caf76027c9e0534a0b636f2b880ace4a0463105a7ad5774ccacede761be8c2d"
 
 local_ruby_block "Download and Install MacTeX.pkg" do
   block do
