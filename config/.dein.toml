@@ -56,6 +56,14 @@ repo = 'wakatime/vim-wakatime'
 [[plugins]]
 repo = 'altercation/vim-colors-solarized'
 
+# nerdtree
+
+[[plugins]]
+repo = 'scrooloose/nerdtree'
+hook_add = '''
+  autocmd VimEnter * execute 'NERDTree'
+'''
+
 # etc.
 
 [[plugins]]
