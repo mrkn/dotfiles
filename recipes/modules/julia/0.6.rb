@@ -1,12 +1,12 @@
-julia_version = '0.5.0'
-ver = '0.5'
+julia_version = '0.6.0'
+ver = '0.6'
 
 case node[:platform]
 when 'darwin'
   install_app "Julia-#{ver}" do
     version julia_version
-    url "https://s3.amazonaws.com/julialang/bin/osx/x64/#{ver}/julia-#{julia_version}-osx10.7+.dmg"
-    sha256 '871dd1f309d0b8659980ef0db667a36cf84e5d0febb2d53b70859de3801bdf03'
+    url "https://julialang-s3.julialang.org/bin/osx/x64/#{ver}/julia-#{julia_version}-osx10.7+.dmg"
+    sha256 '0ad3eb9e52a1c38850d04c833fd2375f588fdc4c48804e976ec7bc9c563bf717'
   end
 
   link File.expand_path("~/bin/julia-#{ver}") do
