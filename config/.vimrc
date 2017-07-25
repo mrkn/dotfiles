@@ -75,4 +75,13 @@ if !has('kaoriya')
 endif
 "" }}}
 
+"" Key mappings {{{
+" Command-line mode
+cnoremap <C-A> <Home>
+cnoremap <C-F> <Right>
+cnoremap <C-B> <Left>
+cnoremap <M-F> <S-Right>
+cnoremap <M-B> <S-Left>
+"" }}}
+
 set secure
