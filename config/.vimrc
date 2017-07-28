@@ -45,7 +45,7 @@ let mapleader = ","
 if has('gui_running')
   set background=light
 else
-  set background=dark
+  set background=light
 end
 
 let g:solarized_termcolors = 256
