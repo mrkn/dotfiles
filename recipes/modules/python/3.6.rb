@@ -1,6 +1,6 @@
-install_python '3.6.0' do
+install_python '3.6.1' do
   keep true
   env PYTHON_CONFIGURE_OPTS: '--enable-framework'
 end
 
-execute 'pyenv global 3.6.0'
+execute 'pyenv global 3.6.1'
