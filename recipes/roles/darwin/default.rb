@@ -26,6 +26,7 @@ execute 'brew update'
 
 include_module 'airport'
 include_module 'mas'
+include_module 'total_spaces'
 include_module 'slack'
 include_module 'tweetbot'
 include_module 'evernote'
