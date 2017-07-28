@@ -1,3 +1,7 @@
 #!/bin/bash
 
-~/bin/mitamae local bootstrap.rb "$@"
+if [ $# -gt 0 ]; then
+  ~/bin/mitamae local bootstrap.rb "$@"
+else
+  ~/bin/mitamae local bootstrap.rb platform.rb
+fi
