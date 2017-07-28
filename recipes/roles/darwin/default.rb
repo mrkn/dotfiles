@@ -83,6 +83,8 @@ include_module 'python'
 include_module 'jupyter'
 include_module 'iruby'
 
+include_module 'llvm'
+
 include_module 'julia'
 include_module 'ijulia'
 
