@@ -16,3 +16,5 @@ configure_args = [
 ]
 
 install_ruby('2.2.7', configure_args: configure_args, make_jobs: 4)
+
+execute 'rbenv alias 2.2 2.2.7'

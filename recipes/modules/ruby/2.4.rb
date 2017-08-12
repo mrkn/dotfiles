@@ -1,5 +1,5 @@
 optflags = '-O3 -mtune=native -march=native'
-debugflags = '-g3 -gdwarf-4'
+debugflags = '-g'
 configure_args = [
   "--with-opt-dir=#{`brew --prefix`.chomp}",
   "--with-dbm-dir=#{`brew --prefix qdbm`.chomp}",
@@ -11,8 +11,11 @@ configure_args = [
   "--disable-install-doc",
   "--enable-shared",
   "--enable-dtrace",
-  "optflags=#{optflags}",
   "debugflags=#{debugflags}"
 ]
 
-install_ruby('2.4.1', configure_args: configure_args, make_jobs: 4)
+install_ruby('2.4.1', configure_args: configure_args + ["optflags=#{optflags}"], make_jobs: 4)
+
+install_ruby('2.4.1', configure_args: configure_args + ["optflags=-O0"], make_jobs: 4, prefix: '2.4.1-o0')
+
+execute 'rbenv alias 2.4 2.4.1'

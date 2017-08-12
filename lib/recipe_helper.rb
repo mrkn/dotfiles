@@ -55,7 +55,7 @@ MItamae::RecipeContext.class_eval do
   def install_ruby(version, opts={})
     rbenv_root = File.expand_path("~/.rbenv")
     source_dir = File.join(rbenv_root, 'sources', version)
-    prefix_dir = File.join(rbenv_root, 'versions', version)
+    prefix_dir = File.join(rbenv_root, 'versions', opts[:prefix] || version)
 
     configure_args = opts[:configure_args]
     make_jobs = opts[:make_jobs]

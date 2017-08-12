@@ -10,5 +10,3 @@ include_recipe 'trunk'
 include_recipe '2.4'
 include_recipe '2.3'
 include_recipe '2.2'
-
-execute 'rbenv alias --auto'
