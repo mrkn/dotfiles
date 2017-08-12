@@ -68,6 +68,7 @@ include_module 'docker'
 include_module 'marp'
 include_module 'kindle'
 include_module 'sequel_pro'
+include_module 'postico'
 include_module 'pixelmator'
 include_module 'jasperapp'
 
