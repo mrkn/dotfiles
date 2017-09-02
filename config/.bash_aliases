@@ -17,3 +17,5 @@ esac
 alias sha1='openssl dgst -sha1 -hex'
 alias sha256='openssl dgst -sha256 -hex'
 alias sha512='openssl dgst -sha512 -hex'
+
+alias prime?='ruby -rprime -e "p ARGV[0].to_i.prime?"'
