@@ -19,3 +19,4 @@ alias sha256='openssl dgst -sha256 -hex'
 alias sha512='openssl dgst -sha512 -hex'
 
 alias prime?='ruby -rprime -e "p ARGV[0].to_i.prime?"'
+alias prime_division='ruby -rprime -e "puts %Q[#{ARGV[0]} = #{ARGV[0].to_i.prime_division.map {|p, e| %Q|#{p}#{e > 1 ? %Q!^#{e}! : %q!!}| }.join(%q! * !)}]"'
