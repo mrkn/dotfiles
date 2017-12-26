@@ -14,6 +14,8 @@ execute 'set runtimepath^=' . s:dein_dir
 if dein#load_state(s:plugin_dir)
   call dein#begin(s:plugin_dir)
   call dein#load_toml('~/.dein.toml', { 'lazy': 0 })
+  " rtp does not worked in toml file
+  call dein#add('chriskempson/tomorrow-theme', { 'rtp': 'vim' })
   call dein#end()
   call dein#save_state()
 endif
@@ -30,6 +32,7 @@ set encoding=utf-8
 filetype plugin indent on
 syntax on
 
+set ambiwidth=double
 set incsearch
 set hlsearch
 set number
@@ -40,6 +43,8 @@ set softtabstop=2
 set expandtab
 set statusline=%<%f\ %{fugitive#statusline()}\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 let mapleader = ","
+set ttimeout
+set ttimeoutlen=50
 
 "" colorscheme {{{
 if has('gui_running')
@@ -52,7 +57,12 @@ let g:solarized_termcolors = 256
 let g:solarized_termtrans = 1
 let g:solarized_contrast = "high"
 
-colorscheme solarized
+if $ITERM_PROFILE == "Hotkey Window"
+  set background=dark
+  colorscheme Tomorrow-Night-Bright
+else
+  colorscheme solarized
+end
 
 " background toggle keymap
 map <Leader>bg :let &background = ( &background == "dark"? "light" : "dark" )<CR>
