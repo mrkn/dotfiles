@@ -14,8 +14,8 @@ configure_args = [
   "debugflags=#{debugflags}"
 ]
 
-install_ruby('2.4.3', configure_args: configure_args + ["optflags=#{optflags}"], make_jobs: 4)
+install_ruby('2.5.0', configure_args: configure_args + ["optflags=#{optflags}"], make_jobs: 4)
 
-install_ruby('2.4.3', configure_args: configure_args + ["optflags=-O0"], make_jobs: 4, prefix: '2.4.3-o0')
+install_ruby('2.5.0', configure_args: configure_args + ["optflags=-O0"], make_jobs: 4, prefix: '2.5.0-o0')
 
-execute 'rbenv alias 2.4 2.4.3'
+execute 'rbenv alias 2.5 2.5.0'
