@@ -1,11 +1,12 @@
+include_recipe 'helper'
 include_module 'autoconf'
 include_module 'bison'
 
 optflags = '-O3 -mtune=native -march=native'
 debugflags = '-g3 -gdwarf-4'
 
-install_ruby_trunk(
-  configure_args: [
+install_ruby :trunk do
+  configure_args [
     "--with-opt-dir=#{`brew --prefix`.chomp}",
     "--with-dbm-dir=#{`brew --prefix qdbm`.chomp}",
     "--with-dbm-type=qdbm",
@@ -18,6 +19,7 @@ install_ruby_trunk(
     "--enable-dtrace",
     "optflags=#{optflags}",
     "debugflags=#{debugflags}"
-  ],
-  make_jobs: 4
-)
+  ]
+  make_jobs 4
+  force true
+end
