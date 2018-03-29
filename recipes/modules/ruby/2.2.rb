@@ -16,15 +16,15 @@ configure_opts = [
   "debugflags=#{debugflags}"
 ]
 
-install_ruby '2.2.7' do
+install_ruby '2.2.10' do
   configure_args configure_opts + ["optflags=#{optflags}"]
   make_jobs 4
 end
 
-install_ruby '2.2.7' do
-  variation_name '2.2.7-o0'
+install_ruby '2.2.10' do
+  variation_name '2.2.10-o0'
   configure_args configure_opts + ["optflags=-O0"]
   make_jobs 4
 end
 
-execute 'rbenv alias 2.2 2.2.7'
+execute 'rbenv alias 2.2 2.2.10'
