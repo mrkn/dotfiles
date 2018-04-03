@@ -1,3 +1,4 @@
+include_module 'pyenv'
 include_recipe 'helper'
 
 install_python '3.2.6' do
