@@ -9,7 +9,14 @@ export DOTFILES_REPO=https://github.com/mrkn/dotfiles
 
 mkdir -p ${DESTDIR}/.dotfiles
 cd ${DESTDIR}/.dotfiles
-curl -fsSL ${DOTFILES_REPO}/tarball/master | /usr/bin/tar xz -m --strip 1
+if [ -x /bin/tar ]; then
+  TAR=/bin/tar
+elif [ -x /usr/bin/tar ]; then
+  TAR=/usr/bin/tar
+else
+  TAR=$(which tar)
+fi
+curl -fsSL ${DOTFILES_REPO}/tarball/master | $TAR xz -m --strip 1
 
 
 ## Install mitamae
