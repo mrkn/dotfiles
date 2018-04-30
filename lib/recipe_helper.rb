@@ -52,8 +52,9 @@ MItamae::RecipeContext.class_eval do
     end
   end
 
-  def pip_package(name)
-    execute "pyenv exec pip install '#{name}'"
+  def pip_package(name, opts={})
+    pyenv = opts[:pyenv] ? "pyenv exec " : nil
+    execute "#{pyenv}pip install '#{name}'"
   end
 
   def top_dir

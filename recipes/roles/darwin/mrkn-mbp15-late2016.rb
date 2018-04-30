@@ -1,3 +1,8 @@
+include_module 'pyenv'
+include_module 'python-pyenv'
+pip_package 'neovim', pyenv: true
+pip_package 'wakatime', pyenv: true
+
 include_module 'total_spaces'
 include_module 'quiver'
 include_module 'todoist'

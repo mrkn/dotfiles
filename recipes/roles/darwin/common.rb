@@ -26,7 +26,6 @@ include_module 'google_drive'
 include_module 'skype'
 include_module 'spark'
 include_module 'kindle'
-include_module 'wakatime'
 include_module 'pixelmator'
 include_module 'duet'
 include_module 'papers'
@@ -55,14 +54,13 @@ include_module 'postico'
 
 include_module 'imagemagick'
 
+include_module 'python'
+pip_package 'neovim'
+
 include_module 'rbenv'
 include_module 'ruby'
 execute 'rbenv global 2.4'
 gem_package 'neovim'
-
-include_module 'pyenv'
-include_module 'python'
-pip_package 'neovim'
 
 include_module 'jupyter'
 include_module 'gem-src'
