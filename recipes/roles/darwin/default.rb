@@ -1,90 +1,12 @@
-include_recipe 'dotfile'
+include_recipe 'common'
 
-include_module 'homebrew'
-include_module 'git'
-
-execute 'brew update'
-
-include_module 'mas'
-include_module 'airport'
-include_module 'alfred'
-include_module 'bartender'
-include_module 'the_unarchiver'
-include_module 'istat_menus'
-include_module 'dropbox'
-include_module '1password'
-include_module 'google_chrome'
 include_module 'total_spaces'
-include_module 'rescue_time'
-include_module 'neovim'
-include_module 'vscode'
-include_module 'slack'
-include_module 'tweetbot'
-include_module 'evernote'
 include_module 'quiver'
 include_module 'todoist'
-include_module 'lv'
-include_module 'highway'
-include_module 'xz'
-include_module 'tmux'
-include_module 'iterm2'
-include_module 'peco'
-include_module 'ghq'
-include_module 'hub'
-include_module 'ctags'
-include_module 'postgresql'
-include_module 'postgis'
-include_module 'mysql'
+
 include_module 'sdl2'
-include_module 'envchain'
-include_module 'amazon-ecs-cli'
-include_module 'imagemagick'
 include_module 'phantomjs'
 include_module 'terminal-notifier'
 
-include_module 'papers'
-include_module 'dash'
-include_module 'google_drive'
-include_module 'skype'
-include_module 'spark'
 include_module 'vagrant'
-include_module 'docker'
 include_module 'marp'
-include_module 'kindle'
-include_module 'sequel_pro'
-include_module 'postico'
-include_module 'pixelmator'
-include_module 'jasperapp'
-
-include_module 'rbenv'
-include_module 'ruby'
-execute 'rbenv global 2.4'
-
-include_module 'gem-src'
-
-include_module 'pyenv'
-include_module 'python'
-
-include_module 'jupyter'
-include_module 'iruby'
-
-include_module 'llvm'
-
-include_module 'julia'
-include_module 'ijulia'
-
-include_module 'r'
-include_module 'irkernel'
-include_module 'rstudio-desktop'
-
-include_module 'nodejs'
-include_module 'yarn'
-
-include_module 'golang'
-
-include_module 'wakatime'
-include_module 'terraform'
-
-include_module 'duet'
-
-include_module 'mactex'
