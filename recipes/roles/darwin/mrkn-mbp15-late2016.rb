@@ -1,5 +1,3 @@
-include_recipe 'common'
-
 include_module 'total_spaces'
 include_module 'quiver'
 include_module 'todoist'
