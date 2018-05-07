@@ -1,8 +1,8 @@
-postico_version = '1.2.2'
+postico_version = '1.3.5'
 
 install_app 'Postico' do
   version postico_version
   url "https://eggerapps.at/postico/download/"
   archive_name "postico-#{postico_version}.zip"
-  sha256 '6bae5e169ddf91af762be0ace4e8a9695c0b52ca5285c1cb330e287d29234404'
+  sha256 '985a5985f8c88337430f10d4459c87937e07f91c9f3b288964e5e88285f7296e'
 end
