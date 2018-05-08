@@ -1,4 +1,6 @@
 export GOENV_ROOT=$HOME/.goenv
 PATH=$GOENV_ROOT/bin:$PATH
 
-eval "$(goenv init -)"
+if which goenv >/dev/null; then
+  eval "$(goenv init -)"
+fi
