@@ -70,9 +70,21 @@ define :install_app, install_app_args do
         run_command("zip --delete '#{download_path}' '*.DS_Store' || :")
         run_command("zip --delete '#{download_path}' '*__MACOSX*' || :")
 
-        unless run_command(['unzip', '-x', '-o', '-d', '/Applications', download_path], error: false).success?
-          MItamae.logger.error "install_app[#{name}] Failed due to unable to extract the archive."
-          exit 2
+        case params[:install_by].to_sym
+        when :copy
+          unless run_command(['unzip', '-x', '-o', '-d', '/Applications', download_path], error: false).success?
+            MItamae.logger.error "install_app[#{name}] Failed due to unable to extract the archive."
+            exit 2
+          end
+        when :open
+          mktmpdir do |tmpdir|
+            unless run_command(['unzip', '-x', '-o', '-d', tmpdir, download_path], error: false).success?
+              MItamae.logger.error "install_app[#{name}] Failed due to unable to extract the archive."
+              exit 2
+            end
+            installer_path = File.join(tmpdir, installer_name)
+            run_command(['open', '-W', installer_path])
+          end
         end
       elsif download_path.end_with?('.dmg')
         # DMG file
