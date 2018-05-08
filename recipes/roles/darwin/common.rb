@@ -44,16 +44,6 @@ include_module 'envchain'
 include_module 'amazon-ecs-cli'
 include_module 'terraform'
 
-include_module 'jasperapp'
-
-include_module 'postgresql'
-include_module 'postgis'
-include_module 'mysql'
-include_module 'sequel_pro'
-include_module 'postico'
-
-include_module 'imagemagick'
-
 include_module 'python'
 pip_package 'neovim'
 
@@ -81,3 +71,13 @@ include_module 'yarn'
 include_module 'golang'
 
 include_module 'mactex'
+
+include_module 'jasperapp'
+
+include_module 'postgresql'
+include_module 'postgis'
+include_module 'mysql'
+include_module 'sequel_pro'
+include_module 'postico'
+
+include_module 'imagemagick'
