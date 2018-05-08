@@ -58,9 +58,11 @@ include_module 'imagemagick'
 include_module 'rbenv'
 include_module 'ruby'
 execute 'rbenv global 2.4'
+gem_package 'neovim'
 
 include_module 'pyenv'
 include_module 'python'
+pip_package 'neovim'
 
 include_module 'jupyter'
 include_module 'gem-src'
