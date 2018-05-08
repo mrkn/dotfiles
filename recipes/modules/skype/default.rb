@@ -1,10 +1,10 @@
-skype_version = '7.43'
-skype_micro_version = 241
+skype_version = '7.59'
+skype_micro_version = 37
 skype_full_version = "#{skype_version}.#{skype_micro_version}"
 
 install_app 'Skype' do
   version skype_version
   url 'https://get.skype.com/go/getskype-macosx'
   archive_name "Skype_#{skype_full_version}.dmg"
-  sha256 '24fe8651e2194b1a75bbb3a91ec9bfb653ad8a762dc8f6c2a2d60d0c7e4394a0'
+  sha256 '5d5d6811dcb0727c478d198cb24b99317dd10db0e55d81601d77285434f8cf1d'
 end
