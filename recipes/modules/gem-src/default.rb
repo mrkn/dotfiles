@@ -11,6 +11,7 @@ local_ruby_block 'Install gem-src for all installed Ruby versions' do
     Dir.glob(File.join(rbenv_versions_dir, '*')) do |version_dir|
       next if File.symlink?(version_dir)  # Skip aliases
       version = File.basename(version_dir)
+      next unless version >= '2.4.0'
       run_command("RBENV_VERSION=#{version} rbenv exec gem install gem-src")
     end
   end
