@@ -1,6 +1,6 @@
 install_app 'Papers' do
-  version '3.4.10'
+  version '3.4.16'
   url 'http://papersapp.com/download/mac'
-  sha256 'cef4ecc8f0968b500db1fe1cd0d525a6912d8e3e9b5035d416fe77236ba74132'
+  sha256 'de4a61730a1a343ad06f0aa41fd9b9881d0cd11436db7aa8b61b11108c22a03e'
   archive_name 'papers.dmg'
 end
