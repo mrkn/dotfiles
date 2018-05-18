@@ -31,6 +31,7 @@ include_module 'duet'
 include_module 'papers'
 include_module 'dash'
 include_module 'docker'
+include_module 'trailer_app'
 
 include_module 'lv'
 include_module 'highway'
