@@ -12,6 +12,7 @@ dotfile '.bash_profile.d/800_iterm2.sh'
 dotfile '.bash_profile.d/810_vscode.sh'
 dotfile '.bash_profile.d/900_home_bin.sh'
 dotfile '.bash_profile.d/910_aliases.sh'
+dotfile '.bash_profile.d/999_local_profile.sh'
 
 dotfile '.config/nvim/init.vim'
 
