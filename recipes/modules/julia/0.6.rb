@@ -20,4 +20,4 @@ when 'darwin'
   end
 end
 
-execute %Q[julia -e 'Pkg.add("PyCall")']
+execute %Q[julia-#{ver} #{File.expand_path('../bootstrap.jl', __FILE__)}]
