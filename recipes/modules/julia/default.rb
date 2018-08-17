@@ -1,6 +1,7 @@
-latest_ver = '0.6'
+latest_ver = '1.0'
 
-include_recipe '0.5'
+include_recipe '1.0'
+include_recipe '0.7'
 include_recipe '0.6'
 
 case node[:platform]
