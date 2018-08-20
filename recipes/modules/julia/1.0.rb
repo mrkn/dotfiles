@@ -5,7 +5,7 @@ case node[:platform]
 when 'darwin'
   install_app "Julia-#{ver}" do
     version julia_version
-    url "https://julialang-s3.julialang.org/bin/osx/x64/#{ver}/julia-#{julia_version}-mac64.dmg"
+    url "https://julialang-s3.julialang.org/bin/mac/x64/#{ver}/julia-#{julia_version}-mac64.dmg"
     sha256 '36d435fd8dbe8ea43509fa7f371a88b82977275c542a926bf917bcf640c57509'
   end
 
