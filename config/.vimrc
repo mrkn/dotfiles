@@ -90,6 +90,7 @@ endif
 cnoremap <C-A> <Home>
 cnoremap <C-F> <Right>
 cnoremap <C-B> <Left>
+cnoremap <C-K> <C-\>e getcmdpos() == 1 ? '' : getcmdline()[:getcmdpos()-2]<CR>
 cnoremap <M-F> <S-Right>
 cnoremap <M-B> <S-Left>
 "" }}}
