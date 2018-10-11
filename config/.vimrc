@@ -93,6 +93,8 @@ cnoremap <C-B> <Left>
 cnoremap <C-K> <C-\>e getcmdpos() == 1 ? '' : getcmdline()[:getcmdpos()-2]<CR>
 cnoremap <M-F> <S-Right>
 cnoremap <M-B> <S-Left>
+" Terminal mode
+tnoremap <silent> <ESC> <C-\><C-n>
 "" }}}
 
 set secure
