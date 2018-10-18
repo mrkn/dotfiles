@@ -1,5 +1,5 @@
 include_module 'gcc'
 
-package 'homebrew/science/openblas' do
+package 'openblas' do
   options '--with-openmp'
 end
