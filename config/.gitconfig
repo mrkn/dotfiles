@@ -1,6 +1,7 @@
 [user]
 	name = Kenta Murata
 	email = mrkn@mrkn.jp
+	signingkey = 6081B062
 
 [core]
 	editor = nvim
@@ -27,6 +28,9 @@
 
 [color]
 	ui = true
+
+[commit]
+	gpgSign = true
 
 [merge]
 	ff = false
