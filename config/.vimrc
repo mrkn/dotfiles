@@ -1,5 +1,10 @@
 set nocompatible
 
+"" python {{{
+let g:python_host_prog = '/opt/brew/bin/python2'
+let g:python3_host_prog = '/opt/brew/bin/python3'
+"" }}}
+
 "" dein {{{
 let s:plugin_dir = expand('~/.cache/dein')
 let s:dein_dir = s:plugin_dir . '/repos/github.com/Shougo/dein.vim'
