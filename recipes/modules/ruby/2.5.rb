@@ -1,5 +1,7 @@
 include_recipe 'helper'
 
+version = '2.5.3'
+
 optflags = '-O3 -mtune=native -march=native'
 debugflags = '-g'
 configure_opts = [
@@ -16,15 +18,15 @@ configure_opts = [
   "debugflags=#{debugflags}"
 ]
 
-install_ruby '2.5.1' do
+install_ruby '2.5.3' do
   configure_args configure_opts + ["optflags=#{optflags}"]
   make_jobs 4
 end
 
-install_ruby '2.5.1' do
-  variation_name '2.5.1-o0'
+install_ruby '2.5.3' do
+  variation_name '2.5.3-o0'
   configure_args configure_opts + ["optflags=-O0"]
   make_jobs 4
 end
 
-execute 'rbenv alias 2.5 2.5.1'
+execute 'rbenv alias 2.5 2.5.3'
