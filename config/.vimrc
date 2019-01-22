@@ -50,6 +50,7 @@ set statusline=%<%f\ %{fugitive#statusline()}\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 let mapleader = ","
 set ttimeout
 set ttimeoutlen=50
+set shell=$SHELL\ -l\ -O\ expand_aliases
 
 "" colorscheme {{{
 if has('gui_running')
