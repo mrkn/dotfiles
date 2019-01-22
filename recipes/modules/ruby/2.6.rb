@@ -2,16 +2,21 @@ include_recipe 'helper'
 
 ruby_version = '2.6.0'
 
+def brew_latest_cellar_path(pkg)
+  prefix = `brew --prefix #{pkg}`.chomp
+  File.expand_path(File.readlink(prefix), File.dirname(prefix))
+end
+
 optflags = '-O3 -mtune=native -march=native'
 debugflags = '-g'
 configure_opts = [
   "--with-opt-dir=#{`brew --prefix`.chomp}",
-  "--with-dbm-dir=#{`brew --prefix qdbm`.chomp}",
+  "--with-dbm-dir=#{brew_latest_cellar_path('qdbm')}",
   "--with-dbm-type=qdbm",
-  "--with-gdbm-dir=#{`brew --prefix gdbm`.chomp}",
-  "--with-libyaml-dir=#{`brew --prefix libyaml`.chomp}",
-  "--with-openssl-dir=#{`brew --prefix openssl`.chomp}",
-  "--with-readline-dir=#{`brew --prefix readline`.chomp}",
+  "--with-gdbm-dir=#{brew_latest_cellar_path('gdbm')}",
+  "--with-libyaml-dir=#{brew_latest_cellar_path('libyaml')}",
+  "--with-openssl-dir=#{brew_latest_cellar_path('openssl')}",
+  "--with-readline-dir=#{brew_latest_cellar_path('readline')}",
   "--disable-install-doc",
   "--enable-shared",
   "--enable-dtrace",
