@@ -45,6 +45,7 @@ include_module 'envchain'
 include_module 'amazon-ecs-cli'
 include_module 'terraform'
 
+include_module 'rapidjson'
 include_module 'apache-arrow'
 
 include_module 'python'
