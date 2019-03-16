@@ -1,12 +1,12 @@
-julia_version = '1.0.1'
-ver = '1.0'
+julia_version = '1.0.3'
+ver = julia_version.split('.')[0,2].join('.')
 
 case node[:platform]
 when 'darwin'
   install_app "Julia-#{ver}" do
     version julia_version
     url "https://julialang-s3.julialang.org/bin/mac/x64/#{ver}/julia-#{julia_version}-mac64.dmg"
-    sha256 '4c7d74f5827d84e5cd74d0d65f4ba972c7975a256ede2fd39a669249f611384d'
+    sha256 'a097e004908ac6ae1f0b766d3ab062796b41f593c1cdeb54952bfbf10529c7dc'
   end
 
   link File.expand_path("~/bin/julia-#{ver}") do
@@ -22,7 +22,7 @@ when 'darwin'
 when 'ubuntu'
   url = "https://julialang-s3.julialang.org/bin/linux/x64/#{ver}/julia-#{julia_version}-linux-x86_64.tar.gz"
   archive_name = File.basename(url)
-  sha256 = '9ffbcf7f4a111e13415954caccdd1ce90b5c835cee9f62d6ac708f5b752c87dd'
+  sha256 = '362ba867d2df5d4a64f824e103f19cffc3b61cf9d5a9066c657f1c5b73c87117'
 
   local_ruby_block "Download and Install Julia #{julia_version}" do
     block do
