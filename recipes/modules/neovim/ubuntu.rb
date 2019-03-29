@@ -9,3 +9,5 @@ package 'python3-dev'
 package 'python3-pip'
 
 execute 'pip3 install neovim'
+
+execute 'ln -sf /usr/bin/nvim $HOME/bin/nvim'
