@@ -10,4 +10,6 @@ package 'python3-pip'
 
 execute 'pip3 install neovim'
 
-execute 'ln -sf /usr/bin/nvim $HOME/bin/nvim'
+# For commonize VS Code setting with macOS
+directory '/opt/brew/bin'
+execute 'ln -sf /usr/bin/nvim /opt/brew/bin/nvim'
