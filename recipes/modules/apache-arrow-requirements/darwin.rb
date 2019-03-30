@@ -18,3 +18,5 @@ package 'meson'
 package 'ninja'
 package 'thrift'
 package 'wget'
+
+include_recipe 'python'

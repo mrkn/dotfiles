@@ -26,3 +26,5 @@ package 'protobuf-compiler'
 package 'pkg-config'
 package 'tzdata'
 package 'valgrind'
+
+include_recipe 'python'
