@@ -5,17 +5,17 @@ DESTDIR=${DESTDIR:-${HOME}}
 uname_m=`uname -m | tr A-Z a-z`
 uname_s=`uname -s | tr A-Z a-z`
 
-mitamae_version=1.7.4
+mitamae_version=1.7.3
 mitamae_platform=${uname_m}-${uname_s}
 mitamae_url=https://github.com/k0kubun/mitamae/releases/download/v${mitamae_version}/mitamae-${mitamae_platform}
 
 case "${uname_s}" in
 darwin)
-  mitamae_sha256=010842a29191d6d27c33d3385315ae06231f94be2a86e3382d319d3e118896
+  mitamae_sha256=388329e94ffb7bf067b8b0f8201300870dc37f681c6bb4e1a854f3d4cf331a
   ;;
 
 linux)
-  mitamae_sha256=4f47d51588299cff82cbdf06bc6d89314d82c4c879f71e26e8f5500dac2b7a5
+  mitamae_sha256=fb9547cc453f80eebeefcfe22702095a658211215299bfe4c912c59cb351bd2
   ;;
 esac
 
