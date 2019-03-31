@@ -19,7 +19,12 @@ define :install_ruby, configure_args: nil, make_jobs: nil, variation_name: nil, 
     version_dir = version.split('.')[0, 2].join('.')
     tarball_url = "https://cache.ruby-lang.org/pub/ruby/#{version_dir}/ruby-#{version}.tar.gz"
 
-    execute "curl -fsSL #{tarball_url} | /usr/bin/tar xz --strip 1 -C #{source_dir}" do
+    if node[:platform] == 'darwin'
+      tar = '/usr/bin/tar'
+    else
+      tar = 'tar'
+    end
+    execute "curl -fsSL #{tarball_url} | #{tar} xz --strip 1 -C #{source_dir}" do
       not_if "test -f #{source_dir}/configure.in"
     end
   end
