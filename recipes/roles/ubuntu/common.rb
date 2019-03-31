@@ -11,4 +11,6 @@ include_module 'peco'
 include_module 'tmux'
 include_module 'neovim'
 
+include_module 'mysql'
+
 include_module 'apache-arrow-requirements'
