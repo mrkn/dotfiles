@@ -1,0 +1,7 @@
+#! /bin/bash
+
+if [ "$1" = "-l" ]; then
+  shift
+fi
+
+exec "$@"

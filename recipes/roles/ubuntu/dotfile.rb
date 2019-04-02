@@ -18,6 +18,9 @@ dotfile '.gitconfig'
 # rubygems
 dotfile '.gemrc'
 
+# tmux
+dotfile '.tmux.conf'
+
 # vim
 dotfile '.config/nvim/init.vim'
 dotfile '.dein.toml'
