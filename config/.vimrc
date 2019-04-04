@@ -53,21 +53,21 @@ set ttimeoutlen=50
 set shell=$SHELL\ -l\ -O\ expand_aliases
 
 "" colorscheme {{{
-if has('gui_running')
-  set background=light
-else
-  set background=light
-end
-
 let g:solarized_termcolors = 256
 let g:solarized_termtrans = 1
 let g:solarized_contrast = "high"
 
-if $ITERM_PROFILE == "Hotkey Window"
-  set background=dark
-  colorscheme Tomorrow-Night-Bright
+if has('mac')
+  if $ITERM_PROFILE == "Hotkey Window"
+    set background=dark
+    colorscheme Tomorrow-Night-Bright
+  else
+    set background=light
+    colorscheme solarized
+  end
 else
-  colorscheme solarized
+  set background=dark
+  colorscheme mrkn256
 end
 
 " background toggle keymap
