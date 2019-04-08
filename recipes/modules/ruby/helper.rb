@@ -61,4 +61,10 @@ define :install_ruby, configure_args: nil, make_jobs: nil, variation_name: nil, 
       run_command("yes | RBENV_VERSION=#{version} rbenv exec gem install bundler pry pry-byebug || :")
     end
   end
+
+  case node[:platform]
+  when 'ubuntu'
+    execute "chown -R #{node[:user]}:#{node[:group]} #{source_dir}"
+    execute "chown -R #{node[:user]}:#{node[:group]} #{prefix_dir}"
+  end
 end
