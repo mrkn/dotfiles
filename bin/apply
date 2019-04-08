@@ -1,5 +1,20 @@
 #!/bin/bash
 
+LOGLEVEL=INFO
+
+while true; do
+  case $1 in
+    -l)
+      shift
+      LOGLEVEL=$1
+      ;;
+    *)
+      break
+      ;;
+  esac
+  shift
+done
+
 if [ $# -gt 0 ]; then
   ~/bin/mitamae local -l ${LOGLEVEL:-INFO} bootstrap.rb "$@"
 else
