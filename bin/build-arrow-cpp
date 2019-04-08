@@ -1,0 +1,112 @@
+#!/bin/bash
+
+function is_darwin() {
+  case $(uname -s) in
+    Darwin)
+      return 0
+      ;;
+  esac
+  return 1
+}
+
+function run_cmake() {
+  if is_darwin; then
+    export OPENSSL_ROOT_DIR=$(brew --prefix openssl)
+    export BOOST_ROOT=$(brew --prefix boost)
+    export LLVM_DIR=$(brew --prefix llvm@6)/lib/cmake/llvm
+    export THRIFT_ROOT=$(brew --prefix thrift)
+    PYTHON=$(which ${PYTHON:-$(brew --prefix python3)/bin/python3})
+    ARROW_FLIGHT=ON
+  fi
+
+  if [ ! -d ${ARROW_CPP_BUILD_DIR} ]; then
+    mkdir -p ${ARROW_CPP_BUILD_DIR}
+  fi
+
+  pushd ${ARROW_CPP_BUILD_DIR}
+  cmake -DCMAKE_INSTALL_PREFIX=$PREFIX \
+        -DARROW_NO_DEPRECATED_API=ON \
+        -DARROW_EXTRA_ERROR_CONTEXT=ON \
+        -DARROW_JEMALLOC=ON \
+        -DARROW_BUILD_TESTS=ON \
+        -DARROW_BUILD_EXAMPLES=ON \
+        -DARROW_BUILD_UTILITIES=ON \
+        -DARROW_INSTALL_NAME_RPATH=OFF \
+        -DARROW_FLIGHT=${ARROW_FLIGHT:-OFF} \
+        -DARROW_PLASMA=ON \
+        -DARROW_PYTHON=ON \
+        -DPYTHON_EXECUTABLE=${PYTHON:-$(which python3)} \
+        -DARROW_ORC=ON \
+        -DARROW_PARQUET=ON \
+        -DPARQUET_BUILD_EXAMPLES=ON \
+        -DPARQUET_BUILD_EXECUTABLES=ON \
+        -DARROW_GANDIVA=ON \
+        -DARROW_OPTIONAL_INSTALL=ON \
+        -DARROW_GFLAGS_USE_SHARED=OFF \
+        -DCMAKE_BUILD_TYPE=${ARROW_BUILD_TYPE:-debug} \
+        -GNinja \
+        ${ARROW_CPP_ROOT}
+  popd
+}
+
+function run_build() {
+  # export OPENSSL_ROOT_DIR=$(brew --prefix openssl)
+  ninja -C ${ARROW_CPP_BUILD_DIR} -j ${BUILD_JOBS:-6}
+}
+
+function run_install() {
+  # OPENSSL_ROOT_DIR=$(brew --prefix openssl)
+  ninja -C ${ARROW_CPP_BUILD_DIR} install
+}
+
+ARGS=()
+RUN_CMAKE=0
+RUN_INSTALL=0
+PREFIX=/opt/arrow-dev
+BUILD_JOBS=6
+ARROW_CPP_ROOT=$(pwd)
+ARROW_CPP_BUILD_DIR=${ARROW_CPP_ROOT}/build
+ARROW_BUILD_TYPE=debug
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --cmake)
+      RUN_CMAKE=1
+      shift
+      ;;
+    --install)
+      RUN_INSTALL=1
+      shift
+      ;;
+    --release)
+      ARROW_BUILD_TYPE=release
+      shift
+      ;;
+    *)
+      ARGS+=("$1")
+      shift
+      ;;
+  esac
+done
+
+if [ -n "${ARGS[0]}" ]; then
+  ARROW_CPP_BUILD_DIR="${ARGS[0]}"
+  case $ARROW_CPP_BUILD_DIR in
+    /*)
+      ;;
+    *)
+      ARROW_CPP_BUILD_DIR=$(cd $(pwd)/$ARROW_CPP_BUILD_DIR; pwd)
+      ;;
+  esac
+fi
+
+set -ex
+
+if [ "$RUN_CMAKE" == 1 ]; then
+  run_cmake
+fi
+
+run_build
+
+if [ "$RUN_INSTALL" == 1 ]; then
+  run_install
+fi
