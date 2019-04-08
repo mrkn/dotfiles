@@ -11,6 +11,7 @@ optflags = '-O3 -mtune=native -march=native'
 
 case node[:platform]
 when 'darwin'
+  debugflags = '-g'
   configure_opts = [
     "--with-opt-dir=#{`brew --prefix`.chomp}",
     "--with-dbm-dir=#{brew_latest_cellar_path('qdbm')}",
@@ -24,15 +25,14 @@ when 'darwin'
     "--enable-dtrace",
     "debugflags=#{debugflags}"
   ]
-  debugflags = '-g'
 else
+  debugflags = '-g3 -gdwarf-4'
   configure_opts = [
     "--with-dbm-type=qdbm",
     "--disable-install-doc",
     "--enable-shared",
     "debugflags=#{debugflags}"
   ]
-  debugflags = '-g3'
 end
 
 install_ruby ruby_version do
