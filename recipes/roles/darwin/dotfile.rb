@@ -14,6 +14,8 @@ dotfile '.bash_profile.d/900_home_bin.sh'
 dotfile '.bash_profile.d/910_aliases.sh'
 dotfile '.bash_profile.d/999_local_profile.sh'
 
+dotfile '.config/alacritty/alacritty.yml'
+
 dotfile '.config/nvim/init.vim'
 
 dotfile '.mume/style.less'

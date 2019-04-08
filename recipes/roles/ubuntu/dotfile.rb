@@ -25,3 +25,6 @@ dotfile '.tmux.conf'
 dotfile '.config/nvim/init.vim'
 dotfile '.dein.toml'
 dotfile '.vimrc'
+
+# Alcaritty
+dotfile '.config/alacritty/alacritty.yml'
