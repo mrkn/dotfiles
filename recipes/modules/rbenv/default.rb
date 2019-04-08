@@ -14,3 +14,8 @@ end
 git File.join(plugins_dir, 'rbenv-aliases') do
   repository 'https://github.com/tpope/rbenv-aliases.git'
 end
+
+case node[:platform]
+when 'ubuntu'
+  execute "chown -R #{node[:user]}:#{node[:group]} #{rbenv_dir}"
+end
