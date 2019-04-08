@@ -1,12 +1,16 @@
 include_recipe 'helper'
-include_module 'autoconf'
-include_module 'bison'
+
+def brew_latest_cellar_path(pkg)
+  prefix = `brew --prefix #{pkg}`.chomp
+  File.expand_path(File.readlink(prefix), File.dirname(prefix))
+end
 
 optflags = '-O3 -mtune=native -march=native'
-debugflags = '-g3 -gdwarf-4'
 
-install_ruby :trunk do
-  configure_args [
+case node[:platform]
+when 'darwin'
+  debugflags = '-g'
+  configure_opts = [
     "--with-opt-dir=#{`brew --prefix`.chomp}",
     "--with-dbm-dir=#{`brew --prefix qdbm`.chomp}",
     "--with-dbm-type=qdbm",
@@ -17,9 +21,27 @@ install_ruby :trunk do
     "--disable-install-doc",
     "--enable-shared",
     "--enable-dtrace",
-    "optflags=#{optflags}",
     "debugflags=#{debugflags}"
   ]
+else
+  debugflags = '-g3 -gdwarf-4'
+  configure_opts = [
+    "--with-dbm-type=qdbm",
+    "--disable-install-doc",
+    "--enable-shared",
+    "debugflags=#{debugflags}"
+  ]
+end
+
+install_ruby :trunk do
+  configure_args configure_opts + ["optflags=#{optflags}"]
+  make_jobs 4
+  force true
+end
+
+install_ruby :trunk do
+  variation_name "trunk-o0"
+  configure_args configure_opts + ["optflags=-O0"]
   make_jobs 4
   force true
 end
