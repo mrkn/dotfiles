@@ -22,6 +22,6 @@ define :dotfile do
   end
 
   if params[:owner] && params[:group]
-    execute "chown #{params[:owner]}:#{params[:group]} #{target_fullpath}"
+    execute "chown -h #{params[:owner]}:#{params[:group]} #{target_fullpath}"
   end
 end
