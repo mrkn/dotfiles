@@ -14,7 +14,7 @@ function run_meson() {
     PKG_CONFIG_PATH=$(brew --prefix libffi)/lib/pkgconfig:$PKG_CONFIG_PATH
   fi
   export PKG_CONFIG_PATH=/opt/arrow-dev/lib/pkgconfig:$PKG_CONFIG_PATH
-  meson build --buildtype=$BUILD_TYPE --prefix=/opt/arrow-dev "$@"
+  meson --buildtype=$BUILD_TYPE --prefix=/opt/arrow-dev "$@"
 }
 
 function run_build() {
@@ -64,11 +64,14 @@ done
 
 if [ -n "${ARGS[0]}" ]; then
   ARROW_GLIB_BUILD_DIR="${ARGS[0]}"
+  if [ ! -d $ARROW_GLIB_BUILD_DIR ]; then
+    mkdir -p $ARROW_GLIB_BUILD_DIR
+  fi
   case $ARROW_GLIB_BUILD_DIR in
     /*)
       ;;
     *)
-      ARROW_GLIB_BUILD_DIR=$(cd $(pwd)/$ARROW_CPP_BUILD_DIR; pwd)
+      ARROW_GLIB_BUILD_DIR=$(cd $(pwd)/$ARROW_GLIB_BUILD_DIR; pwd)
       ;;
   esac
 fi
@@ -77,9 +80,9 @@ set -ex
 
 if [ "$RUN_MESON" == 1 ]; then
   if [ "$RECONFIGURE" == 1 ]; then
-    run_meson --reconfigure
+    run_meson --reconfigure "$ARROW_GLIB_BUILD_DIR" "$ARROW_GLIB_ROOT"
   else
-    run_meson
+    run_meson "$ARROW_GLIB_BUILD_DIR" "$ARROW_GLIB_ROOT"
   fi
 fi
 

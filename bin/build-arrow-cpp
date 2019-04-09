@@ -90,6 +90,9 @@ done
 
 if [ -n "${ARGS[0]}" ]; then
   ARROW_CPP_BUILD_DIR="${ARGS[0]}"
+  if [ ! -d $ARROW_CPP_BUILD_DIR ]; then
+    mkdir -p $ARROW_CPP_BUILD_DIR
+  fi
   case $ARROW_CPP_BUILD_DIR in
     /*)
       ;;
