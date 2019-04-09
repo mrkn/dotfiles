@@ -1,0 +1,79 @@
+#!/bin/bash
+
+function is_darwin() {
+  case $(uname -s) in
+    Darwin)
+      return 0
+      ;;
+  esac
+  return 1
+}
+
+PYTHON=${PYTHON:-python3}
+
+function run_build() {
+  $PYTHON setup.py develop
+}
+
+PYARROW_PYTEST_FLAGS=" -r sxX --duration=15 --parquet"
+
+function run_test() {
+  if [[ $# -gt 0 ]]; then
+    $PYTHON -m pytest $PYARROW_PYTEST_FLAGS "$@"
+  else
+    $PYTHON -m pytest $PYARROW_PYTEST_FLAGS pyarrow/tests
+  fi
+}
+
+export PYARROW_BUILD_TYPE=debug
+export PYARROW_WITH_PARQUET=1
+export PYARROW_WITH_PLASMA=0
+export PYARROW_WITH_ORC=1
+export PYARROW_WITH_GANDIVA=1
+
+ARROW_PYTHON_ROOT=$(pwd)
+ARROW_CPP_ROOT=$(cd ${ARROW_PYTHON_ROOT}/../cpp pwd)
+ARROW_CPP_BUILD_DIR=${ARROW_CPP_BUILD_DIR}/build
+RUN_BUILD=0
+RUN_TEST=0
+
+ARGS=()
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --cpp-build-dir=*)
+      ARROW_CPP_BUILD_DIR=$(echo "$1" | sed -e "s/--cpp-build-dir=//")
+      ARROW_CPP_BUILD_DIR=$(cd ${ARROW_CPP_BUILD_DIR}; pwd)
+      shift
+      ;;
+    --release)
+      export PYARROW_BUILD_TYPE=release
+      shift
+      ;;
+    --build)
+      RUN_BUILD=1
+      shift
+      ;;
+    --test)
+      RUN_TEST=1
+      shift
+      ;;
+    *)
+      ARGS+=("$1")
+      shift
+      ;;
+  esac
+done
+
+if [ "$RUN_BUILD" == 0 -a "$RUN_TEST" == 0 ]; then
+  RUN_BUILD=1
+fi
+
+set -ex
+
+if [ "$RUN_BUILD" == 1 ]; then
+  run_build
+fi
+
+if [ "$RUN_TEST" == 1 ]; then
+  run_test "${ARGS}"
+fi

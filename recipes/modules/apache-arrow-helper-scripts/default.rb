@@ -4,6 +4,7 @@ dest_dir = File.expand_path("~/bin")
 scripts = [
   'build-arrow-cpp',
   'build-arrow-glib',
+  'build-arrow-python',
   'run-arrow-dev',
 ]
 
