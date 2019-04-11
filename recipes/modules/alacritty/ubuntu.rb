@@ -9,7 +9,7 @@ local_ruby_block "Install alacritty" do
       unless download_file(url, filename, tmpdir, sha256)
         exit 2
       end
-      run_command("deb", "install", File.join(tmpdir, filename))
+      run_command(["dpkg", "-i", File.join(tmpdir, filename)])
     end
   end
 end
