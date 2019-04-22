@@ -15,6 +15,7 @@ include_module 'rbenv'
 include_module 'ruby'
 
 include_module 'mysql'
+include_module 'postgresql'
 
 include_module 'apache-arrow-requirements'
 include_module 'apache-arrow-helper-scripts'
