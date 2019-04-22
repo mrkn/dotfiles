@@ -71,21 +71,22 @@ while [[ $# -gt 0 ]]; do
   case "$1" in
     --cmake)
       RUN_CMAKE=1
-      shift
       ;;
     --install)
       RUN_INSTALL=1
+      ;;
+    --prefix)
       shift
+      PREFIX="$1"
       ;;
     --release)
       ARROW_BUILD_TYPE=release
-      shift
       ;;
     *)
       ARGS+=("$1")
-      shift
       ;;
   esac
+  shift
 done
 
 if [ -n "${ARGS[0]}" ]; then
