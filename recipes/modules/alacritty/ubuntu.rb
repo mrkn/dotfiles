@@ -1,6 +1,6 @@
-ver = "0.3.0"
-url = "https://github.com/jwilm/alacritty/releases/download/v#{ver}/Alacritty-v#{ver}_amd64.deb"
-sha256 = "09239ce8562264d4e755b0d872b707e5fea9c39d0e9c890d13fbf881fb8ecc0c"
+ver = "0.3.2"
+url = "https://github.com/jwilm/alacritty/releases/download/v#{ver}/Alacritty-v#{ver}-ubuntu_18_04_amd64.deb"
+sha256 = "884dadc9f97792f6a8ef6a062b116f69e25943ab2cab79072cdcc795d6615205"
 
 local_ruby_block "Install alacritty" do
   block do
