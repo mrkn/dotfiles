@@ -25,3 +25,5 @@ dotfile '.gitconfig'
 dotfile '.tmux.conf'
 dotfile '.dein.toml'
 dotfile '.vimrc'
+
+dotfile '.irbrc'

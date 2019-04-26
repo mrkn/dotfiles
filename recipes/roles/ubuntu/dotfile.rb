@@ -15,8 +15,9 @@ dotfile '.bash_profile.d/999_local_profile.sh'
 # git
 dotfile '.gitconfig'
 
-# rubygems
+# ruby
 dotfile '.gemrc'
+dotfile '.irbrc'
 
 # tmux
 dotfile '.tmux.conf'
