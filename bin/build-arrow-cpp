@@ -9,6 +9,18 @@ function is_darwin() {
   return 1
 }
 
+function expand_path() {
+  local d="$1"
+  case "$d" in
+    /*)
+      echo "$d"
+      ;;
+    *)
+      echo $(cd $(pwd)/$d; pwd)
+      ;;
+  esac
+}
+
 function run_cmake() {
   if is_darwin; then
     export OPENSSL_ROOT_DIR=$(brew --prefix openssl)
@@ -59,6 +71,24 @@ function run_install() {
   ninja -C ${ARROW_CPP_BUILD_DIR} install
 }
 
+function help() {
+  cat <<HELP
+Usage: $0 [OPTIONS] [BUILD_DIR]
+
+Build Arrow C++ library on the build directory specified by BUILD_DIR.
+The default build directory is "./build".
+
+OPTIONS:
+
+  --help       Show this message
+  --cmake      Run cmake to configure the build environment
+  --install    Run ninja install
+  --prefix     Specify the prefix directory to install
+  --release    Release build (the default is debug build)
+
+HELP
+}
+
 ARGS=()
 RUN_CMAKE=0
 RUN_INSTALL=0
@@ -69,6 +99,10 @@ ARROW_CPP_BUILD_DIR=${ARROW_CPP_ROOT}/build
 ARROW_BUILD_TYPE=debug
 while [[ $# -gt 0 ]]; do
   case "$1" in
+    --help)
+      help
+      exit
+      ;;
     --cmake)
       RUN_CMAKE=1
       ;;
@@ -90,17 +124,10 @@ while [[ $# -gt 0 ]]; do
 done
 
 if [ -n "${ARGS[0]}" ]; then
-  ARROW_CPP_BUILD_DIR="${ARGS[0]}"
+  ARROW_CPP_BUILD_DIR=$(expand_path "${ARGS[0]}")
   if [ ! -d $ARROW_CPP_BUILD_DIR ]; then
     mkdir -p $ARROW_CPP_BUILD_DIR
   fi
-  case $ARROW_CPP_BUILD_DIR in
-    /*)
-      ;;
-    *)
-      ARROW_CPP_BUILD_DIR=$(cd $(pwd)/$ARROW_CPP_BUILD_DIR; pwd)
-      ;;
-  esac
 fi
 
 set -ex

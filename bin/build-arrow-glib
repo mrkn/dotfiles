@@ -9,6 +9,18 @@ function is_darwin() {
   return 1
 }
 
+function expand_path() {
+  local d="$1"
+  case "$d" in
+    /*)
+      echo "$d"
+      ;;
+    *)
+      echo $(cd $(pwd)/$d; pwd)
+      ;;
+  esac
+}
+
 function run_meson() {
   if is_darwin; then
     PKG_CONFIG_PATH=$(brew --prefix libffi)/lib/pkgconfig:$PKG_CONFIG_PATH
@@ -25,6 +37,25 @@ function run_install() {
   ninja -C ${ARROW_GLIB_BUILD_DIR} install
 }
 
+function help() {
+  cat <<HELP
+Usage: $0 [OPTIONS] [BUILD_DIR]
+
+Build Arrow GLib library on the build directory specified by BUILD_DIR.
+The default build directory is "./build".
+
+OPTIONS:
+
+  --help                Show this message
+  --meson               Run meson to configure the build environment
+  --reconfigure         Specify --reconfigure flag to meson
+  --install             Run ninja install
+  --prefix     Specify the prefix directory to install
+  --relrease            Release build (the default is debug build)
+
+HELP
+}
+
 ARGS=()
 RUN_MESON=0
 RECONFIGURE=0
@@ -34,11 +65,13 @@ BUILD_JOBS=6
 BUILD_TYPE=debug
 ARROW_GLIB_ROOT=$(pwd)
 ARROW_GLIB_BUILD_DIR=${ARROW_GLIB_ROOT}/build
-ARROW_CPP_ROOT=$(cd ${ARROW_GLIB_ROOT}/../cpp; pwd)
-ARROW_CPP_BUILD_DIR=${ARROW_CPP_ROOT}/build
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
+    --help)
+      help
+      exit
+      ;;
     --meson)
       RUN_MESON=1
       ;;
@@ -63,17 +96,10 @@ while [[ $# -gt 0 ]]; do
 done
 
 if [ -n "${ARGS[0]}" ]; then
-  ARROW_GLIB_BUILD_DIR="${ARGS[0]}"
+  ARROW_GLIB_BUILD_DIR=$(expand_path "${ARGS[0]}")
   if [ ! -d $ARROW_GLIB_BUILD_DIR ]; then
     mkdir -p $ARROW_GLIB_BUILD_DIR
   fi
-  case $ARROW_GLIB_BUILD_DIR in
-    /*)
-      ;;
-    *)
-      ARROW_GLIB_BUILD_DIR=$(cd $(pwd)/$ARROW_GLIB_BUILD_DIR; pwd)
-      ;;
-  esac
 fi
 
 set -ex

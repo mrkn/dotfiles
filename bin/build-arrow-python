@@ -9,6 +9,18 @@ function is_darwin() {
   return 1
 }
 
+function expand_path() {
+  local d="$1"
+  case "$d" in
+    /*)
+      echo "$d"
+      ;;
+    *)
+      echo $(cd $(pwd)/$d; pwd)
+      ;;
+  esac
+}
+
 PYTHON=${PYTHON:-python3}
 
 function run_build() {
@@ -23,6 +35,23 @@ function run_test() {
   else
     $PYTHON -m pytest $PYARROW_PYTEST_FLAGS pyarrow/tests
   fi
+}
+
+function help() {
+  cat <<HELP
+Usage: $0 [OPTIONS]
+
+Build Arrow Python library.
+
+OPTIONS:
+
+  --help       Show this message
+  --build      Build Arrow Python
+  --test       Run test of Arrow Python
+  --release    Release build (the default is debug build)
+  --cpp-build-dir=DIR   Specify Arrow C++ build directory
+
+HELP
 }
 
 export PYARROW_BUILD_TYPE=debug
@@ -40,6 +69,10 @@ RUN_TEST=0
 ARGS=()
 while [[ $# -gt 0 ]]; do
   case "$1" in
+    --help)
+      help
+      exit
+      ;;
     --cpp-build-dir=*)
       ARROW_CPP_BUILD_DIR=$(echo "$1" | sed -e "s/--cpp-build-dir=//")
       ARROW_CPP_BUILD_DIR=$(cd ${ARROW_CPP_BUILD_DIR}; pwd)
