@@ -16,9 +16,18 @@ define :dotfile do
     group params[:group] if params[:group]
   end
 
-  link target_fullpath do
-    to File.join(config_dir, params[:name])
-    force params[:force]
+  source_path = File.join(config_dir, params[:name])
+  if !File.file?(source_path) && File.file?("#{source_path}.erb")
+    execute "rm -f #{target_fullpath}"
+
+    template target_fullpath do
+      source "#{source_path}.erb"
+    end
+  else
+    link target_fullpath do
+      to source_path
+      force params[:force]
+    end
   end
 
   if params[:owner] && params[:group]
