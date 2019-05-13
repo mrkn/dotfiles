@@ -85,3 +85,5 @@ include_module 'sequel_pro'
 include_module 'postico'
 
 include_module 'imagemagick'
+
+include_module 'apache-arrow-helper-scripts'
