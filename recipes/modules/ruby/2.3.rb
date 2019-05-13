@@ -6,7 +6,6 @@ def brew_latest_cellar_path(pkg)
   prefix = `brew --prefix #{pkg}`.chomp
   File.expand_path(File.readlink(prefix), File.dirname(prefix))
 end
-
 optflags = '-O3 -mtune=native -march=native'
 
 case node[:platform]
@@ -26,6 +25,9 @@ when 'darwin'
     "debugflags=#{debugflags}"
   ]
 else
+  restore_libssl_dev = true
+  package 'libssl1.0-dev'
+
   debugflags = '-g3 -gdwarf-4'
   configure_opts = [
     "--with-dbm-type=qdbm",
@@ -45,6 +47,8 @@ install_ruby ruby_version do
   configure_args configure_opts + ["optflags=-O0"]
   make_jobs 4
 end
+
+package 'libssl-dev' if restore_libssl_dev
 
 alias_version = ruby_version.split('.')[0, 2].join('.')
 execute "rbenv alias #{alias_version} #{ruby_version}"
