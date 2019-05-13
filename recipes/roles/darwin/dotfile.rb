@@ -1,5 +1,6 @@
 include_module 'dotfile'
 
+# bash
 dotfile '.bash_aliases'
 dotfile '.bash_profile'
 dotfile '.bash_profile.d/000_locale.sh'
@@ -14,16 +15,23 @@ dotfile '.bash_profile.d/900_home_bin.sh'
 dotfile '.bash_profile.d/910_aliases.sh'
 dotfile '.bash_profile.d/999_local_profile.sh'
 
-dotfile '.config/alacritty/alacritty.yml'
-
-dotfile '.config/nvim/init.vim'
-
-dotfile '.mume/style.less'
-
-dotfile '.gemrc'
+# git
 dotfile '.gitconfig'
+
+# ruby
+dotfile '.gemrc'
+dotfile '.irbrc'
+
+# tmux
 dotfile '.tmux.conf'
+
+# vim
+dotfile '.config/nvim/init.vim'
 dotfile '.dein.toml'
 dotfile '.vimrc'
 
-dotfile '.irbrc'
+# Alacritty
+dotfile '.config/alacritty/alacritty.yml'
+
+# Markdown Preview Enhanced on VSCode
+dotfile '.mume/style.less'
