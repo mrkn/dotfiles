@@ -13,7 +13,9 @@ local_ruby_block 'Install iruby for all installed Ruby versions' do
       next if File.symlink?(version_dir)  # Skip aliases
 
       version = File.basename(version_dir)
-      run_command("RBENV_VERSION=#{version} rbenv exec gem install cztop iruby")
+      next if version.start_with?('2.3')
+
+      run_command("RBENV_VERSION=#{version} rbenv exec gem install ffi-rzmq iruby")
     end
   end
 end
