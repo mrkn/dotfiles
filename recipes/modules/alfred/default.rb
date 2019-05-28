@@ -1,8 +1,8 @@
-alfred_version = '3.6.1'
-bundle_version = 910
+alfred_version = '3.8.1'
+bundle_version = 961
 
 install_app 'Alfred 3' do
   version alfred_version
   url "https://cachefly.alfredapp.com/Alfred_#{alfred_version}_#{bundle_version}.dmg"
-  sha256 'fdefdb35047e193e1d06f5a441f4aabd4b45b24fd43c63d223d8508ad11a131e'
+  sha256 '9eb1c72910357775b6684f27b189533645f9d65fce57c7e4dad247042afb6621'
 end
