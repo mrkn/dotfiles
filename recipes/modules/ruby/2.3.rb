@@ -11,40 +11,44 @@ optflags = '-O3 -mtune=native -march=native'
 case node[:platform]
 when 'darwin'
   debugflags = '-g'
-  configure_opts = [
-    "--with-opt-dir=#{`brew --prefix`.chomp}",
-    "--with-dbm-dir=#{brew_latest_cellar_path('qdbm')}",
-    "--with-dbm-type=qdbm",
-    "--with-gdbm-dir=#{brew_latest_cellar_path('gdbm')}",
-    "--with-libyaml-dir=#{brew_latest_cellar_path('libyaml')}",
-    "--with-openssl-dir=#{brew_latest_cellar_path('openssl')}",
-    "--with-readline-dir=#{brew_latest_cellar_path('readline')}",
-    "--disable-install-doc",
-    "--enable-shared",
-    "--enable-dtrace",
-    "debugflags=#{debugflags}"
-  ]
+  configure_opts = ->() {
+    [
+      "--with-opt-dir=#{`brew --prefix`.chomp}",
+      "--with-dbm-dir=#{brew_latest_cellar_path('qdbm')}",
+      "--with-dbm-type=qdbm",
+      "--with-gdbm-dir=#{brew_latest_cellar_path('gdbm')}",
+      "--with-libyaml-dir=#{brew_latest_cellar_path('libyaml')}",
+      "--with-openssl-dir=#{brew_latest_cellar_path('openssl')}",
+      "--with-readline-dir=#{brew_latest_cellar_path('readline')}",
+      "--disable-install-doc",
+      "--enable-shared",
+      "--enable-dtrace",
+      "debugflags=#{debugflags}"
+    ]
+  }
 else
   restore_libssl_dev = true
   package 'libssl1.0-dev'
 
   debugflags = '-g3 -gdwarf-4'
-  configure_opts = [
-    "--with-dbm-type=qdbm",
-    "--disable-install-doc",
-    "--enable-shared",
-    "debugflags=#{debugflags}"
-  ]
+  configure_opts = ->() {
+    [
+      "--with-dbm-type=qdbm",
+      "--disable-install-doc",
+      "--enable-shared",
+      "debugflags=#{debugflags}"
+    ]
+  }
 end
 
 install_ruby ruby_version do
-  configure_args configure_opts + ["optflags=#{optflags}"]
+  configure_args ->() { configure_opts + ["optflags=#{optflags}"] }
   make_jobs 4
 end
 
 install_ruby ruby_version do
   variation_name "#{ruby_version}-o0"
-  configure_args configure_opts + ["optflags=-O0"]
+  configure_args ->() { configure_opts + ["optflags=-O0"] }
   make_jobs 4
 end
 

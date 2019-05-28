@@ -42,6 +42,10 @@ define :install_ruby, configure_args: nil, make_jobs: nil, variation_name: nil, 
 
         run_command('autoconf')
 
+        if params[:configure_args].respond_to?(:call)
+          params[:configure_args] = params[:configure_args].call
+        end
+
         configure_cmdline = [
           './configure',
           "--prefix=#{prefix_dir}",
