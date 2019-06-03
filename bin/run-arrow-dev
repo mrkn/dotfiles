@@ -9,6 +9,7 @@ while [[ $# -gt 0 ]]; do
       PREFIX="$1"
       ;;
     --)
+      shift
       break
       ;;
   esac
@@ -16,11 +17,23 @@ while [[ $# -gt 0 ]]; do
 done
 
 export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig:$PREFIX/lib/x86_64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH
-export LD_LIBRARY_PATH=$PREFIX/lib:$PREFIX/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
-export DYLD_LIBRARY_PATH=$PREFIX/lib:$PREFIX/lib/x86_64-linux-gnu:$DYLD_LIBRARY_PATH
 
-arrow_glib_libdir=$(pkg-config --variable=libdir arrow-glib)
-export GI_TYPELIB_PATH=${arrow_glib_libdir}/girepository-1.0:$GI_TYPELIB_PATH
-unset arrow_glib_libdir
+libdir=$(pkg-config --variable=libdir arrow)
+export LD_LIBRARY_PATH=${libdir}:$LD_LIBRARY_PATH
+export DYLD_LIBRARY_PATH=${libdir}:$DYLD_LIBRARY_PATH
+export GI_TYPELIB_PATH=${libdir}/girepository-1.0:$GI_TYPELIB_PATH
+unset libdir
 
-exec "$@"
+case "$1" in
+  ruby)
+    if [ $(which ruby) = $(echo ~/.rbenv/shims/ruby) ]; then
+      shift
+      $(rbenv which ruby) "$@"
+    else
+      "$@"
+    fi
+    ;;
+  *)
+    "$@"
+    ;;
+esac
