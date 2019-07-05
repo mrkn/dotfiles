@@ -26,7 +26,7 @@ function run_cmake() {
     export OPENSSL_ROOT_DIR=$(brew --prefix openssl)
     #export BOOST_ROOT=$(brew --prefix boost)
     ARROW_BOOST_VENDORED=ON
-    export LLVM_DIR=$(brew --prefix llvm@6)/lib/cmake/llvm
+    export LLVM_DIR=$(brew --prefix llvm@7)/lib/cmake/llvm
     export THRIFT_ROOT=$(brew --prefix thrift)
     PYTHON=$(which ${PYTHON:-$(brew --prefix python3)/bin/python3})
     ARROW_FLIGHT=ON
