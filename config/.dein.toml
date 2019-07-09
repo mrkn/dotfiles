@@ -67,11 +67,6 @@ hook_post_source = '''
         \ ])
 '''
 
-# lightline
-
-[[plugins]]
-repo = 'itchyny/lightline.vim'
-
 # git
 
 [[plugins]]
@@ -79,6 +74,34 @@ repo = 'tpope/vim-fugitive'
 
 [[plugins]]
 repo = 'airblade/vim-gitgutter'
+
+# lightline
+
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+hook_add = '''
+set noshowmode
+let g:lightline = {
+      \ 'colorscheme': 'solarized',
+      \ 'active': {
+      \   'left': [
+      \     [ 'mode', 'paste' ],
+      \     [ 'gitbranch', 'readonly', 'filename', 'modified' ]
+      \   ],
+      \   'right': [
+      \     [ 'lineinfo' ],
+      \     [ 'percent' ],
+      \     [ 'fileformat', 'fileencoding', 'filetype', 'charvaluehex' ]
+      \   ]
+      \ },
+      \ 'component': {
+      \   'charvaluehex': '0x%B'
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'fugitive#head'
+      \ },
+      \ }
+'''
 
 # toml
 
