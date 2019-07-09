@@ -67,6 +67,11 @@ hook_post_source = '''
         \ ])
 '''
 
+# lightline
+
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+
 # git
 
 [[plugins]]
