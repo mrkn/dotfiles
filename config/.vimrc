@@ -40,7 +40,6 @@ syntax on
 set ambiwidth=double
 set incsearch
 set hlsearch
-set number
 set ruler
 set autoindent
 set shiftwidth=2
@@ -51,6 +50,17 @@ let mapleader = ","
 set ttimeout
 set ttimeoutlen=50
 set shell=$SHELL\ -l\ -O\ expand_aliases
+
+"" relative linenumber {{{
+set number
+set relativenumber
+
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+augroup END
+"" }}}
 
 "" colorscheme {{{
 let g:solarized_termcolors = 256
