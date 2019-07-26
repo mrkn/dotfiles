@@ -3,5 +3,5 @@ docker_version = '18.03.1-ce-mac65'
 install_app 'Docker' do
   version docker_version
   url 'https://download.docker.com/mac/stable/Docker.dmg'
-  sha256 '678e2317427377bf6550af4cce7fcea10c4c860b9718fd9db4311350dd886fc2'
+  sha256 "a55462f153284ff212f8857945a69d4e128afb6753f5572984877f7b6fc3fc25"
 end

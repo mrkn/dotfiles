@@ -4,5 +4,5 @@ install_app 'Visual Studio Code' do
   version vscode_version
   url 'https://go.microsoft.com/fwlink/?LinkID=620882'
   archive_name 'VSCode-darwin-stable.zip'
-  sha256 '92e51c4be9e945a295d719ed2e5e570daf98a4fd1c7be3192ca4f6ffe28f7020'
+  sha256 "1726d0c2713753186d7b4b664c77aef6fc0dce6356d0c07062dac2533284314f"
 end
