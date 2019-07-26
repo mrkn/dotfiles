@@ -17,8 +17,13 @@ MItamae::RecipeContext.class_eval do
 
   def include_recipe(recipe_path)
     include_recipe_orig(recipe_path)
-  rescue
-    include_recipe_orig(File.join(recipe_path, node[:platform]))
+  rescue => err
+    begin
+      include_recipe_orig(File.join(recipe_path, node[:platform]))
+    rescue
+      puts *err.backtrace
+      raise err
+    end
   end
 
   def include_module(name)
