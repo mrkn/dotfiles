@@ -15,6 +15,12 @@ while true; do
   shift
 done
 
+if which brew 2>&1 >/dev/null; then
+  :
+else
+  PATH=/opt/brew/bin:$PATH
+fi
+
 if [ $# -gt 0 ]; then
   ~/bin/mitamae local -l ${LOGLEVEL:-INFO} bootstrap.rb "$@"
 else
