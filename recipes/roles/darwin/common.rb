@@ -66,8 +66,8 @@ include_module 'julia'
 include_module 'ijulia'
 
 include_module 'r'
-include_module 'irkernel'
-include_module 'rstudio-desktop'
+#include_module 'irkernel'
+#include_module 'rstudio-desktop'
 
 include_module 'nodejs'
 include_module 'yarn'
