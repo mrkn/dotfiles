@@ -40,13 +40,13 @@ else
 end
 
 install_ruby ruby_version do
-  configure_args ->() { configure_opts + ["optflags=#{optflags}"] }
+  configure_args ->() { configure_opts.() + ["optflags=#{optflags}"] }
   make_jobs 4
 end
 
 install_ruby ruby_version do
   variation_name "#{ruby_version}-o0"
-  configure_args ->() { configure_opts + ["optflags=-O0"] }
+  configure_args ->() { configure_opts.() + ["optflags=-O0"] }
   make_jobs 4
 end
 
