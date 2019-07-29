@@ -6,6 +6,4 @@ include_module 'glib'
 include_module 'gsettings-desktop-schemas'
 include_module 'jasper'
 
-package 'gtk+3' do
-  options '--with-jasper --with-quartz-relocation --with-gsettings-desktop-schemas'
-end
+package 'gtk+3'

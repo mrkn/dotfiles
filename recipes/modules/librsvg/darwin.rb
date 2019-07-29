@@ -6,6 +6,4 @@ include_module 'pango'
 include_module 'gtk+3'
 include_module 'libgsf'
 
-package 'librsvg' do
-  options '--with-gtk+3 --with-libgsf'
-end
+package 'librsvg'
