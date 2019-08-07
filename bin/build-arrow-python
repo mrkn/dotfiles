@@ -24,10 +24,14 @@ function expand_path() {
 PYTHON=${PYTHON:-python3}
 
 function run_build() {
+  if is_darwin; then
+    PKG_CONFIG_PATH=$(brew --prefix libffi)/lib/pkgconfig:$PKG_CONFIG_PATH
+  fi
+  export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH
   $PYTHON setup.py develop
 }
 
-PYARROW_PYTEST_FLAGS=" -r sxX --duration=15 --parquet"
+PYARROW_PYTEST_FLAGS=" -r sxX --durations=15" #--parquet"
 
 function run_test() {
   if [[ $# -gt 0 ]]; then
@@ -58,6 +62,7 @@ export PYARROW_BUILD_TYPE=debug
 export PYARROW_WITH_PARQUET=1
 export PYARROW_WITH_PLASMA=0
 export PYARROW_WITH_ORC=1
+export PYARROW_WITH_FLIGHT=0
 export PYARROW_WITH_GANDIVA=1
 
 ARROW_PYTHON_ROOT=$(pwd)
@@ -65,6 +70,7 @@ ARROW_CPP_ROOT=$(cd ${ARROW_PYTHON_ROOT}/../cpp pwd)
 ARROW_CPP_BUILD_DIR=${ARROW_CPP_BUILD_DIR}/build
 RUN_BUILD=0
 RUN_TEST=0
+PREFIX=/opt/arrow-dev
 
 ARGS=()
 while [[ $# -gt 0 ]]; do
@@ -77,6 +83,10 @@ while [[ $# -gt 0 ]]; do
       ARROW_CPP_BUILD_DIR=$(echo "$1" | sed -e "s/--cpp-build-dir=//")
       ARROW_CPP_BUILD_DIR=$(cd ${ARROW_CPP_BUILD_DIR}; pwd)
       shift
+      ;;
+    --prefix)
+      shift
+      PREFIX="$1"
       ;;
     --release)
       export PYARROW_BUILD_TYPE=release
