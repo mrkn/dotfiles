@@ -2,6 +2,7 @@ include_recipe 'dotfile'
 
 include_module 'homebrew'
 include_module 'git'
+include_module 'gnupg'
 
 execute 'brew update'
 
