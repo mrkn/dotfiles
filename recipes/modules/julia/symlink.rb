@@ -1,4 +1,4 @@
-latest_ver = '1.1'
+latest_ver = '1.2'
 
 case node[:platform]
 when 'darwin'
