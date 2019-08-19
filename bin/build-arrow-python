@@ -53,6 +53,7 @@ OPTIONS:
   --build      Build Arrow Python
   --test       Run test of Arrow Python
   --release    Release build (the default is debug build)
+  --prefix     Specify the prefix directory to install
   --cpp-build-dir=DIR   Specify Arrow C++ build directory
 
 HELP
