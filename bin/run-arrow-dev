@@ -9,10 +9,27 @@ function is_darwin() {
   return 1
 }
 
+function help() {
+  cat <<HELP
+Usage: $0 [OPTIONS] -- COMMAND ARG1 ARG2 ...
+
+Run command on the environment at which Apache Arrow is available.
+
+OPTIONS:
+
+  --help     Show this message
+  --prefix   Specify the prefix directory to install
+HELP
+}
+
 PREFIX=/opt/arrow-dev
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
+    --help)
+      help
+      exit
+      ;;
     --prefix)
       shift
       PREFIX="$1"
@@ -35,7 +52,13 @@ libdir=$(pkg-config --variable=libdir arrow)
 export LD_LIBRARY_PATH=${libdir}:$LD_LIBRARY_PATH
 export DYLD_LIBRARY_PATH=${libdir}:$DYLD_LIBRARY_PATH
 export GI_TYPELIB_PATH=${libdir}/girepository-1.0:$GI_TYPELIB_PATH
-unset libdir
+glib_libdir=$(pkg-config --variable=libdir arrow-glib)
+if [ "$libdir" != "$glib_libdir" ]; then
+  export LD_LIBRARY_PATH=${glib_libdir}:$LD_LIBRARY_PATH
+  export DYLD_LIBRARY_PATH=${glib_libdir}:$DYLD_LIBRARY_PATH
+  export GI_TYPELIB_PATH=${glib_libdir}/girepository-1.0:$GI_TYPELIB_PATH
+fi
+unset libdir glib_libdir
 
 case "$1" in
   ruby)
