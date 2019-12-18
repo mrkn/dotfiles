@@ -1,8 +1,10 @@
 set nocompatible
 
 "" python {{{
-let g:python_host_prog = '/opt/brew/bin/python2'
-let g:python3_host_prog = '/opt/brew/bin/python3'
+if has('mac')
+  let g:python_host_prog = '/opt/brew/bin/python2'
+  let g:python3_host_prog = '/opt/brew/bin/python3'
+end
 "" }}}
 
 "" dein {{{

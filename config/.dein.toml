@@ -158,6 +158,13 @@ hook_add = '''
   autocmd VimEnter * execute 'NERDTree'
 '''
 
+# coc
+[[plugins]]
+repo = 'neoclide/coc.nvim'
+merged = 0
+rev = 'release'
+on_i = 1
+
 # etc.
 
 [[plugins]]
