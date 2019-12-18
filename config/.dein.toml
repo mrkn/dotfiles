@@ -165,6 +165,20 @@ merged = 0
 rev = 'release'
 on_i = 1
 
+# denite-gtags
+[[plugins]]
+repo = 'ozelentok/denite-gtags'
+hook_add = '''
+nnoremap <leader>a :DeniteCursorWord -buffer-name=gtags_context gtags_context<CR>
+nnoremap <leader>d :DeniteCursorWord -buffer-name=gtags_def gtags_def<CR>
+nnoremap <leader>r :DeniteCursorWord -buffer-name=gtags_ref gtags_ref<CR>
+nnoremap <leader>g :DeniteCursorWord -buffer-name=gtags_grep gtags_grep<CR>
+nnoremap <leader>t :Denite -buffer-name=gtags_completion gtags_completion<CR>
+nnoremap <leader>f :Denite -buffer-name=gtags_file gtags_file<CR>
+nnoremap <leader>F :Denite -buffer-name=gtags_files gtags_files<CR>
+nnoremap <leader>p :Denite -buffer-name=gtags_path gtags_path<CR>
+'''
+
 # etc.
 
 [[plugins]]
