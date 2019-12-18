@@ -10,6 +10,7 @@ include_module 'ghq'
 include_module 'gpg'
 include_module 'lv'
 include_module 'peco'
+include_module 'global'
 include_module 'tmux'
 
 include_module 'neovim'
