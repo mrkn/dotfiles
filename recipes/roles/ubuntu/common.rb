@@ -14,6 +14,8 @@ include_module 'neovim'
 include_module 'rbenv'
 include_module 'ruby'
 
+include_module 'yarn'
+
 include_module 'mysql'
 include_module 'postgresql'
 
