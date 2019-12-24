@@ -15,6 +15,7 @@ include_module 'tmux'
 
 include_module 'neovim'
 include_module 'ccls'
+include_module 'bear'
 
 include_module 'rbenv'
 include_module 'ruby'
