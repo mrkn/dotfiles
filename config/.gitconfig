@@ -7,6 +7,7 @@
 	editor = nvim
         precomposeunicode = true
         quotepath = false
+	excludesfile = /home/mrkn/.gitignore_global
 
 [alias]
 	a = add
