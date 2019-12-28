@@ -60,6 +60,7 @@ function run_cmake() {
         -DARROW_OPTIONAL_INSTALL=ON \
         -DARROW_GFLAGS_USE_SHARED=OFF \
         -DCMAKE_BUILD_TYPE=${ARROW_BUILD_TYPE:-debug} \
+        -DARROW_USE_CCACHE=${ARROW_USE_CCACHE:-ON} \
         -GNinja \
         ${ARROW_CPP_ROOT}
   popd
@@ -88,6 +89,7 @@ OPTIONS:
   --cmake      Run cmake to configure the build environment
   --coverage   Enable coverage
   --install    Run ninja install
+  --no-ccache  Stop using ccache
   --prefix     Specify the prefix directory to install
   --release    Release build (the default is debug build)
 
@@ -102,6 +104,7 @@ BUILD_JOBS=6
 ARROW_CPP_ROOT=$(pwd)
 ARROW_CPP_BUILD_DIR=${ARROW_CPP_ROOT}/build
 ARROW_BUILD_TYPE=debug
+ARROW_USE_CCACHE=ON
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --help)
@@ -116,6 +119,9 @@ while [[ $# -gt 0 ]]; do
       ;;
     --install)
       RUN_INSTALL=1
+      ;;
+    --no-ccache)
+      ARROW_USE_CCACHE=OFF
       ;;
     --prefix)
       shift
