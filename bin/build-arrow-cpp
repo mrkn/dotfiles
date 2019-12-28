@@ -37,7 +37,8 @@ function run_cmake() {
   fi
 
   pushd ${ARROW_CPP_BUILD_DIR}
-  cmake -DCMAKE_INSTALL_PREFIX=$PREFIX \
+  cmake ${LOGLEVEL:+--log-level=${LOGLEVEL}} \
+        -DCMAKE_INSTALL_PREFIX=$PREFIX \
         -DBUILD_WARNING_LEVEL=CHECKIN \
         ${ARROW_GENERATE_COVERAGE:+-DARROW_GENERATE_COVERAGE=${ARROW_GENERATE_COVERAGE}} \
         -DARROW_NO_DEPRECATED_API=ON \
@@ -129,6 +130,9 @@ while [[ $# -gt 0 ]]; do
       ;;
     --release)
       ARROW_BUILD_TYPE=release
+      ;;
+    --verbose)
+      LOGLEVEL=VERBOSE
       ;;
     *)
       ARGS+=("$1")
