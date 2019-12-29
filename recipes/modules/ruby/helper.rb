@@ -9,7 +9,8 @@ define :install_ruby, configure_args: nil, make_jobs: nil, variation_name: nil, 
   params[:force] ||= ENV[rebuild_flag_name]
   params[:configure_args] ||= []
 
-  if version == 'trunk' || version == :trunk
+  if version == 'master' || version == :master
+    version = :master
     git source_dir do
       repository 'https://github.com/ruby/ruby.git'
     end
@@ -34,8 +35,8 @@ define :install_ruby, configure_args: nil, make_jobs: nil, variation_name: nil, 
 
     block do
       Dir.chdir source_dir do
-        if version == 'trunk' && params[:force]
-          run_command(['git', 'pull', '--rebase', 'origin', 'trunk'])
+        if version == :master && params[:force]
+          run_command(['git', 'pull', '--rebase', 'origin', 'master'])
         elsif File.file?('Makefile') && params[:force]
           run_command(['make', 'distclean'])
         end

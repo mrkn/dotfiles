@@ -33,14 +33,14 @@ else
   ]
 end
 
-install_ruby :trunk do
+install_ruby :master do
   configure_args configure_opts + ["optflags=#{optflags}"]
   make_jobs 4
   force true
 end
 
-install_ruby :trunk do
-  variation_name "trunk-o0"
+install_ruby :master do
+  variation_name "master-o0"
   configure_args configure_opts + ["optflags=-O0"]
   make_jobs 4
   force true
