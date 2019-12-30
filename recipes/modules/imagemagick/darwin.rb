@@ -19,5 +19,3 @@ include_module 'fftw'
 include_module 'pango'
 
 package 'imagemagick'
-
-package 'imagemagick@6'
