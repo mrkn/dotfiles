@@ -28,6 +28,8 @@ function run_cmake() {
     ARROW_BOOST_VENDORED=ON
     export LLVM_DIR=$(brew --prefix llvm@7)/lib/cmake/llvm
     export CLANG_TOOLS_PATH=$(brew --prefix llvm@7)/lib/cmake/llvm/bin
+    #export gRPC_ROOT=$(brew --prefix grpc)
+    ARROW_GRPC_VENDORED=ON
     export THRIFT_ROOT=$(brew --prefix thrift)
     PYTHON=$(which ${PYTHON:-$(brew --prefix python3)/bin/python3})
     ARROW_FLIGHT=ON
@@ -46,6 +48,7 @@ function run_cmake() {
         -DARROW_EXTRA_ERROR_CONTEXT=ON \
         -DARROW_JEMALLOC=ON \
         -DARROW_BOOST_VENDORED=${ARROW_BOOST_VENDORED:-OFF} \
+        -DARROW_GRPC_VENDORED=${ARROW_GRPC_VENDORED:-OFF} \
         -DARROW_BUILD_TESTS=ON \
         -DARROW_BUILD_EXAMPLES=ON \
         -DARROW_BUILD_UTILITIES=ON \
