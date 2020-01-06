@@ -60,10 +60,6 @@ define :install_ruby, configure_args: nil, make_jobs: nil, variation_name: nil, 
 
         run_command(['make', 'install'])
       end
-
-      run_command("RBENV_VERSION=#{version} rbenv exec gem update --system")
-      run_command("yes | RBENV_VERSION=#{version} rbenv exec gem update")
-      run_command("yes | RBENV_VERSION=#{version} rbenv exec gem install bundler pry pry-byebug || :")
     end
   end
 
@@ -71,5 +67,17 @@ define :install_ruby, configure_args: nil, make_jobs: nil, variation_name: nil, 
   when 'ubuntu'
     execute "chown -R #{node[:user]}:#{node[:group]} #{source_dir}"
     execute "chown -R #{node[:user]}:#{node[:group]} #{prefix_dir}"
+  end
+
+  execute "RBENV_VERSION=#{version} #{rbenv_root}/bin/rbenv exec gem update --system" do
+    user node[:user] if node[:user]
+  end
+
+  execute "yes | RBENV_VERSION=#{version} #{rbenv_root}/bin/rbenv exec gem update" do
+    user node[:user] if node[:user]
+  end
+
+  execute "yes | RBENV_VERSION=#{version} #{rbenv_root}/bin/rbenv exec gem install bundler pry pry-byebug || :" do
+    user node[:user] if node[:user]
   end
 end
