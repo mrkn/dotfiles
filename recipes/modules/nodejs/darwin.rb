@@ -1,1 +1,1 @@
-package 'nodejs'
+package 'node'
