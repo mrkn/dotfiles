@@ -124,6 +124,18 @@ on_ft = ['ruby']
 [[plugins]]
 repo = 'mrkn/vim-cruby'
 
+# rust
+
+[[plugins]]
+repo = 'rust-lang/rust.vim'
+hook_add = '''
+if has('mac')
+  let g:rust_clip_command = 'pbcopy'
+else " assume Linux
+  let g:rust_clip_command = 'xclip -selection clipboard'
+end
+'''
+
 # terraform
 
 [[plugins]]
