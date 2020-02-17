@@ -39,35 +39,63 @@ function run_cmake() {
     mkdir -p ${ARROW_CPP_BUILD_DIR}
   fi
 
+  if [ "$CLANG" == 1 ]; then
+    CMAKE_C_COMPILER=clang-7
+    CMAKE_CXX_COMPILER=clang++-7
+  fi
+
+  if [ "$GCC" == 1 ]; then
+    CMAKE_C_COMPILER=gcc
+    CMAKE_CXX_COMPILER=g++
+  fi
+
   pushd ${ARROW_CPP_BUILD_DIR}
   cmake ${LOGLEVEL:+--log-level=${LOGLEVEL}} \
-        -DCMAKE_INSTALL_PREFIX=$PREFIX \
-        -DBUILD_WARNING_LEVEL=CHECKIN \
-        ${ARROW_GENERATE_COVERAGE:+-DARROW_GENERATE_COVERAGE=${ARROW_GENERATE_COVERAGE}} \
-        -DARROW_NO_DEPRECATED_API=ON \
-        -DARROW_EXTRA_ERROR_CONTEXT=ON \
-        -DARROW_JEMALLOC=ON \
-        -DARROW_BOOST_VENDORED=${ARROW_BOOST_VENDORED:-OFF} \
-        -DARROW_GRPC_VENDORED=${ARROW_GRPC_VENDORED:-OFF} \
-        -DARROW_BUILD_TESTS=ON \
         -DARROW_BUILD_EXAMPLES=ON \
+        -DARROW_BUILD_TESTS=ON \
         -DARROW_BUILD_UTILITIES=ON \
-        -DARROW_INSTALL_NAME_RPATH=OFF \
+        -DARROW_DEPENDENCY_SOURCE=SYSTEM \
+        -DARROW_DATASET=ON \
         -DARROW_FLIGHT=${ARROW_FLIGHT:-OFF} \
-        -DARROW_PLASMA=ON \
-        -DARROW_PYTHON=ON \
-        -DPYTHON_EXECUTABLE=${PYTHON:-$(which python3)} \
+        -DARROW_GANDIVA=ON \
+        -DARROW_HDFS=ON \
+        -DARROW_HOME=$PREFIX \
+        -DARROW_INSTALL_NAME_RPATH=OFF \
+        -DARROW_JEMALLOC=ON \
+        -DARROW_NO_DEPRECATED_API=ON \
+        -DARROW_OPTIONAL_INSTALL=ON \
         -DARROW_ORC=ON \
         -DARROW_PARQUET=ON \
+        -DARROW_PLASMA=ON \
+        -DARROW_USE_ASAN=OFF \
+        -DARROW_USE_CCACHE=${ARROW_USE_CCACHE:-ON} \
+        -DARROW_USE_UBSAN=OFF \
+        -DARROW_WITH_BROTLI=ON \
+        -DARROW_WITH_BZ2=ON \
+        -DARROW_WITH_LZ4=ON \
+        -DARROW_WITH_SNAPPY=ON \
+        -DARROW_WITH_ZLIB=ON \
+        -DARROW_WITH_ZSTD=ON \
+        -DARROW_FUZZING=${ARROW_FUZZING:-OFF} \
+        ${ARROW_GENERATE_COVERAGE:+-DARROW_GENERATE_COVERAGE=${ARROW_GENERATE_COVERAGE}} \
+        -DARROW_BOOST_VENDORED=${ARROW_BOOST_VENDORED:-OFF} \
+        -DARROW_GRPC_VENDORED=${ARROW_GRPC_VENDORED:-OFF} \
+        -DARROW_EXTRA_ERROR_CONTEXT=ON \
+        -DARROW_PYTHON=ON \
+        -DBUILD_WARNING_LEVEL=CHECKIN \
+        -DCMAKE_BUILD_TYPE=${ARROW_BUILD_TYPE:-debug} \
+        -DCMAKE_C_COMPILER=$CMAKE_C_COMPILER \
+        -DCMAKE_CXX_COMPILER=$CMAKE_CXX_COMPILER \
+        -DCMAKE_INSTALL_PREFIX=$PREFIX \
+        -DGTest_SOURCE=BUNDLED \
+        -DORC_SOURCE=BUNDLED \
+        -DThrift_SOURCE=BUNDLED \
         -DPARQUET_BUILD_EXAMPLES=ON \
         -DPARQUET_BUILD_EXECUTABLES=ON \
-        -DARROW_GANDIVA=ON \
-        -DARROW_OPTIONAL_INSTALL=ON \
-        -DARROW_GFLAGS_USE_SHARED=OFF \
-        -DCMAKE_BUILD_TYPE=${ARROW_BUILD_TYPE:-debug} \
-        -DARROW_USE_CCACHE=${ARROW_USE_CCACHE:-ON} \
+        -DPYTHON_EXECUTABLE=${PYTHON:-$(which python3)} \
         -GNinja \
         ${ARROW_CPP_ROOT}
+        # -DARROW_GFLAGS_USE_SHARED=OFF \
   popd
 }
 
@@ -92,7 +120,10 @@ OPTIONS:
 
   --help       Show this message
   --cmake      Run cmake to configure the build environment
-  --coverage   Enable coverage
+  --clang      Use clang
+  --gcc        Use gcc
+  --coverage   Enable coverage (imply clang)
+  --fuzzing    Enable fuzzing (imply coverage and clang)
   --install    Run ninja install
   --no-ccache  Stop using ccache
   --prefix     Specify the prefix directory to install
@@ -119,8 +150,17 @@ while [[ $# -gt 0 ]]; do
     --cmake)
       RUN_CMAKE=1
       ;;
+    --clang)
+      CLANG=1
+      ;;
+    --gcc)
+      GCC=1
+      ;;
     --coverage)
       ARROW_GENERATE_COVERAGE=ON
+      ;;
+    --fuzzing)
+      ARROW_FUZZING=ON
       ;;
     --install)
       RUN_INSTALL=1
@@ -150,6 +190,23 @@ if [ -n "${ARGS[0]}" ]; then
   if [ ! -d $ARROW_CPP_BUILD_DIR ]; then
     mkdir -p $ARROW_CPP_BUILD_DIR
   fi
+fi
+
+if [ "$ARROW_FUZZING" == "ON" ]; then
+  ARROW_GENERATE_COVERAGE=ON
+fi
+
+if [ "$ARROW_GENERATE_COVERAGE" == "ON" ]; then
+  CLANG=1
+  GCC=0
+fi
+
+if [ -z "$GCC" -a -z "$CLANG" ]; then
+  GCC=$(is_darwin; echo $?)
+  CLANG=$(expr 1 - $GCC)
+elif [ "$GCC" == 1 -a -z "$CLANG" == 1 ]; then
+  echo "--gcc and --clang cannot be specified at the same time" 1>&2
+  exit 1
 fi
 
 set -ex

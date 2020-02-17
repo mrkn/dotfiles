@@ -28,7 +28,9 @@ function run_build() {
     PKG_CONFIG_PATH=$(brew --prefix libffi)/lib/pkgconfig:$PKG_CONFIG_PATH
   fi
   export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH
-  $PYTHON setup.py develop
+  export ARROW_HOME=$PREFIX
+  export PARQUET_HOME=$PREFIX
+  $PYTHON setup.py build_ext --inplace
 }
 
 PYARROW_PYTEST_FLAGS=" -r sxX --durations=15" #--parquet"
@@ -60,11 +62,11 @@ HELP
 }
 
 export PYARROW_BUILD_TYPE=debug
-export PYARROW_WITH_PARQUET=1
-export PYARROW_WITH_PLASMA=0
-export PYARROW_WITH_ORC=1
 export PYARROW_WITH_FLIGHT=0
 export PYARROW_WITH_GANDIVA=1
+export PYARROW_WITH_ORC=1
+export PYARROW_WITH_PARQUET=0
+export PYARROW_WITH_PLASMA=1
 
 ARROW_PYTHON_ROOT=$(pwd)
 ARROW_CPP_ROOT=$(cd ${ARROW_PYTHON_ROOT}/../cpp pwd)
