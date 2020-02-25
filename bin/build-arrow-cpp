@@ -9,6 +9,11 @@ function is_darwin() {
   return 1
 }
 
+function is_windows() {
+  # TODO
+  return 1
+}
+
 function expand_path() {
   local d="$1"
   case "$d" in
@@ -21,13 +26,76 @@ function expand_path() {
   esac
 }
 
+function init_env() {
+  export ARROW_HOME=$PREFIX
+  export ARROW_BUILD_TESTS=ON
+
+  if is_darwin; then
+    export OPENSSL_ROOT_DIR=$(brew --prefix openssl@1.1)
+    export ARROW_JEMALLOC=ON
+    export ARROW_ORC=ON
+    export ARROW_FLIGHT=ON
+    export ARROW_GANDIVA=ON
+    export ARROW_PARQUET=ON
+    export ARROW_WITH_ZLIB=ON
+    export ARROW_WITH_LZ4=ON
+    export ARROW_WITH_BZ2=ON
+    export ARROW_WITH_ZSTD=ON
+    export ARROW_WITH_SNAPPY=ON
+    export ARROW_WITH_BROTLI=ON
+  elif is_windows; then
+    export CMAKE_ARGS="-A x64"
+    export CMAKE_GENERATOR="Visual Studio 16 2019"
+    export CMAKE_INSTALL_LIBDIR=bin
+    export CMAKE_INSTALL_PREFIX=$PREFIX
+    export ARROW_FLIGHT=OFF
+    export ARROW_PARQUET=OFF
+    export ARROW_WITH_ZLIB=OFF
+    export ARROW_WITH_LZ4=OFF
+    export ARROW_WITH_BZ2=OFF
+    export ARROW_WITH_ZSTD=OFF
+    export ARROW_WITH_SNAPPY=OFF
+    export ARROW_WITH_BROTLI=OFF
+    export ARROW_USE_GLOG=OFF
+    export ARROW_BUILD_SHARED=ON
+    export ARROW_BUILD_STATIC=OFF
+    export ARROW_BOOST_USE_SHARED=OFF
+    export ARROW_VERBOSE_THIRDPARTY_BUILD=OFF
+    export BOOST_SOURCE=BUNDLED
+  else # Assume ubuntu 18.04
+    export ARROW_DEPENDENCY_SOURCE=SYSTEM
+    export ARROW_FLIGHT=OFF
+    export ARROW_GANDIVA=ON
+    export ARROW_HDFS=ON
+    export ARROW_INSTALL_NAME_RPATH=OFF
+    export ARROW_NO_DEPRECATED_API=ON
+    export ARROW_ORC=ON
+    export ARROW_PARQUET=ON
+    export ARROW_PLASMA=ON
+    export ARROW_USE_ASAN=OFF
+    export ARROW_USE_CCACHE=ON
+    export ARROW_USE_UBSAN=OFF
+    export ARROW_WITH_BROTLI=ON
+    export ARROW_WITH_BZ2=ON
+    export ARROW_WITH_LZ4=ON
+    export ARROW_WITH_SNAPPY=ON
+    export ARROW_WITH_ZLIB=ON
+    export ARROW_WITH_ZSTD=ON
+    export GTest_SOURCE=BUNDLED
+    export ORC_SOURCE=BUNDLED
+    export PARQUET_BUILD_EXECUTABLE=ON
+    export PARQUET_BUILD_EXAMPLES=ON
+    export Thrift_SOURCE=BUNDLED
+  fi
+}
+
 function run_cmake() {
   if is_darwin; then
     export OPENSSL_ROOT_DIR=$(brew --prefix openssl)
     #export BOOST_ROOT=$(brew --prefix boost)
     ARROW_BOOST_VENDORED=ON
-    export LLVM_DIR=$(brew --prefix llvm@7)/lib/cmake/llvm
-    export CLANG_TOOLS_PATH=$(brew --prefix llvm@7)/lib/cmake/llvm/bin
+    export LLVM_DIR=$(brew --prefix llvm@7)
+    export CLANG_TOOLS_PATH=$(brew --prefix llvm@7)/bin
     #export gRPC_ROOT=$(brew --prefix grpc)
     ARROW_GRPC_VENDORED=ON
     export THRIFT_ROOT=$(brew --prefix thrift)
@@ -40,8 +108,14 @@ function run_cmake() {
   fi
 
   if [ "$CLANG" == 1 ]; then
-    CMAKE_C_COMPILER=clang-7
-    CMAKE_CXX_COMPILER=clang++-7
+    if is_darwin; then
+      export PATH=$CLANG_TOOLS_PATH:$PATH
+      CMAKE_C_COMPILER=clang
+      CMAKE_CXX_COMPILER=clang++
+    else
+      CMAKE_C_COMPILER=clang-7
+      CMAKE_CXX_COMPILER=clang++-7
+    fi
   fi
 
   if [ "$GCC" == 1 ]; then
