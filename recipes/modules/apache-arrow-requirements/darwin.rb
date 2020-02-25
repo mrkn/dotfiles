@@ -16,6 +16,7 @@ package 'lua'
 package 'luarocks'
 package 'meson'
 package 'ninja'
+package 'openssl@1.1'
 package 'thrift'
 package 'wget'
 
