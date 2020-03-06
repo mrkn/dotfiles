@@ -29,6 +29,7 @@ function expand_path() {
 function init_env() {
   export ARROW_HOME=$PREFIX
   export ARROW_BUILD_TESTS=ON
+  export CMAKE_EXPORT_COMPILE_COMMANDS=ON
 
   if is_darwin; then
     export OPENSSL_ROOT_DIR=$(brew --prefix openssl@1.1)
@@ -110,17 +111,17 @@ function run_cmake() {
   if [ "$CLANG" == 1 ]; then
     if is_darwin; then
       export PATH=$CLANG_TOOLS_PATH:$PATH
-      CMAKE_C_COMPILER=clang
-      CMAKE_CXX_COMPILER=clang++
+      CC=clang
+      CXX=clang++
     else
-      CMAKE_C_COMPILER=clang-7
-      CMAKE_CXX_COMPILER=clang++-7
+      CC=clang-7
+      CXX=clang++-7
     fi
   fi
 
   if [ "$GCC" == 1 ]; then
-    CMAKE_C_COMPILER=gcc
-    CMAKE_CXX_COMPILER=g++
+    CC=gcc
+    CXX=g++
   fi
 
   pushd ${ARROW_CPP_BUILD_DIR}
@@ -138,7 +139,7 @@ function run_cmake() {
         -DARROW_JEMALLOC=ON \
         -DARROW_NO_DEPRECATED_API=ON \
         -DARROW_OPTIONAL_INSTALL=ON \
-        -DARROW_ORC=ON \
+        -DARROW_ORC=OFF \
         -DARROW_PARQUET=ON \
         -DARROW_PLASMA=ON \
         -DARROW_USE_ASAN=OFF \
@@ -158,8 +159,9 @@ function run_cmake() {
         -DARROW_PYTHON=ON \
         -DBUILD_WARNING_LEVEL=CHECKIN \
         -DCMAKE_BUILD_TYPE=${ARROW_BUILD_TYPE:-debug} \
-        -DCMAKE_C_COMPILER=$CMAKE_C_COMPILER \
-        -DCMAKE_CXX_COMPILER=$CMAKE_CXX_COMPILER \
+        -DCMAKE_C_FLAGS=${CFLAGS:-} \
+        -DCMAKE_CXX_FLAGS=${CXXFLAGS:-} \
+        -DCMAKE_EXPORT_COMPILE_COMMANDS=${CMAKE_EXPORT_COMPILE_COMMANDS:-OFF} \
         -DCMAKE_INSTALL_PREFIX=$PREFIX \
         -DGTest_SOURCE=BUNDLED \
         -DORC_SOURCE=BUNDLED \
@@ -276,8 +278,7 @@ if [ "$ARROW_GENERATE_COVERAGE" == "ON" ]; then
 fi
 
 if [ -z "$GCC" -a -z "$CLANG" ]; then
-  GCC=$(is_darwin; echo $?)
-  CLANG=$(expr 1 - $GCC)
+  : do nothing
 elif [ "$GCC" == 1 -a -z "$CLANG" == 1 ]; then
   echo "--gcc and --clang cannot be specified at the same time" 1>&2
   exit 1
