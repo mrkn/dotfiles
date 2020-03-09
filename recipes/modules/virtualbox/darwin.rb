@@ -1,7 +1,7 @@
 install_app 'VirtualBox' do
   installer_name 'VirtualBox.pkg'
   install_by :open
-  version '5.1.26'
-  url 'http://download.virtualbox.org/virtualbox/5.1.26/VirtualBox-5.1.26-117224-OSX.dmg'
-  sha256 '51a6cc75841ed60e01ea62974907049fd3d39be7a916f30e77d842c1a8354655'
+  version '6.1.2'
+  url 'https://download.virtualbox.org/virtualbox/6.1.2/VirtualBox-6.1.2-135662-OSX.dmg'
+  sha256 '20fb52bbd7edec58c9eef69046240a809091727872b8b4b254db272ffd6950b4'
 end
