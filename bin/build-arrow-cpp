@@ -28,6 +28,7 @@ function expand_path() {
 
 function init_env() {
   export ARROW_HOME=$PREFIX
+  export ARROW_PYTHON=ON
   export ARROW_BUILD_TESTS=ON
   export CMAKE_EXPORT_COMPILE_COMMANDS=ON
 
