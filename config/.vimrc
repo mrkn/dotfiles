@@ -53,6 +53,13 @@ set ttimeout
 set ttimeoutlen=50
 set shell=$SHELL\ -l\ -O\ expand_aliases
 
+"" cindent {{{
+augroup CIndentation
+  autocmd!
+  autocmd FileType c,cpp setlocal cinoptions=l1
+augroup END
+"" }}}
+
 "" relative linenumber {{{
 set number
 set relativenumber
