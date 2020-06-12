@@ -16,7 +16,11 @@ function expand_path() {
       echo "$d"
       ;;
     *)
-      echo $(cd $(pwd)/$d; pwd)
+      if [ -d $(pwd)/$d ]; then
+        echo $(cd $(pwd)/$d; pwd)
+      else
+        echo $(pwd)/$d
+      fi
       ;;
   esac
 }
@@ -24,22 +28,56 @@ function expand_path() {
 PYTHON=${PYTHON:-python3}
 
 function run_build() {
+  local build_dir="$1"
+
   if is_darwin; then
     PKG_CONFIG_PATH=$(brew --prefix libffi)/lib/pkgconfig:$PKG_CONFIG_PATH
   fi
   export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH
   export ARROW_HOME=$PREFIX
   export PARQUET_HOME=$PREFIX
-  $PYTHON setup.py build_ext --inplace
+  export LD_LIBRARY_PATH=${ARROW_HOME}/lib:${LD_LIBRARY_PATH}
+
+  export PYARROW_CMAKE_GENERATOR=Ninja
+  export PYARROW_BUILD_TYPE=debug
+  export PYARROW_WITH_S3=${ARROW_S3:-ON}
+  export PYARROW_WITH_ORC=${ARROW_ORC:-ON}
+  export PYARROW_WITH_CUDA=${ARROW_CUDA:-OFF}
+  export PYARROW_WITH_HDFS=${ARROW_HDFS:-OFF}
+  export PYARROW_WITH_FLIGHT=${ARROW_FLIGHT:-OFF}
+  export PYARROW_WITH_PLASMA=${ARROW_PLASMA:-OFF}
+  export PYARROW_WITH_GANDIVA=${ARROW_GANDIVA:-ON}
+  export PYARROW_WITH_PARQUET=${ARROW_PARQUET:-ON}
+  export PYARROW_WITH_DATASET=${ARROW_DATASET:-ON}
+
+  if [ "$INPLACE_BUILD" == 1 ]; then
+    $PYTHON setup.py build_ext --inplace \
+                     install --single-version-externally-managed \
+                             --record record.txt
+  else
+    local relative_build_dir=$(realpath --relative-to=. $build_dir)
+
+    $PYTHON setup.py build --build-base $build_dir \
+                     install --single-version-externally-managed \
+                             --record $relative_build_dir/record.txt
+  fi
 }
 
-PYARROW_PYTEST_FLAGS=" -r sxX --durations=15" #--parquet"
+PYARROW_PYTEST_FLAGS="-r s --capture=no"
 
 function run_test() {
+  local python=$PYTHON
+
+  export PYTHONDEVMODE=1
+
+  if is_darwin; then
+    python="run-arrow-dev --prefix $PREFIX -- $python"
+  fi
+
   if [[ $# -gt 0 ]]; then
-    $PYTHON -m pytest $PYARROW_PYTEST_FLAGS "$@"
+    $python -m pytest $PYARROW_PYTEST_FLAGS --pyargs "$@"
   else
-    $PYTHON -m pytest $PYARROW_PYTEST_FLAGS pyarrow/tests
+    $python -m pytest $PYARROW_PYTEST_FLAGS --pyargs pyarrow
   fi
 }
 
@@ -61,17 +99,11 @@ OPTIONS:
 HELP
 }
 
-export PYARROW_BUILD_TYPE=debug
-export PYARROW_WITH_FLIGHT=0
-export PYARROW_WITH_GANDIVA=1
-export PYARROW_WITH_ORC=1
-export PYARROW_WITH_PARQUET=0
-export PYARROW_WITH_PLASMA=1
-
 ARROW_PYTHON_ROOT=$(pwd)
 ARROW_CPP_ROOT=$(cd ${ARROW_PYTHON_ROOT}/../cpp pwd)
 ARROW_CPP_BUILD_DIR=${ARROW_CPP_BUILD_DIR}/build
 RUN_BUILD=0
+INPLACE_BUILD=0
 RUN_TEST=0
 PREFIX=/opt/arrow-dev
 
@@ -90,6 +122,7 @@ while [[ $# -gt 0 ]]; do
     --prefix)
       shift
       PREFIX="$1"
+      shift
       ;;
     --release)
       export PYARROW_BUILD_TYPE=release
@@ -97,6 +130,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     --build)
       RUN_BUILD=1
+      shift
+      ;;
+    --inplace)
+      INPLACE_BUILD=1
       shift
       ;;
     --test)
@@ -110,6 +147,16 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
+if [ -n "${ARGS[0]}" ]; then
+  build_dir=$(expand_path "${ARGS[0]}")
+  if [ ! -d $build_dir ]; then
+    mkdir -p $build_dir
+  fi
+elif [ "$INPLACE_BUILD" == 0 ]; then
+  build_dir=$(expand_path build)
+  mkdir -p $build_dir
+fi
+
 if [ "$RUN_BUILD" == 0 -a "$RUN_TEST" == 0 ]; then
   RUN_BUILD=1
 fi
@@ -117,7 +164,7 @@ fi
 set -ex
 
 if [ "$RUN_BUILD" == 1 ]; then
-  run_build
+  run_build $build_dir
 fi
 
 if [ "$RUN_TEST" == 1 ]; then
