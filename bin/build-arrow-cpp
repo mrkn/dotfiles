@@ -98,8 +98,8 @@ function run_cmake() {
     export OPENSSL_ROOT_DIR=$(brew --prefix openssl)
     #export BOOST_ROOT=$(brew --prefix boost)
     ARROW_BOOST_VENDORED=ON
-    export LLVM_ROOT=$(brew --prefix llvm)
-    export CLANG_TOOLS_PATH=$(brew --prefix llvm)/bin
+    export LLVM_ROOT=$(brew --prefix llvm\@8)
+    export CLANG_TOOLS_PATH=$(brew --prefix llvm\@8)/bin
     export gRPC_ROOT=$(brew --prefix grpc)
     export RE2_ROOT=$(brew --prefix re2)
     export THRIFT_ROOT=$(brew --prefix thrift)
@@ -320,8 +320,8 @@ if [ "$ARROW_GENERATE_COVERAGE" == "ON" ]; then
 fi
 
 if [ -z "$GCC" -a -z "$CLANG" ]; then
-  : do nothing
-elif [ "$GCC" == 1 -a -z "$CLANG" == 1 ]; then
+  : "do nothing"
+elif [ "$GCC" == 1 -a "$CLANG" == 1 ]; then
   echo "--gcc and --clang cannot be specified at the same time" 1>&2
   exit 1
 fi
