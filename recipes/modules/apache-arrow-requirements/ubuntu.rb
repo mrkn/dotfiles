@@ -2,9 +2,17 @@ package 'wget'
 package 'software-properties-common'
 package 'gpg-agent'
 
-llvm_version = 7
-llvm_apt_url = "http://apt.llvm.org/bionic/"
-llvm_apt_arch = "llvm-toolchain-bionic-#{llvm_version}"
+llvm_version = 9
+
+ubuntu_codename = case node[:platform_version]
+                  when '18.04'
+                    'bionic'
+                  when '20.04'
+                    'focal'
+                  end
+
+llvm_apt_url = "http://apt.llvm.org/#{ubuntu_codename}/"
+llvm_apt_arch = "llvm-toolchain-#{ubuntu_codename}-#{llvm_version}"
 execute "wget -q -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -"
 execute %Q[apt-add-repository -y --update "deb #{llvm_apt_url} #{llvm_apt_arch} main"]
 package "clang-#{llvm_version}"
