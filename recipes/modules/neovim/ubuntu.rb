@@ -1,7 +1,10 @@
-package 'software-properties-common'
+case node[:platform_version]
+when '18.04'
+  package 'software-properties-common'
 
-execute 'add-apt-repository -y ppa:neovim-ppa/stable'
-execute 'apt-get update'
+  execute 'add-apt-repository -y ppa:neovim-ppa/stable'
+  execute 'apt-get update'
+end
 
 package 'neovim'
 
