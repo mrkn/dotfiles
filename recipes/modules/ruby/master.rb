@@ -23,7 +23,10 @@ when 'darwin'
     "--enable-dtrace",
     "debugflags=#{debugflags}"
   ]
+
 else
+  package 'ruby'
+
   debugflags = '-g3 -gdwarf-4'
   configure_opts = [
     "--with-dbm-type=qdbm",
