@@ -57,6 +57,12 @@ set shell=$SHELL\ -l\ -O\ expand_aliases
 augroup CIndentation
   autocmd!
   autocmd FileType c,cpp setlocal cinoptions=l1
+  autocmd BufRead,BufNewFile
+\         */apache/{arrow,ARROW-*}/*.{c,cc,cpp,h,hpp}
+\         setlocal cinoptions=l1,g1,h1,N-s,(0,W4
+  autocmd BufRead,BufNewFile
+\         */ruby/ruby{,-*}/*.{c,cc,cpp,h,hpp}
+\         setlocal filetype=cruby
 augroup END
 "" }}}
 
