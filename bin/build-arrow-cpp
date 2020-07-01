@@ -84,10 +84,12 @@ function init_env() {
     export ARROW_WITH_ZLIB=ON
     export ARROW_WITH_ZSTD=ON
     export GTest_SOURCE=BUNDLED
+    export GTest_SOURCE=BUNDLED
     export ORC_SOURCE=BUNDLED
     export PARQUET_BUILD_EXECUTABLE=ON
     export PARQUET_BUILD_EXAMPLES=ON
     export Thrift_SOURCE=BUNDLED
+    export PYTHON=$(which python3)
   fi
 }
 
