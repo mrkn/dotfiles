@@ -2,7 +2,8 @@ package 'wget'
 package 'software-properties-common'
 package 'gpg-agent'
 
-llvm_version = 9
+llvm_version = 10
+clang_tools_version = 8
 
 ubuntu_codename = case node[:platform_version]
                   when '18.04'
@@ -11,14 +12,15 @@ ubuntu_codename = case node[:platform_version]
                     'focal'
                   end
 
-llvm_apt_url = "http://apt.llvm.org/#{ubuntu_codename}/"
-llvm_apt_arch = "llvm-toolchain-#{ubuntu_codename}-#{llvm_version}"
+apt_url = "http://apt.llvm.org/#{ubuntu_codename}/"
+apt_arch = "llvm-toolchain-#{ubuntu_codename}-#{llvm_version}"
 execute "wget -q -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -"
-execute %Q[apt-add-repository -y --update "deb #{llvm_apt_url} #{llvm_apt_arch} main"]
+execute %Q[apt-add-repository -y --update "deb #{apt_url} #{apt_arch} main"]
 package "clang-#{llvm_version}"
-package "clang-format-#{llvm_version}"
-package "clang-tidy-#{llvm_version}"
 package "llvm-#{llvm_version}-dev"
+
+package "clang-format-#{clang_tools_version}"
+package "clang-tidy-#{clang_tools_version}"
 
 package 'autoconf'
 package 'bison'
