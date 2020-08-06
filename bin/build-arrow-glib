@@ -22,10 +22,6 @@ function expand_path() {
 }
 
 function run_meson() {
-  if is_darwin; then
-    PKG_CONFIG_PATH=$(brew --prefix libffi)/lib/pkgconfig:$PKG_CONFIG_PATH
-  fi
-  export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH
   meson --buildtype=$BUILD_TYPE --prefix=$PREFIX "$@"
 }
 
@@ -101,6 +97,14 @@ if [ -n "${ARGS[0]}" ]; then
     mkdir -p $ARROW_GLIB_BUILD_DIR
   fi
 fi
+
+if is_darwin; then
+  PKG_CONFIG_PATH=$(brew --prefix libffi)/lib/pkgconfig:$PKG_CONFIG_PATH
+fi
+if [ -d $PREFIX/lib/x86_64-linux-gnu/pkgconfig ]; then
+  PKG_CONFIG_PATH=$PREFIX/lib/x86_64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH
+fi
+export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH
 
 set -ex
 
