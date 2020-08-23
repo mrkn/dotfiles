@@ -1,4 +1,5 @@
 include_recipe 'dotfile'
+include_recipe 'init-7skb'
 
 include_module 'homebrew'
 include_module 'git'
