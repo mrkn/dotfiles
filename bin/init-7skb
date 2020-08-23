@@ -1,6 +1,6 @@
 #!/bin/bash
 
-src=$HOME/src/github.com/sekigon-gonnoc/BLE-Micro-Pro/AboutDefaultFirmware/keyboards/7skb/default/7skb_rev1_lpme_left_config.json
+src=$HOME/.dotfiles/7skb/7skb_rev1_lpme_left_config.json
 dst=/Volumes/ble_micro_p/CONFIG.JSN
 
 cp $src $dst
