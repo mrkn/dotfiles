@@ -116,8 +116,8 @@ function run_cmake() {
       CC=clang
       CXX=clang++
     else
-      CC=clang-7
-      CXX=clang++-7
+      CC=clang-10
+      CXX=clang++-10
     fi
   fi
 
@@ -188,6 +188,8 @@ function run_cmake() {
         -DBUILD_WARNING_LEVEL=${BUILD_WARNING_LEVEL:-CHECKIN} \
         -Dc-ares_SOURCE=${cares_SOURCE:-AUTO} \
         -DCMAKE_BUILD_TYPE=${ARROW_BUILD_TYPE:-debug} \
+        -DCMAKE_C_COMPILER=${CC:-cc} \
+        -DCMAKE_CXX_COMPILER=${CXX:-c++} \
         -DCMAKE_C_FLAGS=${CFLAGS:-} \
         -DCMAKE_CXX_FLAGS=${CXXFLAGS:-} \
         -DCMAKE_EXPORT_COMPILE_COMMANDS=${CMAKE_EXPORT_COMPILE_COMMANDS:-OFF} \
