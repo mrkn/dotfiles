@@ -69,15 +69,15 @@ define :install_ruby, configure_args: nil, make_jobs: nil, variation_name: nil, 
     execute "chown -R #{node[:user]}:#{node[:group]} #{prefix_dir}"
   end
 
-  execute "RBENV_VERSION=#{version} #{rbenv_root}/bin/rbenv exec gem update --system" do
+  execute "RBENV_VERSION=#{variation_name} #{rbenv_root}/bin/rbenv exec gem update --system" do
     user node[:user] if node[:user]
   end
 
-  execute "yes | RBENV_VERSION=#{version} #{rbenv_root}/bin/rbenv exec gem update" do
+  execute "yes | RBENV_VERSION=#{variation_name} #{rbenv_root}/bin/rbenv exec gem update" do
     user node[:user] if node[:user]
   end
 
-  execute "yes | RBENV_VERSION=#{version} #{rbenv_root}/bin/rbenv exec gem install bundler pry pry-byebug || :" do
+  execute "yes | RBENV_VERSION=#{variation_name} #{rbenv_root}/bin/rbenv exec gem install bundler pry pry-byebug || :" do
     user node[:user] if node[:user]
   end
 end
