@@ -34,8 +34,8 @@ window:
   # Blank space added around the window in pixels. This padding is scaled
   # by DPI and the specified value is always added at both opposing sides.
   padding:
-    x: 2
-    y: 2
+    x: 4
+    y: 4
 
   # Spread additional padding evenly around the terminal content.
   dynamic_padding: false
@@ -173,8 +173,8 @@ draw_bold_text_with_bright_colors: true
 colors:
   # Default colors
   primary:
-    background: '0xfdf6e3'
-    foreground: '0x586e75'
+    background: '#fdf6e3'
+    foreground: '#586e75'
 
     # Bright and dim foreground colors
     #
@@ -204,6 +204,51 @@ colors:
     text: CellBackground
     cursor: CellForeground
 
+  # Search colors
+  #
+  # Colors used for the search bar and match highlighting.
+  search:
+    # Allowed values are CellForeground and CellBackground, which reference the
+    # affected cell, or hexadecimal colors like #ff00ff.
+    matches:
+      foreground: '#000000'
+      background: '#ffffff'
+    focused_matches:
+      foreground: CellBackground
+      background: CellBackground
+
+    bar:
+      background: '#c5c8c6'
+      foreground: '#1d1f21'
+
+  # Keyboard hints
+  #hints:
+    # Fist character in the hint label
+    #
+    # Allowed values are CellForeground/CellBackground, which reference the
+    # affected cell, or hexadecimal colors like #ff00ff.
+    #start:
+    #  foreground: '#1d1f21'
+    #  background: '#e9ff5e'
+
+    # All characters after the first one in the hint label
+    #
+    # Allowed values are CellForeground/CellBackground, which reference the
+    # affected cell, or hexadecimal colors like #ff00ff.
+    #end:
+    #  foreground: '#e9ff5e'
+    #  background: '#1d1f21'
+
+  # Line indicator
+  #
+  # Color used for the indicator displaying the position in history during
+  # search and vi mode.
+  #
+  # By default, these will use the opposing primary color.
+  #line_indicator:
+  #  foreground: None
+  #  background: None
+
   # Selection colors
   #
   # Colors which should be used to draw the selection area.
@@ -214,41 +259,27 @@ colors:
     text: CellBackground
     background: CellForeground
 
-  # Search colors
-  #
-  # Colors used for the search bar and match highlighting.
-  search:
-    # Allowed values are CellForeground and CellBackground, which reference the
-    # affected cell, or hexadecimal colors like #ff00ff.
-    matches:
-      foreground: '#000000'
-      background: '#ffffff'
-
-    bar:
-      background: '#c5c8c6'
-      foreground: '#1d1f21'
-
   # Normal colors
   normal:
-    black:   '0x073642'
-    red:     '0xdc322f'
-    green:   '0x859900'
-    yellow:  '0xb58900'
-    blue:    '0x268bd2'
-    magenta: '0xd33682'
-    cyan:    '0x2aa198'
-    white:   '0xeee8d5'
+    black:   '#073642'
+    red:     '#dc322f'
+    green:   '#859900'
+    yellow:  '#b58900'
+    blue:    '#268bd2'
+    magenta: '#d33682'
+    cyan:    '#2aa198'
+    white:   '#eee8d5'
 
   # Bright colors
   bright:
-    black:   '0x002b36'
-    red:     '0xcb4b16'
-    green:   '0x93a1a1'
-    yellow:  '0x839496'
-    blue:    '0x657b83'
-    magenta: '0x6c71c4'
-    cyan:    '0x586e75'
-    white:   '0xfdf6e3'
+    black:   '#002b36'
+    red:     '#cb4b16'
+    green:   '#93a1a1'
+    yellow:  '#839496'
+    blue:    '#657b83'
+    magenta: '#6c71c4'
+    cyan:    '#586e75'
+    white:   '#fdf6e3'
 
   # Dim colors
   #
@@ -329,12 +360,23 @@ selection:
 
 cursor:
   # Cursor style
-  #
-  # Values for `style`:
-  #   - ▇ Block
-  #   - _ Underline
-  #   - | Beam
-  style: Block
+  style:
+    # Cursor shape
+    #
+    # Values for `style`:
+    #   - ▇ Block
+    #   - _ Underline
+    #   - | Beam
+    shape: Block
+
+    # Cursor blinking state
+    #
+    # Values for `blinking`:
+    #   - Never: Prevent the cursor from ever blinking
+    #   - Off: Disable blinking by default
+    #   - On: Enable blinking by default
+    #   - Always: Force the cursor to always blink
+    #blinking: Off
 
   # Vi mode cursor style
   #
@@ -343,6 +385,9 @@ cursor:
   #
   # See `cursor.style` for available options.
   vi_mode_style: None
+
+  # Cursor blinking interval in milliseconds.
+  #blink_interval: 750
 
   # If this is `true`, the cursor will be rendered as a hollow box when the
   # window is not focused.
@@ -374,16 +419,6 @@ live_config_reload: true
 # Directory the shell is started in. If this is unset, or `None`, the working
 # directory of the parent process will be used.
 #working_directory: None
-
-# WinPTY backend (Windows only)
-#
-# Alacritty defaults to using the newer ConPTY backend if it is available,
-# since it resolves a lot of bugs and is quite a bit faster. If it is not
-# available, the WinPTY backend will be used instead.
-#
-# Setting this option to `true` makes Alacritty use the legacy WinPTY backend,
-# even if the ConPTY backend is available.
-winpty_backend: false
 
 # Send ESC (\x1b) before characters when alt is pressed.
 alt_send_esc: true
@@ -422,13 +457,47 @@ mouse:
     # on them. The available modifiers are documented in the key binding section.
     modifiers: None
 
+# Regex hints
+#
+# Terminal hints can be used to find text in the visible part of the terminal
+# and pipe it to other applications.
+#hints:
+  # Keys used for the hint labels.
+  #alphabet: "jfkdls;ahgurieowpq"
+
+  # List with all available hints
+  #
+  # Each hint takes a `regex`, `binding` and either a `command` or an `action`.
+  #
+  # The fields `command`, `binding.key` and `binding.mods` accept the same
+  # values as they do in the `key_bindings` section.
+  #
+  # Values for `action`:
+  #   - Copy
+  #       Copy the hint's text to the clipboard.
+  #   - Paste
+  #       Paste the hint's text to the terminal or search.
+  #   - Select
+  #       Select the hint's text.
+  #
+  # Example
+  #
+  # enabled:
+  #   - regex: "alacritty/alacritty#\\d*"
+  #     command: firefox
+  #     binding:
+  #       key: G
+  #       mods: Control|Shift
+  #enabled: []
+
 # Mouse bindings
 #
 # Mouse bindings are specified as a list of objects, much like the key
 # bindings further below.
 #
-# To trigger mouse bindings when an application running within Alacritty captures the mouse, the
-# `Shift` modifier is automatically added as a requirement.
+# To trigger mouse bindings when an application running within Alacritty
+# captures the mouse, the `Shift` modifier is automatically added as a
+# requirement.
 #
 # Each mouse binding will specify a:
 #
