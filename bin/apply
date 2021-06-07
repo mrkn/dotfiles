@@ -22,7 +22,7 @@ else
 fi
 
 if [ $# -gt 0 ]; then
-  ~/bin/mitamae local -l ${LOGLEVEL:-INFO} bootstrap.rb "$@"
+  ~/bin/mitamae local bootstrap.rb "$@"
 else
-  ~/bin/mitamae local -l ${LOGLEVEL:-INFO} bootstrap.rb platform.rb
+  ~/bin/mitamae local bootstrap.rb platform.rb
 fi
