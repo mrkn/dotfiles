@@ -1,6 +1,6 @@
 include_recipe 'helper'
 
-ruby_version = '3.0.0'
+ruby_version = '3.0.1'
 
 def brew_latest_cellar_path(pkg)
   prefix = `brew --prefix #{pkg}`.chomp
@@ -15,15 +15,16 @@ optflags = '-O3 -mtune=native -march=native'
 case node[:platform]
 when 'darwin'
   debugflags = '-g'
+  optflags = '-O3' if `uname -m`.chomp == "arm64"
   configure_opts = ->() {
     [
-      "--with-opt-dir=#{`brew --prefix`.chomp}",
-      "--with-dbm-dir=#{brew_latest_cellar_path('qdbm')}",
+      "--with-opt-dir=#{`cd $(brew --prefix); pwd -P`.chomp}",
+      "--with-dbm-dir=#{`cd $(brew --prefix qdbm); pwd -P`.chomp}",
       "--with-dbm-type=qdbm",
-      "--with-gdbm-dir=#{brew_latest_cellar_path('gdbm')}",
-      "--with-libyaml-dir=#{brew_latest_cellar_path('libyaml')}",
-      "--with-openssl-dir=#{brew_latest_cellar_path('openssl')}",
-      "--with-readline-dir=#{brew_latest_cellar_path('readline')}",
+      "--with-gdbm-dir=#{`cd $(brew --prefix gdbm); pwd -P`.chomp}",
+      "--with-libyaml-dir=#{`cd $(brew --prefix libyaml); pwd -P`.chomp}",
+      "--with-openssl-dir=#{`cd $(brew --prefix openssl); pwd -P`.chomp}",
+      "--with-readline-dir=#{`cd $(brew --prefix readline); pwd -P`.chomp}",
       "--disable-install-doc",
       "--enable-shared",
       "--enable-dtrace",
