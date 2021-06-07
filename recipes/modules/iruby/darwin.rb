@@ -2,7 +2,7 @@ include_module 'libtool'
 include_module 'autoconf'
 include_module 'automake'
 include_module 'autogen'
-include_module 'czmq'
+include_module 'zeromq'
 
 rbenv_dir = File.expand_path('~/.rbenv')
 rbenv_versions_dir = File.join(rbenv_dir, 'versions')
