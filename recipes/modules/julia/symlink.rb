@@ -1,4 +1,4 @@
-latest_ver = '1.5'
+latest_ver = '1.6'
 
 link File.expand_path("~/bin/julia") do
   to "julia-#{latest_ver}"
