@@ -1,6 +1,6 @@
 include_recipe 'helper'
 
-ruby_version = '3.0.1'
+ruby_version = '3.0.2'
 
 def brew_latest_cellar_path(pkg)
   prefix = `brew --prefix #{pkg}`.chomp
@@ -10,7 +10,7 @@ rescue => err
   raise
 end
 
-optflags = '-O3 -mtune=native -march=native'
+optflags = '-O3'
 
 case node[:platform]
 when 'darwin'
