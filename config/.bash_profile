@@ -4,3 +4,4 @@ if [ -d $HOME/.bash_profile.d ]; then
   done
   unset profile
 fi
+. "$HOME/.cargo/env"

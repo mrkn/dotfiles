@@ -1,7 +1,6 @@
 julia_version = '1.5.3'
 ver = julia_version.split('.')[0,2].join('.')
 
-
 case node[:platform]
 when 'darwin'
   install_app "Julia-#{ver}" do

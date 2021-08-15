@@ -1,5 +1,5 @@
 install_app 'Backup and Sync' do
   version '3.41'
   url 'https://dl.google.com/drive/installgoogledrive.dmg'
-  sha256 "b323fd0d393218948a0def210118a08e39209fc5614ef6d5d6c2de961d593aa2"
+  sha256 "c92e9bd002aad696db9553b107db5598ea96c3d69971035c4e5e768ae9f066cf"
 end

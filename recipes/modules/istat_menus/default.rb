@@ -1,8 +1,8 @@
-istat_menus_version = '5.32'
+istat_menus_version = '6.51'
 
 install_app 'iStat Menus' do
   version istat_menus_version
   url 'http://download.bjango.com/istatmenus/'
   archive_name "istatmenus#{istat_menus_version}.zip"
-  sha256 "56eb07e2c581319323cd9784c8a78d5f3a8de11cf3ebae4dcdcd9c6bba12931d"
+  sha256 "b0daf05bb62c2627136dd5b0cce59caceeafa48e24b5b253ac0d81332d48629d"
 end
