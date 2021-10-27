@@ -1,7 +1,7 @@
-ver = "0.7.2"
+ver = "0.9.0"
 
 install_app "Alacritty" do
   version ver
   url "https://github.com/jwilm/alacritty/releases/download/v#{ver}/Alacritty-v#{ver}.dmg"
-  sha256 "c7f361038811c992ebaf3cb4dbc2cac7ccf9a7e3b0182e73ecb600e65b86dba1"
+  sha256 "754406b48ce1d4b4529f354ca51496c6c57c47ff98d7e5f6aa67efd89e4a5859"
 end
