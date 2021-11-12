@@ -1,7 +1,7 @@
-bartender_version = '3.0.64'
+bartender_version = '4.1.14'
 
-install_app 'Bartender 3' do
+install_app 'Bartender 4' do
   version bartender_version
-  url 'https://www.macbartender.com/Demo/Bartender%203.zip'
-  sha256 'bd31aa2aab3262ed08f5c421d504b82893b5dfc546f37fc98eae23bc47494c8a'
+  url 'https://www.macbartender.com/Demo/Bartender%204.dmg'
+  sha256 '8c7dc9327d6fe9da2711c51562d4fba261190ae8d289e3e96722deed445ddf52'
 end
