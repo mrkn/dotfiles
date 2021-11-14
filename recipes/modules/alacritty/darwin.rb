@@ -1,7 +1,19 @@
 ver = "0.9.0"
 
-install_app "Alacritty" do
-  version ver
-  url "https://github.com/jwilm/alacritty/releases/download/v#{ver}/Alacritty-v#{ver}.dmg"
-  sha256 "754406b48ce1d4b4529f354ca51496c6c57c47ff98d7e5f6aa67efd89e4a5859"
+include_module "rust"
+
+clone_dir = File.expand_path("~/src/github.com/alacritty/alacritty")
+
+directory File.dirname(clone_dir)
+
+git clone_dir do
+  repository "git@github.com:alacritty/alacritty.git"
+end
+
+execute "make app" do
+  cwd clone_dir
+end
+
+execute "cp -r target/release/osx/Alacritty.app /Applications/" do
+  cwd clone_dir
 end
