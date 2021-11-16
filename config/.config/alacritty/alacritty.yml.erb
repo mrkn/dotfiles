@@ -1,4 +1,11 @@
 <%
+  open_command = case node[:platform]
+                 when "darwin"
+                   "open"
+                 else
+                   "xdg-open"
+                 end
+
   font_size = {
     'mrkn-mbp15-late2016' => 16.0,
     'mrkn-mbp14-2021'     => 16.0
@@ -68,6 +75,12 @@ window:
   #     - transparent: Title bar, transparent background and title bar buttons
   #     - buttonless: Title bar, transparent background and no title bar buttons
   decorations: full
+
+  # Background opacity
+  #
+  # Window opacity as a floating point number from `0.0` to `1.0`.
+  # The value `0.0` is completely transparent and `1.0` is opaque.
+  opacity: 1.0
 
   # Startup Mode (changes require restart)
   #
@@ -165,6 +178,7 @@ font:
     x: 0
     y: 0
 
+  # Glyph offset determines the locations of the glyphs within their cells with
   # the default being at the bottom. Increasing `x` moves the glyph to the
   # right, increasing `y` moves the glyph upward.
   glyph_offset:
@@ -317,6 +331,13 @@ colors:
   #
   indexed_colors: []
 
+  # Transparent cell backgrounds
+  #
+  # Whether or not `window.opacity` applies to all cell backgrounds or only to
+  # the default background. When set to `true` all cells will be transparent
+  # regardless of their background color.
+  #transparent_background_colors: false
+
 # Bell
 #
 # The bell is rung every time the BEL control character is received.
@@ -357,12 +378,6 @@ colors:
   #     args: ["Hello, World!"]
   #
   #command: None
-
-# Background opacity
-#
-# Window opacity as a floating point number from `0.0` to `1.0`.
-# The value `0.0` is completely transparent and `1.0` is opaque.
-background_opacity: 1.0
 
 selection:
   # This string contains all characters that are used as separators for
@@ -438,6 +453,9 @@ live_config_reload: true
 # Send ESC (\x1b) before characters when alt is pressed.
 alt_send_esc: true
 
+# Offer IPC using `alacritty msg` (unix only)
+#ipc_socket: true
+
 mouse:
   # Click settings
   #
@@ -463,8 +481,8 @@ hints:
   # Each hint must have a `regex` and either an `action` or a `command` field.
   # The fields `mouse`, `binding` and `post_processing` are optional.
   #
-  # The fields `command`, `binding.key`, `binding.mods` and `mouse.mods` accept
-  # the same values as they do in the `key_bindings` section.
+  # The fields `command`, `binding.key`, `binding.mods` and `binding.mode` and
+  # `mouse.mods` accept the same values as they do in the `key_bindings` section.
   #
   # The `mouse.enabled` field controls if the hint should be underlined while
   # the mouse with all `mouse.mods` keys held or the vi mode cursor is above it.
@@ -480,23 +498,12 @@ hints:
   #       Paste the hint's text to the terminal or search.
   #   - Select
   #       Select the hint's text.
-  #
-  # Example
-  #
-  # enabled:
-  #   - regex: "alacritty/alacritty#\\d*"
-  #     command: firefox
-  #     binding:
-  #       key: G
-  #       mods: Control|Shift
-  #enabled: []
-
   #   - MoveViModeCursor
   #       Move the vi mode cursor to the beginning of the hint.
   enabled:
-  - regex: "(magnet:|mailto:|gemini:|gopher:|https:|http:|news:|file:|git:|ssh:|ftp:)\
+  - regex: "(ipfs:|ipns:|magnet:|mailto:|gemini:|gopher:|https:|http:|news:|file:|git:|ssh:|ftp:)\
             [^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`]+"
-    command: open
+    command: <%= open_command %>
     post_processing: true
     mouse:
       enabled: true
@@ -523,13 +530,19 @@ hints:
 #   - Right
 #   - Numeric identifier such as `5`
 #
-# - `action` (see key bindings)
+# - `action` (see key bindings for actions not exclusive to mouse mode)
+#
+# - Mouse exclusive actions:
+#
+#   - ExpandSelection
+#       Expand the selection to the current mouse cursor location.
 #
 # And optionally:
 #
 # - `mods` (see key bindings)
 mouse_bindings:
-  - { mouse: Middle, action: PasteSelection }
+  - { mouse: Right,             action: ExpandSelection }
+  - { mouse: Middle, mode: ~Vi, action: PasteSelection  }
 
 # Key bindings
 #
@@ -598,6 +611,8 @@ mouse_bindings:
 #   - ToggleFullscreen
 #   - SpawnNewInstance
 #       Spawn a new instance of Alacritty.
+#   - CreateNewWindow
+#       Create a new Alacritty window from the current process.
 #   - ClearLogNotice
 #       Clear Alacritty's UI warning and error notice.
 #   - ClearSelection
@@ -746,11 +761,11 @@ key_bindings:
   #- { key: End,       mods: Shift,   mode: ~Alt,        action: ScrollToBottom }
 
   # Vi Mode
-  #- { key: Space,  mods: Shift|Control, mode: Vi|~Search, action: ScrollToBottom          }
   #- { key: Space,  mods: Shift|Control, mode: ~Search,    action: ToggleViMode            }
+  #- { key: Space,  mods: Shift|Control, mode: Vi|~Search, action: ScrollToBottom          }
   #- { key: Escape,                      mode: Vi|~Search, action: ClearSelection          }
-  #- { key: I,                           mode: Vi|~Search, action: ScrollToBottom          }
   #- { key: I,                           mode: Vi|~Search, action: ToggleViMode            }
+  #- { key: I,                           mode: Vi|~Search, action: ScrollToBottom          }
   #- { key: C,      mods: Control,       mode: Vi|~Search, action: ToggleViMode            }
   #- { key: Y,      mods: Control,       mode: Vi|~Search, action: ScrollLineUp            }
   #- { key: E,      mods: Control,       mode: Vi|~Search, action: ScrollLineDown          }
@@ -847,7 +862,8 @@ key_bindings:
   #- { key: B,              mods: Command, mode: ~Search,     action: SearchBackward        }
 
   # personal addition
-  - { key: N,              mods: Command,                    action: SpawnNewInstance      }
+  - { key: N,              mods: Shift|Command,              action: SpawnNewInstance      }
+  - { key: N,              mods: Command,                    action: CreateNewWindow       }
 
   # default (Keep the previous configuration)
   #- { key: Paste,                   action: Paste                            }
