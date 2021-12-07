@@ -1,8 +1,8 @@
-vscode_version = '1.22.2'
+vscode_version = '1.62.3'
 
 install_app 'Visual Studio Code' do
   version vscode_version
-  url 'https://go.microsoft.com/fwlink/?LinkID=620882'
-  archive_name 'VSCode-darwin-stable.zip'
-  sha256 "77c4e891d7cf837ac5ceb718237a85dab7501cec8dadf659dce2849d783c0dad"
+  url "https://code.visualstudio.com/sha/download?build=stable&os=darwin-universal"
+  archive_name 'VSCode-darwin-universal-stable.zip'
+  sha256 "2d7b93996845a443895d36c42dc3f43e354a079c27187aefc2ec03e3271f9e89"
 end
