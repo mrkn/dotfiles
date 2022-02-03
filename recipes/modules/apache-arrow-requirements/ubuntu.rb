@@ -2,7 +2,7 @@ package 'wget'
 package 'software-properties-common'
 package 'gpg-agent'
 
-llvm_version = 10
+llvm_version = 11
 clang_tools_version = 8
 
 ubuntu_codename = case node[:platform_version]
@@ -36,6 +36,7 @@ package 'libbenchmark-dev'
 package 'libboost-filesystem-dev'
 package 'libboost-regex-dev'
 package 'libboost-system-dev'
+package 'libboost-thread-dev'
 package 'libbrotli-dev'
 package 'libbz2-dev'
 package 'libgflags-dev'

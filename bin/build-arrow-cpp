@@ -65,7 +65,7 @@ function init_env() {
     export BOOST_SOURCE=BUNDLED
   else # Assume ubuntu 18.04
     export ARROW_DEPENDENCY_SOURCE=SYSTEM
-    export ARROW_FLIGHT=OFF
+    #export ARROW_FLIGHT=OFF
     export ARROW_GANDIVA=ON
     export ARROW_HDFS=ON
     export ARROW_INSTALL_NAME_RPATH=OFF
@@ -116,8 +116,8 @@ function run_cmake() {
       CC=clang
       CXX=clang++
     else
-      CC=clang-10
-      CXX=clang++-10
+      CC=clang-11
+      CXX=clang++-11
     fi
   fi
 

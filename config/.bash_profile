@@ -5,3 +5,5 @@ if [ -d $HOME/.bash_profile.d ]; then
   unset profile
 fi
 . "$HOME/.cargo/env"
+
+export PATH="$HOME/.poetry/bin:$PATH"
