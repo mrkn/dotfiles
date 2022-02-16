@@ -1,6 +1,6 @@
 include_recipe 'helper'
 
-ruby_version = '2.5.5'
+ruby_version = '2.5.9'
 
 def brew_latest_cellar_path(pkg)
   prefix = `brew --prefix #{pkg}`.chomp
