@@ -41,7 +41,7 @@ define :install_ruby, configure_args: nil, make_jobs: nil, variation_name: nil, 
           run_command(['make', 'distclean'])
         end
 
-        run_command('autoconf')
+        run_command('autoconf') unless File.file?("configure")
 
         if params[:configure_args].respond_to?(:call)
           params[:configure_args] = params[:configure_args].call
