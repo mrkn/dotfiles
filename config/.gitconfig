@@ -1,7 +1,7 @@
 [user]
 	name = Kenta Murata
 	email = mrkn@mrkn.jp
-        # signingkey = 6081B062
+	signingkey = 6081B062
 
 [core]
 	editor = nvim
@@ -44,10 +44,3 @@
 
 [github]
 	user = mrkn
-
-[gpg]
-	format = ssh
-
-[gpg "ssh"]
-	defaultKeyCommand = ssh-add -L
-	allowedSignersFile = ~/.ssh/allowed_signers
