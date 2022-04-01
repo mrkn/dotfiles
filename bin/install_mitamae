@@ -11,7 +11,7 @@ case ${uname_m}-${uname_s} in
     ;;
 esac
 
-mitamae_version=1.12.4
+mitamae_version=1.12.9
 mitamae_platform=${uname_m}-${uname_s}
 mitamae_url=https://github.com/k0kubun/mitamae/releases/download/v${mitamae_version}/mitamae-${mitamae_platform}
 
@@ -19,16 +19,16 @@ case "${uname_s}" in
 darwin)
   case "${uname_m}" in
   aarch64)
-    mitamae_sha256=3f59d8b27227059aa65c142e93dab17abac2db929ac9912a8693422417477113
+    mitamae_sha256=bd3e7ac36c9d51436b39e26e7689714d25b2d95e17aad700af644053b4203888
     ;;
   x86_64)
-    mitamae_sha256=03c27e47034c9a66c78381cf7d4f7e5b66869b51d806c2c5fd6e4df0e8756e4d
+    mitamae_sha256=77a0cea4bd644fef49bb28700e1df25ad36f76438e3a4575bcc3370a7a889068
     ;;
   esac
   ;;
 
 linux)
-  mitamae_sha256=fd881910b1f2882a51544756b1751ac2867751097b3f10bf12af9ed5637d8e66
+  mitamae_sha256=16b0d624ccf37af22cf4099ceff07e86de2ed9f9820f041ada81bec2289d6d0c
   ;;
 esac
 
