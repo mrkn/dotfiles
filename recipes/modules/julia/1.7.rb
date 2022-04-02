@@ -48,7 +48,7 @@ when "darwin"
 when "ubuntu"
   url = File.join(base_uri, variations[os][arch][:path])
   archive_name = File.basename(url)
-  sha256 = variations[os][arch][:path]
+  sha256 = variations[os][arch][:sha256]
 
   local_ruby_block "Download and Install Julia #{julia_version}" do
     block do
