@@ -3,6 +3,7 @@ include_module 'dotfile'
 # bash
 dotfile '.aliases'
 dotfile '.bash_profile'
+dotfile '.zprofile'
 dotfile '.profile.d/000_locale.sh'
 dotfile '.profile.d/100_homebrew.sh'
 dotfile '.profile.d/101_cache.sh'

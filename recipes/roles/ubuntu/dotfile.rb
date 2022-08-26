@@ -2,7 +2,8 @@ include_module 'dotfile'
 
 # bash
 dotfile '.aliases'
-dotfile '.profile'
+dotfile '.bash_profile'
+dotfile '.zprofile'
 dotfile '.profile.d/000_locale.sh'
 dotfile '.profile.d/101_cache.sh'
 dotfile '.profile.d/200_functions.sh'
