@@ -16,7 +16,7 @@ define :dotfile, source: nil do
     group params[:group] if params[:group]
   end
 
-  source_name = params[:source] || paramns[:name]
+  source_name = params[:source] || params[:name]
   source_path = File.join(config_dir, source_name)
   if !File.file?(source_path) && File.file?("#{source_path}.erb")
     execute "rm -f #{target_fullpath}"
