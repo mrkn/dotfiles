@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LOGLEVEL=INFO
+LOGLEVEL=info
 
 while true; do
   case $1 in
