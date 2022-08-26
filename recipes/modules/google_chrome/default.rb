@@ -1,7 +1,7 @@
-chrome_version = '2623.112'
+chrome_version = '104.0.5112.101'
 
 install_app 'Google Chrome' do
   version chrome_version
   url 'https://dl.google.com/chrome/mac/stable/GGRO/googlechrome.dmg'
-  sha256 '5a4ad06d569ec50edc53c0a864df681bd9f8d9c8b183515e583d7f036908b55a'
+  sha256 '3a03078fd6886ce6b0e72b7bb1b675f7b97bb9257a273bda7c7f1caf734fe00f'
 end
