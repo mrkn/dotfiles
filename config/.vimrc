@@ -2,8 +2,13 @@ set nocompatible
 
 "" python {{{
 if has('mac')
-  let g:python_host_prog = '/opt/brew/bin/python2'
-  let g:python3_host_prog = '/opt/brew/bin/python3'
+  if empty($HOMEBREW_PREFIX)
+    let g:python_host_prog = '/opt/homebrew/bin/python2'
+    let g:python3_host_prog = '/opt/homebrew/bin/python3'
+  else
+    let g:python_host_prog = $HOMEBREW_PREFIX . '/bin/python2'
+    let g:python3_host_prog = $HOMEBREW_PREFIX . '/bin/python3'
+  endif
 end
 "" }}}
 
