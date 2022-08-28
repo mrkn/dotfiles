@@ -1,5 +1,5 @@
-url = "http://ftp.jaist.ac.jp/pub/CTAN/systems/mac/mactex/mactex-20190508.pkg"
-sha256 = "ce6fa6d3ec5a4058d5889cfc36bf634fd8a5aefb6601d10c853e5f5d76455f4a"
+url = "https://ftp.jaist.ac.jp/pub/CTAN/systems/mac/mactex/MacTeX.pkg"
+sha256 = "dc1983c82de2c68f1c434f734d94343959d1338adb6f55132ccce11c787badc1"
 
 local_ruby_block "Download and Install MacTeX.pkg" do
   block do
