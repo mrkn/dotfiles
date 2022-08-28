@@ -15,7 +15,7 @@ local_ruby_block 'Install iruby for all installed Ruby versions' do
       version = File.basename(version_dir)
       next if version < "2.4.0"
 
-      run_command("RBENV_VERSION=#{version} rbenv exec gem install ffi-rzmq iruby")
+      run_command("RBENV_VERSION=#{version} yes | rbenv exec gem install ffi-rzmq iruby")
     end
   end
 end
