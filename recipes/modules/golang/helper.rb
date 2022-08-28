@@ -13,6 +13,7 @@ define :install_golang, env: {} do
 
       begin
         cmdline = ['goenv', 'install']
+        cmdline << '-s' if params[:force]
         cmdline << params[:name]
         run_command(cmdline)
       ensure
