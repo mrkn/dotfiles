@@ -9,6 +9,10 @@ if has('mac')
     let g:python_host_prog = $HOMEBREW_PREFIX . '/bin/python2'
     let g:python3_host_prog = $HOMEBREW_PREFIX . '/bin/python3'
   endif
+
+  let g:rbenv_global_version = trim(system('rbenv global'))
+  let g:rbenv_version_prefix = $HOME . '/.rbenv/versions/' . g:rbenv_global_version
+  let g:ruby_host_prog = g:rbenv_version_prefix . '/bin/ruby'
 end
 "" }}}
 
@@ -56,7 +60,7 @@ set statusline=%<%f\ %{fugitive#statusline()}\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 let mapleader = ","
 set ttimeout
 set ttimeoutlen=50
-set shell=$SHELL\ -l\ -O\ expand_aliases
+set shellcmdflag=-l\ -O\ expand_aliases\ -c
 set foldmethod=marker
 set foldmarker={{{,}}}
 
