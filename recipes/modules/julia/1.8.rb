@@ -1,4 +1,4 @@
-julia_version = '1.8.3'
+julia_version = '1.8.4'
 ver = julia_version.split('.')[0,2].join('.')
 
 base_uri = "https://julialang-s3.julialang.org/bin"
@@ -6,18 +6,22 @@ variations = {
   "darwin" => {
     "x86_64" => {
       path: "mac/x64/#{ver}/julia-#{julia_version}-mac64.dmg",
-      sha256: "1544909bf670e4b276b369beaa52995017398969efd89b71ce07ac11c9635eb1"
+      sha256: "17f3f7755361942e76a26801d9e8cddf7020de864780aadf8c85e0bd28631946"
     },
     "arm64" => {
       path: "mac/aarch64/#{ver}/julia-#{julia_version}-macaarch64.dmg",
-      sha256: "829d57ab4c3ef02c714e3c73d47e97ddd7dd422043f85e1e34a0690552a494f5"
+      sha256: "b1feb9a18be86c7f77de3a84ee396d691b4c54b280842b90b5daa3986ab04d5b"
     }
   },
 
   "ubuntu" => {
     "x86_64" => {
       path: "linux/x64/#{ver}/julia-#{julia_version}-linux-x86_64.tar.gz",
-      sha256: "33c3b09356ffaa25d3331c3646b1f2d4b09944e8f93fcb994957801b8bbf58a9"
+      sha256: "f0427a4d7910c47dc7c31f65ba7ecaafedbbc0eceb39c320a37fa33598004fd5"
+    },
+    "arm64" => {
+      path: "linux/x64/#{ver}/julia-#{julia_version}-linux-aarch64.tar.gz",
+      sha256: "dc4798c1ce8768fa35972e8b149ca3a85fc69e1074b609a72b2cfed5c4aa7050"
     }
   }
 }
@@ -77,4 +81,3 @@ when "ubuntu"
 end
 
 execute %Q[~/bin/julia-#{ver} #{File.expand_path('../bootstrap.jl', __FILE__)}]
-
