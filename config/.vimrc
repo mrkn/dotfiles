@@ -44,7 +44,7 @@ set encoding=utf-8
 filetype plugin indent on
 syntax on
 
-set ambiwidth=double
+set ambiwidth=single
 set incsearch
 set hlsearch
 set ruler
@@ -57,6 +57,8 @@ let mapleader = ","
 set ttimeout
 set ttimeoutlen=50
 set shell=$SHELL\ -l\ -O\ expand_aliases
+set foldmethod=marker
+set foldmarker={{{,}}}
 
 "" cindent {{{
 augroup CIndentation
