@@ -1,1 +1,3 @@
-export PATH="$HOME/.cargo/bin:$PATH"
+if [ -d $HOME/.cargo/env ]; then
+  source "$HOME/.cargo/env"
+fi
