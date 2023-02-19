@@ -4,9 +4,3 @@ if [ -d $HOME/.profile.d ]; then
   done
   unset profile
 fi
-
-if [ -d $HOME/.cargo/env ]; then
-  source "$HOME/.cargo/env"
-fi
-
-export PATH="$HOME/.poetry/bin:$PATH"

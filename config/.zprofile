@@ -8,5 +8,3 @@ if [ -d $HOME/.profile.d ]; then
 fi
 
 setopt nomatch
-
-export PATH="$HOME/.poetry/bin:$PATH"
