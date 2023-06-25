@@ -34,4 +34,4 @@ dotfile '.dein.toml'
 dotfile '.vimrc'
 
 # Alcaritty
-dotfile '.config/alacritty/alacritty.yml'
+dotfile '.config/alacritty/alacritty.toml'

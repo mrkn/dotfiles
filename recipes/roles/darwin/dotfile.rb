@@ -37,7 +37,7 @@ dotfile '.dein.toml'
 dotfile '.vimrc'
 
 # Alacritty
-dotfile '.config/alacritty/alacritty.yml'
+dotfile '.config/alacritty/alacritty.toml'
 
 # Markdown Preview Enhanced on VSCode
 dotfile '.mume/style.less'
