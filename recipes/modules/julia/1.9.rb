@@ -1,4 +1,4 @@
-julia_version = '1.9.0'
+julia_version = '1.9.1'
 ver = julia_version.split('.')[0,2].join('.')
 
 base_uri = "https://julialang-s3.julialang.org/bin"
@@ -6,18 +6,17 @@ variations = {
   "darwin" => {
     "arm64" => {
       path: "mac/aarch64/#{ver}/julia-#{julia_version}-macaarch64.dmg",
-      sha256: "bddc1ab553550563ea949f671874b4898b60c0d21e823ce08f2cf5cd7210a8e2"
+      sha256: "0363f53ba2a63a0997eda4deb4493f86a353b39f3e6bc8985af38740b8a7d612"
     }
   },
-
   "ubuntu" => {
     "x86_64" => {
       path: "linux/x64/#{ver}/julia-#{julia_version}-linux-x86_64.tar.gz",
-      sha256: "00c614466ef9809c2eb23480e38d196a2c577fff2730c4f83d135b913d473359"
+      sha256: "cde14a58f899251f30cfced87055626f44845780659ebe8d50cbc4c67b31997c"
     },
     "arm64" => {
       path: "linux/x64/#{ver}/julia-#{julia_version}-linux-aarch64.tar.gz",
-      sha256: "0a14315b53acd97f22d26d4a8fd2c237e524e95c3bec98d2d78b54d80c2bc364"
+      sha256: "b643ccd3e2a5960f7ce7055243743d0a39badda3974bce3d77861dd363badd10"
     }
   }
 }
