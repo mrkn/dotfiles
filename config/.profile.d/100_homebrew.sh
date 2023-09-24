@@ -7,6 +7,10 @@ else
   export HOMEBREW_PREFIX=/opt/homebrew
 fi
 
+if [ -d /opt/brew ]; then
+  export HOMEBREW_PREFIX=/opt/brew
+fi
+
 eval "$($HOMEBREW_PREFIX/bin/brew shellenv)"
 
 export LD_LIBRARY_PATH=$HOMEBREW_PREFIX/lib${LD_LIBRARY_PATH+:$LD_LIBRARY_PATH}
