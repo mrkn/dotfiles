@@ -1,6 +1,8 @@
 export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+if test -d $PYENV_ROOT; then
+  command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+  eval "$(pyenv init -)"
+fi
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
@@ -17,4 +19,7 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-conda deactivate
+type conda 2>&1 >/dev/null
+if [ $? -eq 0 ]; then
+  conda deactivate
+fi
