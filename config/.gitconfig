@@ -1,7 +1,7 @@
 [user]
 	name = Kenta Murata
 	email = mrkn@mrkn.jp
-	signingkey = 6081B062
+	signingkey = ~/.ssh/id_ed25519.pub
 
 [core]
 	editor = nvim
@@ -46,3 +46,6 @@
 	user = mrkn
 [url "git@github.com:"]
 	insteadOf = https://github.com/
+
+[gpg]
+	format = ssh
