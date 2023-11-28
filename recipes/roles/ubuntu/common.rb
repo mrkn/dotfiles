@@ -1,6 +1,7 @@
 include_recipe 'dotfile'
 
 include_module 'ssh-server'
+include_module 'libpam-ssh-agent-auth'
 
 include_module 'mdns'
 
