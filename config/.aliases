@@ -1,7 +1,7 @@
 alias bi='bundle install'
 alias be='bundle exec'
 
-alias ,='cd_ghq_list_path_peco'
+alias ,='cd_ghq_list_path_fzf'
 
 case "${OSTYPE}" in
   darwin*)

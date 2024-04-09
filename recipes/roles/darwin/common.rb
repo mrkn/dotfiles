@@ -38,6 +38,7 @@ include_module 'dash'
 #include_module 'trailer_app'
 #include_module 'google_ime'
 
+include_module 'fzf'
 include_module 'lv'
 include_module 'highway'
 include_module 'xz'

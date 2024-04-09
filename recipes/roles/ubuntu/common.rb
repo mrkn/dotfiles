@@ -7,6 +7,7 @@ include_module 'mdns'
 
 include_module 'snapd'
 
+include_module 'fzf'
 include_module 'ghq'
 include_module 'gpg'
 include_module 'lv'

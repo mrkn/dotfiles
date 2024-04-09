@@ -67,6 +67,11 @@ hook_post_source = '''
         \ ])
 '''
 
+# fzf
+
+[[plugins]]
+repo = 'junegunn/fzf'
+
 # git
 
 [[plugins]]
