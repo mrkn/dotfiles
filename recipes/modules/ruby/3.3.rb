@@ -1,7 +1,7 @@
 include_recipe 'prerequisites'
 include_recipe 'helper'
 
-ruby_version = '3.3.0'
+ruby_version = '3.3.1'
 optflags = '-O3 -mtune=native -march=native'
 
 case node[:platform]
