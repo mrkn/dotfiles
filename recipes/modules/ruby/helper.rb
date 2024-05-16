@@ -77,7 +77,7 @@ define :install_ruby, configure_args: nil, make_jobs: nil, variation_name: nil, 
     user node[:user] if node[:user]
   end
 
-  execute "yes | RBENV_VERSION=#{variation_name} #{rbenv_root}/bin/rbenv exec gem install bundler pry pry-byebug || :" do
+  execute "yes | RBENV_VERSION=#{variation_name} #{rbenv_root}/bin/rbenv exec gem install bundler debug || :" do
     user node[:user] if node[:user]
   end
 end
