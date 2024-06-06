@@ -103,7 +103,7 @@ if has('mac')
   end
 else
   set background=dark
-  colorscheme mrkn256
+  colorscheme rose-pine-main
 end
 
 " background toggle keymap
