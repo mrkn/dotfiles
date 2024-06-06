@@ -99,7 +99,7 @@ if has('mac')
     colorscheme Tomorrow-Night-Bright
   else
     set background=light
-    colorscheme solarized
+    colorscheme rose-pine-dawn
   end
 else
   set background=dark

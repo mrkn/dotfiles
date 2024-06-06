@@ -153,8 +153,14 @@ on_ft = ['terraform', 'javascript']
 repo = 'wakatime/vim-wakatime'
 
 # mrkn256
+
 [[plugins]]
 repo = 'mrkn/mrkn256.vim'
+
+# rose-pine
+
+[[plugins]]
+repo = 'rose-pine/neovim'
 
 # Solarized
 
