@@ -1,12 +1,13 @@
-case node[:platform_version]
-when '18.04'
-  package 'software-properties-common'
+package "libfuse2"
 
-  execute 'add-apt-repository -y ppa:neovim-ppa/stable'
-  execute 'apt-get update'
+directory "/opt/nvim" do
+  owner "root"
+  group "root"
+  mode "0755"
 end
 
-package 'neovim'
+execute "curl -sfSL -o /opt/nvim/nvim.appimage https://github.com/neovim/neovim/releases/latest/download/nvim.appimage"
+execute "chmod a+x /opt/nvim/nvim.appimage"
 
 package 'python3-dev'
 package 'python3-pip'
@@ -15,4 +16,4 @@ execute 'pip3 install neovim'
 
 # For commonize VS Code setting with macOS
 directory '/opt/brew/bin'
-execute 'ln -sf /usr/bin/nvim /opt/brew/bin/nvim'
+execute 'ln -sf /opt/nvim/nvim.appimage /opt/brew/bin/nvim'
