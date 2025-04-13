@@ -17,7 +17,7 @@ when 'darwin'
       "--with-gdbm-dir=#{`brew --prefix gdbm`.chomp}",
       "--with-libffi-dir=#{`brew --prefix libffi`.chomp}",
       "--with-libyaml-dir=#{`brew --prefix libyaml`.chomp}",
-      "--with-openssl-dir=#{`brew --prefix openssl@1.1`.chomp}",
+      "--with-openssl-dir=#{`brew --prefix openssl`.chomp}",
       "--with-readline-dir=#{`brew --prefix readline`.chomp}",
       "--disable-install-doc",
       "--enable-shared",
